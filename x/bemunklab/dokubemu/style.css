@@ -18,6 +18,9 @@ p {
   margin-top: 10px;
   padding: 5px;
 }
+img {
+  pointer-events: none;
+}
 
 .center {
   display: block;
@@ -34,7 +37,7 @@ p {
   border-radius: 10px;
 
   margin-top: 20px;
-  padding: 3px;
+  padding: 5px;
 
   /* background-color: white; */
   /* opacity: 0.5; */
