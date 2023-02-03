@@ -2,26 +2,66 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
+  font-family: "Poppins";
 }
 html,
 body {
   height: 100%;
-  margin: 0;
-  margin-left: 10px;
-  margin-right: 10px;
-
-  /* background-color: #28abb9; */
-  background-image: linear-gradient(to right, #28abb9, #a8dda8);
+  margin: 1rem;
+  background-color: #28abb9;
+  /* background-image: linear-gradient(to right, #28abb9, #a8dda8); */
   color: white;
 }
 p {
   text-align: center;
   margin-top: 10px;
+  padding: 5px;
 }
 
 .center {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* content */
+.main-floating {
+  background: rgba(255, 255, 255, 0.2); /*  10% opaque green */
+  border-color: white;
+  border-width: thin;
+  border-style: solid;
+  border-radius: 10px;
+
+  margin-top: 20px;
+  padding: 3px;
+
+  /* background-color: white; */
+  /* opacity: 0.5; */
+
+  width: 19rem;
+}
+
+.items {
+  /* background-color: black; */
+  padding: 5px;
+  margin: 3px;
+}
+
+/* Non blue link  */
+a.nav-link:link {
+  color: white;
+  text-decoration: none;
+}
+a.nav-link:visited {
+  color: white;
+  text-decoration: none;
+}
+a.nav-link:hover {
+  color: white;
+  text-decoration: none;
+}
+a.nav-link:active {
+  color: white;
+  text-decoration: none;
 }
