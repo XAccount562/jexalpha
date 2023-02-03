@@ -11,7 +11,8 @@ body {
   margin-left: 10px;
   margin-right: 10px;
 
-  background-color: #28abb9;
+  /* background-color: #28abb9; */
+  background-image: linear-gradient(to right, #28abb9, #a8dda8);
   color: white;
 }
 p {
