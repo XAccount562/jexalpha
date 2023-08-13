@@ -3471,7 +3471,7 @@ body.is-preload #header.alt {
   -webkit-align-items: center;
   -ms-align-items: center;
   align-items: center;
-  background-image: url("../../images/banner.png");
+  background-image: url("../../images/compressed/banner.png");
   display: -moz-flex;
   display: -webkit-flex;
   display: -ms-flex;
@@ -3798,7 +3798,7 @@ body.is-preload #banner > .inner {
 
 #footer .copyright li {
   border-left: solid 1px rgba(212, 212, 255, 0.1);
-  color: rgba(244, 244, 255, 0.2);
+  color: rgb(219, 219, 219);
   display: inline-block;
   line-height: 1;
   margin-left: 1em;
