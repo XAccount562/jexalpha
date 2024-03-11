@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-time Date and Time</title>
+    <style>
+      #datetime {
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="datetime"></div>
+
+    <script>
+      function updateDateTime() {
+        var now = new Date();
+        var options = { timeZone: "Asia/Makassar" }; // Set to Central Indonesia Time (WITA)
+        var datetimeElement = document.getElementById("datetime");
+        datetimeElement.innerText = now.toLocaleString("en-US", options); // Adjust format as needed
+      }
+
+      // Call the function initially to avoid delay
+      updateDateTime();
+
+      // Update every second
+      setInterval(updateDateTime, 1000);
+    </script>
+  </body>
+</html>
