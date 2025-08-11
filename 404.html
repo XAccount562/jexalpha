@@ -1,47 +1,277 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sorry, page not found (404) - alphacast.id</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alphacast.id</title>
     <link
       rel="shortcut icon"
       href="/images/logo/(smallforwebsite)  color1 - alphacast.id logo.png"
     />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-  </head>
-  <body
-    style="
-      background: rgb(2, 0, 36);
-      background: linear-gradient(
-        90deg,
-        rgba(2, 0, 36, 1) 0%,
-        rgba(9, 9, 121, 1) 35%,
-        rgba(0, 124, 149, 1) 100%
-      );
-      color: rgb(211, 211, 211);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    "
-  >
-    <div style="text-align: center; padding-top: 10%; padding-bottom: 10%">
-      <img
-        src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png"
-        alt="alphacast.id logo"
-        style="height: 8em; padding-bottom: 2em"
-      />
-      <h1><b>Maaf</b> :(</h1>
-      <p>Halaman yang Anda minta tidak dapat ditemukan.</p>
-      <p><b>Ayo pergi ke halaman utama!</b></p>
-      <p style="padding: 0; margin: 0">
-        <a
-          href="/"
-          class="w3-button w3-white w3-padding-large w3-margin-top w3-opacity w3-hover-opacity-off"
-          style="padding: 0; margin: 0; width: 15em"
-          >Lets Go!</a
-        >
-      </p>
-      <p style="font-size: 0.7em; padding-top: 2em">error 404 - not found</p>
+    
+    <!-- Google Fonts - Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* CSS Custom Properties (Variables) */
+        :root {
+            /* Tema Gelap dan Biru */
+            --background-color: #1a1a1a;
+            --surface-color: #2b2b2b;
+            --primary-color: #00bcd4; /* Cyan/Biru Terang */
+            --primary-variant-color: #008ba3;
+            --on-background-color: #e0e0e0;
+            --on-surface-color: #ffffff;
+            --text-color: #f0f0f0;
+            --shadow-color: rgba(0, 0, 0, 0.6);
+            --border-radius: 12px;
+        }
+
+        /* Styling dasar untuk body dan elemen umum */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Video Background */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .video-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Overlay untuk membuat teks lebih mudah dibaca */
+        .video-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(26, 26, 26, 0.7); /* Warna background dengan opacity */
+        }
+
+        /* Kontainer utama untuk konten 404 */
+        .error-container {
+            max-width: 600px;
+            padding: 0 24px;
+            flex-grow: 1; /* Kontainer akan memenuhi ruang yang tersedia */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo-placeholder {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 24px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Styling untuk teks "404" */
+        h1 {
+            font-size: 10rem; /* Ukuran font yang sangat besar */
+            font-weight: 700;
+            margin: 0;
+            color: var(--primary-color);
+            text-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Styling untuk pesan error */
+        p {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin: 0 0 40px;
+            color: var(--on-background-color);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Styling untuk tombol "Kembali ke Beranda" */
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--surface-color);
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background-color: var(--primary-variant-color);
+            box-shadow: 0 5px 15px rgba(0, 188, 212, 0.3);
+        }
+        
+
+        /* Contact Section */
+        #contact {
+            padding: 40px 0;
+            text-align: center; /* Memastikan semua konten terpusat */
+        }
+
+        .contact-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .social-links-container {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--surface-color);
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: transform 0.2s, background-color 0.2s;
+            gap: 12px;
+            box-shadow: 0 2px 5px var(--shadow-color);
+        }
+
+        .social-link:hover {
+            transform: translateY(-2px);
+            background-color: var(--primary-color);
+            color: var(--surface-color);
+        }
+
+        .social-link .fa-brands, .social-link .fa-solid {
+            font-size: 24px;
+            color: var(--primary-color);
+            transition: color 0.2s;
+        }
+        
+        .social-link:hover .fa-brands, .social-link:hover .fa-solid {
+            color: var(--surface-color);
+        }
+
+
+        /* Footer */
+        footer {
+            background-color: var(--surface-color);
+            padding: 24px 0;
+            text-align: center;
+            color: var(--on-surface-color);
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+
+        /* Keyframes untuk animasi fade-in */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Media Queries untuk responsif */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 8rem;
+            }
+            p {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <div class="video-bg">
+        <video autoplay muted loop playsinline>
+            <!-- Ganti URL video di bawah ini.
+                 Untuk layar landscape, gunakan video dengan rasio 16:9.
+                 Untuk layar portrait, gunakan video dengan rasio 9:16.
+            -->
+            <source src="/videos/(H264) (LANDSCAPE) loop video for website - www.alphacast.id.mp4" media="(orientation: landscape)" type="video/mp4">
+            <source src="/videos/(H264) (LANDSCAPE) loop video for website - www.alphacast.id.mp4" media="(orientation: portrait)" type="video/mp4">
+            Video tidak dapat dimuat.
+        </video>
     </div>
-  </body>
+
+    <!-- Konten Error -->
+    <div class="error-container">
+        <!-- Placeholder Logo -->
+        <div class="logo-placeholder">
+            <br>
+                 <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="" height="100em">
+        </div>
+        <!-- Teks utama 404 -->
+        <h1>404</h1>
+        <!-- Pesan yang ramah -->
+        <p>Maaf, halaman yang Anda cari tidak ditemukan.</p>
+        <!-- Tombol untuk kembali ke halaman utama -->
+        <a href="/" class="btn">Kembali ke Beranda</a>
+    </div>
+
+</div>
+
+<br>
+
+<!-- <div style="max-width: 35em;">
+
+    <p>Ayo hubungi kami untuk berkonsultasi tentang event besarmu, tanya-tanya juga dulu boleh, dan segera booking tanggal spesialmu bersama kami!</p>
+    <a href="https://wa.me/6285159556468?text=Halo%20admin%2C%20saya%20datang%20dari%20halaman%20pricelist%20alphacast.id!" target="_blank" class="social-link">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span>WhatsApp</span>
+    </a>
+
+</div> -->
+
+<br><br><br>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 www.alphacast.id. Semua hak dilindungi.</p>
+        </div>
+    </footer>
+</body>
 </html>
