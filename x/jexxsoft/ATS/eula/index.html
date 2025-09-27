@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perjanjian Pengguna - JexxSoftwares</title>
+    <!-- Memuat Tailwind CSS CDN untuk styling modern dan responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Mengatur font Inter sebagai default, seperti Material Design */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Styling kustom untuk list, memberikan indentasi yang lebih bersih */
+        .list-style-modern li {
+            margin-bottom: 0.75rem; /* pt-3 */
+            padding-left: 0.5rem;
+            list-style-type: disc;
+        }
+        .list-style-modern ol li {
+            list-style-type: decimal;
+        }
+
+        /* Warna kustom untuk Material/Gemini Dark Blue */
+        :root {
+            --color-primary-blue: #70a1ff; /* Light blue accent for dark mode */
+            --color-surface-dark: #12121e; /* Very dark background */
+            --color-card-dark: #1f2937; /* Slightly lighter surface for card (equivalent to gray-800) */
+        }
+
+        /* KEYFRAMES untuk animasi fade-in dan slide-up minimalis */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Kelas utilitas untuk menerapkan animasi */
+        .animate-in {
+            opacity: 0; /* Mulai tersembunyi */
+            animation: fadeInSlideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            /* Timing function yang halus (ease-out cubic) */
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#70a1ff',
+                        'dark-surface': '#0f172a', /* slate-900 equivalent or slightly darker */
+                        // 'dark-card': '#1e293b',    /* slate-800 equivalent */
+                        'dark-card': '#1e293b',    /* slate-800 equivalent */
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-dark-surface text-gray-100 min-h-screen p-4 md:p-8 selection:bg-primary-blue selection:text-dark-surface">
+    <!-- Kontainer Utama: Menciptakan efek "kartu" yang terpusat dan berbayangan (Shadow-2xl) -->
+    <!-- Menerapkan animasi utama ke kontainer agar seluruh konten muncul bersamaan dengan sedikit delay awal -->
+    <div class="max-w-4xl mx-auto bg-dark-card shadow-2xl shadow-blue-900/50 rounded-3xl p-6 sm:p-10 border border-blue-600/30 animate-in" style="animation-delay: 0.2s;">
+
+        <!-- Logo Perusahaan (16:10, Responsif - Sekarang menggunakan tag <img>) -->
+        <!-- Menerapkan animasi dengan delay paling rendah -->
+        <div class="mb-8 flex justify-center animate-in" style="animation-delay: 0.4s;">
+            <!-- 
+                Ganti URL di bawah dengan path ke file PNG/gambar Anda (contoh: src="path/to/your/logo.png").
+                max-w-[200px] menjaga ukuran kecil yang Anda inginkan.
+                aspect-[16/10] menjaga rasio 16:10.
+            -->
+            <img 
+                src="../../jexxsoftwares LOGO 1.jpg" 
+                alt="Logo Perusahaan JexxSoftwares" 
+                class="w-3/5 max-w-[200px] h-auto aspect-[16/3] rounded-lg border border-blue-600/50 shadow-lg shadow-blue-800/20"
+                onerror="this.onerror=null; this.src='https://placehold.co/160x100/1e293b/70a1ff?text=Placeholder';"
+            >
+        </div>
+
+        <!-- Header dan Judul Utama -->
+        <!-- Menerapkan animasi dengan delay sedang -->
+        <header class="mb-8 md:mb-10 animate-in" style="animation-delay: 0.6s;">
+            <h1 class="text-3xl sm:text-4xl font-bold text-primary-blue mb-2 text-center">
+                Perjanjian Pengguna (User Agreement)
+            </h1>
+            <p class="text-xl font-medium text-gray-300 text-center">JexxSoftwares - Perjanjian Lisensi Pengguna Akhir (EULA)</p>
+            <!-- Garis pemisah yang tetap di tengah -->
+            <div class="w-24 h-1 bg-primary-blue rounded-full mt-4 mx-auto"></div>
+        </header>
+
+        <!-- Konten Perjanjian -->
+        <!-- Konten utama akan muncul terakhir untuk memastikan header sudah muncul sepenuhnya -->
+        <div class="space-y-6 text-lg text-gray-300 list-style-modern animate-in" style="animation-delay: 0.8s;">
+
+            <p class="font-semibold text-gray-200">
+                <span class="text-primary-blue mr-2">1.</span> Pendahuluan
+            </p>
+            <p class="pl-6 text-gray-400">
+                <strong class="text-primary-blue">JexxSoftwares</strong> ("Kami", "Perusahaan") dengan ini memberikan Anda ("Pengguna", "Anda") hak untuk menggunakan perangkat lunak <strong class="text-primary-blue">Attendance System</strong> ("Perangkat Lunak") berdasarkan ketentuan-ketentuan berikut. Dengan mengakses atau menggunakan Perangkat Lunak, Anda setuju untuk terikat oleh ketentuan-ketentuan ini.
+            </p>
+
+            <p class="font-semibold text-gray-200 pt-4">
+                <span class="text-primary-blue mr-2">2.</span> Lisensi Penggunaan
+            </p>
+            <ol class="pl-12 space-y-3">
+                <li class="list-decimal marker:text-primary-blue">
+                    <strong class="text-primary-blue">Lisensi Terbatas:</strong> Perangkat Lunak ini diberikan kepada Anda dalam bentuk lisensi terbatas. Anda hanya diperbolehkan menggunakan Perangkat Lunak pada <strong class="text-amber-400">satu</strong> komputer dengan sistem operasi <strong class="text-amber-400">Windows</strong>.
+                </li>
+                <li class="list-decimal marker:text-primary-blue">
+                    <strong class="text-primary-blue">Pelanggan Tunggal:</strong> Perangkat Lunak ini hanya boleh digunakan oleh <strong class="text-amber-400">satu</strong> pelanggan (client) yang telah diberikan akses oleh Perusahaan.
+                </li>
+                <li class="list-decimal marker:text-primary-blue">
+                    <strong class="text-primary-blue">Modifikasi:</strong> Anda <strong class="text-red-400">tidak diperbolehkan</strong> memodifikasi, mendekompilasi, atau melakukan tindakan lain yang melanggar hak cipta terhadap Perangkat Lunak.
+                </li>
+                <li class="list-decimal marker:text-primary-blue">
+                    <strong class="text-primary-blue">Penggandaan dan Distribusi:</strong> Anda <strong class="text-red-400">tidak diperbolehkan</strong> menyalin, menggandakan, atau mendistribusikan Perangkat Lunak ini ke publik tanpa izin tertulis dari Perusahaan.
+                </li>
+            </ol>
+
+            <p class="font-semibold text-gray-200 pt-4">
+                <span class="text-primary-blue mr-2">3.</span> Pembayaran dan Berlangganan
+            </p>
+            <ol class="pl-12 space-y-3">
+                <li class="list-decimal marker:text-primary-blue">
+                    <strong class="text-primary-blue">Berbasis Langganan:</strong> Penggunaan Perangkat Lunak ini didasarkan pada model berlangganan yang dibayar per semester akademik di Indonesia.
+                </li>
+                <li class="list-decimal marker:text-primary-blue">
+                    <strong class="text-primary-blue">Pembayaran:</strong> Anda setuju untuk membayar biaya berlangganan sesuai dengan ketentuan yang berlaku.
+                </li>
+            </ol>
+
+            <p class="font-semibold text-gray-200 pt-4">
+                <span class="text-primary-blue mr-2">4.</span> Tanggung Jawab dan Keamanan Data
+            </p>
+            <ol class="pl-12 space-y-3">
+                <li class="list-decimal marker:text-primary-blue">
+                    <strong class="text-primary-blue">Keamanan Data:</strong> Perusahaan akan menjaga kerahasiaan data dan informasi yang dikumpulkan dari penggunaan Perangkat Lunak.
+                </li>
+                <li class="list-decimal marker:text-primary-blue">
+                    <strong class="text-primary-blue">Tanggung Jawab:</strong> Pengguna bertanggung jawab atas penggunaan Perangkat Lunak dan memastikan kepatuhan terhadap peraturan dan hukum yang berlaku.
+                </li>
+            </ol>
+
+            <p class="font-semibold text-gray-200 pt-4">
+                <span class="text-primary-blue mr-2">5.</span> Pemutusan Hubungan
+            </p>
+            <p class="pl-6 text-gray-400">
+                <strong class="text-primary-blue">Pemutusan:</strong> Perusahaan berhak memutuskan akses Anda ke Perangkat Lunak jika Anda melanggar ketentuan-ketentuan ini.
+            </p>
+
+            <footer class="pt-8 text-center text-gray-500 text-sm border-t border-blue-700/20 mt-8">
+                &copy; 2024 JexxSoftwares. Hak Cipta Dilindungi Undang-Undang.
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
