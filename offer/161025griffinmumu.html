@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alphacast.id - Services Price List</title>
+    <link rel="icon" type="image/png" href="/img/mainthings/medium1 - wagiuroger_productions logoremake1.png" sizes="32x32" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/png" href="/img/mainthings/medium1 - wagiuroger_productions logoremake1-dark.png" sizes="32x32" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" href="/img/mainthings/medium1 - wagiuroger_productions logoremake1.png" sizes="32x32">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Load Lucide Icons for accordion chevrons and features list -->
+    <script src="https://unpkg.com/lucide@latest"></script> 
+
+<script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+
+    <style>
+        /* BASE STYLES for Dark/Light Mode */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Slate 900 (Dark) */
+            color: #f8fafc; /* Slate 50 (Dark text) */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s, color 0.3s;
+            /* Added padding-top to compensate for fixed header */
+            padding-top: 5rem;
+        }
+
+        .dark body {
+            background-color: #ffffff; /* White (Light) */
+            color: #1e293b; /* Slate 800 (Light text) */
+        }
+        
+        .interactive-element {
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .interactive-element:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            transform: translateY(-1px);
+        }
+        
+        .whatsapp-cta {
+            box-shadow: 0 4px 6px rgba(16, 185, 129, 0.4);
+        }
+        .whatsapp-cta:hover {
+            box-shadow: 0 8px 10px rgba(16, 185, 129, 0.6);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-in {
+            animation-name: fadeInUp;
+            animation-duration: 0.6s;
+            animation-timing-function: ease-out;
+            animation-fill-mode: both;
+        }
+
+        /* --- FIXED HEADER & BLUR EFFECT STYLES --- */
+        #main-header {
+            /* Initial state: More transparent, no blur, light border */
+            background-color: #0f172a99; /* Slate 900 (60% opacity) */
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1); /* Blue 500 (10% opacity) */
+            transition: all 0.3s ease-in-out;
+        }
+        .dark #main-header {
+            background-color: #ffffff99; /* White (60% opacity) */
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        #main-header.scrolled {
+            /* Scrolled state: Less transparent, blur added, stronger border */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            background-color: #0f172af0; /* Slate 900 (94% opacity) */
+            border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .dark #main-header.scrolled {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            background-color: #ffffffed; /* White (92% opacity) */
+            border-bottom: 1px solid rgba(59, 130, 246, 0.5);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+
+        /* --- ACCORDION STYLES --- */
+        
+        /* Transition for smooth opening/closing */
+        .accordion-content-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+        .accordion-content-panel.open {
+            max-height: 3000px; /* Increased max-height for many packages */
+            opacity: 1;
+        }
+
+        /* Major Service Header (Blue Theme) */
+        .major-header {
+            background-color: #1e293b; /* Slate 800 (Dark) */
+            border-left: 4px solid #3b82f6; /* Blue 500 */
+        }
+        .dark .major-header {
+            background-color: #f1f5f9; /* Slate 100 (Light) */
+            border-left: 4px solid #1d4ed8; /* Blue 700 */
+        }
+        .major-header:hover { background-color: #334155; }
+        .dark .major-header:hover { background-color: #e2e8f0; }
+
+        /* Additional Service Header (Orange Theme) */
+        .additional-header {
+            background-color: #3f3f46; /* Zinc 700 (Dark) */
+            border-left: 4px solid #f97316; /* Orange 600 */
+        }
+        .dark .additional-header {
+            background-color: #fef3c7; /* Amber 100 (Light) */
+            border-left: 4px solid #c2410c; /* Orange 800 */
+        }
+        .additional-header:hover { background-color: #52525b; }
+        .dark .additional-header:hover { background-color: #fed7aa; }
+
+
+        /* Major Content Panel (Blue) */
+        .major-content-panel {
+            background-color: #0f172a; /* Slate 900 */
+            border-left: 4px solid #60a5fa; /* Blue 400 */
+        }
+        .dark .major-content-panel {
+            background-color: #f8fafc; /* Slate 50 */
+            border-left: 4px solid #60a5fa; /* Blue 400 */
+        }
+        /* Additional Content Panel (Orange) */
+        .additional-content-panel {
+            background-color: #1f2937; /* Gray 800 */
+            border-left: 4px solid #fb923c; /* Orange 400 */
+        }
+        .dark .additional-content-panel {
+            background-color: #fff7ed; /* Orange 50 */
+            border-left: 4px solid #fb923c; /* Orange 400 */
+        }
+        
+        /* Package Card Styles */
+        .package-card {
+            /* Dark Mode */
+            background-color: #1e293b; /* Slate 800 */
+            color: #f8fafc;
+            border: 1px solid #334155;
+            /* Light Mode */
+        }
+        .dark .package-card {
+            background-color: #ffffff; /* White */
+            color: #1e293b;
+            border: 1px solid #e2e8f0;
+        }
+
+        .package-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .dark .package-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Shared text/icon styling */
+        .service-text { color: #cbd5e1; } /* Dark Mode Text */
+        .dark .service-text { color: #475569; } /* Light Mode Text */
+        .service-icon { color: #60a5fa; } /* Dark Mode Icon */
+        .dark .service-icon { color: #2563eb; } /* Light Mode Icon */
+    </style>
+</head>
+<body class="antialiased bg-slate-900 dark:bg-white text-gray-100 dark:text-gray-900">
+
+    <div id="header-placeholder"></div>
+
+    <main class="w-full flex-grow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 animate-in" style="animation-delay: 0.3s;">
+            
+            <header class="text-center mb-12">
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-blue-400 dark:text-blue-700 mb-4 animate-in" style="animation-delay: 0.4s;">
+                    <span class="lang-switchable block" data-lang="en">Our Professional Services & Pricing</span>
+                    <span class="lang-switchable block hidden" data-lang="id">Daftar Harga & Layanan Profesional Kami</span>
+                </h1>
+                <p class="text-lg text-gray-400 dark:text-gray-600 max-w-2xl mx-auto animate-in" style="animation-delay: 0.5s;">
+                    <span class="lang-switchable block" data-lang="en">Offer - 161025 - Griffin Mumu</span>
+                    <span class="lang-switchable block hidden" data-lang="id">Penawaran - 161025 - Griffin Mumu</span>
+                </p>
+            </header>
+
+            <!-- Service List Accordion -->
+            <section id="services-accordion" class="max-w-3xl mx-auto space-y-4 animate-in" style="animation-delay: 0.6s;">
+                <!-- Accordion items will be generated here -->
+            </section>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // =========================================================================
+        // DATA STRUCTURE: Packages now include an optional 'oldPrice' for promos
+        // =========================================================================
+
+        const serviceGroups = [
+            // --- Individual Service Types (Major Services with Multiple Packages) ---
+            { 
+                id: 'livestreaming', 
+                name_en: "Livestreaming", 
+                name_id: "Livestreaming", 
+                type: 'major', 
+                //isOpen: true, // Open first one by default
+                isOpen: false, // jex hide semua dulu
+                packages: [
+                    {
+                        name_en: "Standard Livestream Package",
+                        name_id: "Standard Livestream Package",
+                        oldPrice: "Rp 3.500.000",
+                        price: "Rp 2.600.000",
+                        duration: "Max 3 Hours",
+                        features_en: ["2 Cameras", "Cameraman + Operator", "Livestream to 1 client's social media (Facebook / Youtube)"],
+                        features_id: ["2 Kamera", "Kameramen + Operator", "Siarkan ke 1 media sosial klien (Facebook / Youtube)"],
+                    },
+                    {
+                        name_en: "Multisocmed Package",
+                        name_id: "Multisocmed Package",
+                        oldPrice: "Rp 6.500.000",
+                        price: "Rp 4.100.000",
+                        duration: "Max 3 Hours",
+                        features_en: ["2 Cameras", "Cameraman + Operator", "Livestream to 5 client's social media (Facebook / Youtube / Instagram / Tiktok / Twitch / Twitter)"],
+                        features_id: ["2 Kamera", "Kameramen + Operator", "Siarkan ke 5 media sosial klien (Facebook / Youtube / Instagram / Tiktok / Twitch / Twitter)"],
+                    },
+                    {
+                        name_en: "Zoom Interaction Package",
+                        name_id: "Zoom Interaction Package",
+                        oldPrice: "Rp 5.200.000",
+                        price: "Rp 3.200.000",
+                        duration: "Max 3 Hours",
+                        features_en: ["2 Cameras", "Cameraman + Operator", "Interaction at Zoom Meeting", "100 participants zoom meeting provided if needed"],
+                        features_id: ["2 Kamera", "Kameramen + Operator", "Berinteraksi di Zoom Meeting", "Disediakan zoom meeting 100 participants jika diperlukan"],
+                    },
+                    {
+                        name_en: "Complete Package",
+                        name_id: "Complete Package",
+                        oldPrice: "Rp 11.200.000",
+                        price: "Rp 8.100.000",
+                        duration: "Max 3 Hours",
+                        features_en: ["4 Cameras", "Cameraman + Operator", "Livestream to 5 client's social media (Facebook / Youtube / Instagram / Tiktok / Twitch / Twitter)", "Interaction at Zoom Meeting", "100-300 participants zoom meeting provided if needed"],
+                        features_id: ["4 Kamera", "Kameramen + Operator", "Siarkan ke 5 media sosial klien (Facebook / Youtube / Instagram / Tiktok / Twitch / Twitter)", "Berinteraksi di Zoom Meeting", "Disediakan zoom meeting 100-300 participants jika diperlukan"],
+                    },
+                ]
+            }, 
+            // { 
+            //     id: 'multimedia', 
+            //     name_en: "Multimedia Production", 
+            //     name_id: "Produksi Multimedia", 
+            //     type: 'major', 
+            //     isOpen: false,
+            //     packages: [
+            //         {
+            //             name_en: "Basic Post-Production",
+            //             name_id: "Pasca-Produksi Dasar",
+            //             price: "Rp 800.000",
+            //             duration: "Per Minute (Finished Video)",
+            //             features_en: ["Basic Color Grading", "Simple Text Overlays", "Background Music", "1 Revision"],
+            //             features_id: ["Color Grading Dasar", "Overlay Teks Sederhana", "Musik Latar", "1 Revisi"],
+            //         },
+            //         {
+            //             name_en: "Standard Explainer Video",
+            //             name_id: "Video Penjelas Standar",
+            //             price: "Rp 4.000.000",
+            //             duration: "Max 5 Minutes",
+            //             features_en: ["Script & Concept Development", "Professional Voice Over", "Motion Graphics (Basic)", "2 Revisions"],
+            //             features_id: ["Pengembangan Naskah & Konsep", "Pengisi Suara Profesional", "Motion Graphics (Dasar)", "2 Revisi"],
+            //         },
+            //         {
+            //             name_en: "Corporate Profile Film",
+            //             name_id: "Film Profil Perusahaan",
+            //             price: "Rp 15.000.000",
+            //             duration: "Max 10 Minutes",
+            //             features_en: ["Full Field Production (2 days)", "Advanced VFX/Editing", "Licensed Soundtrack", "3 Revisions"],
+            //             features_id: ["Produksi Lapangan Penuh (2 hari)", "VFX/Pengeditan Tingkat Lanjut", "Musik Berlisensi", "3 Revisi"],
+            //         },
+            //     ]
+            // },
+            { 
+                id: 'genset', 
+                name_en: "Genset (Power Generator)", 
+                name_id: "Genset (Generator Listrik)", 
+                type: 'major', 
+                isOpen: false,
+                packages: [
+                    {
+                        name_en: "Small Event Power",
+                        name_id: "Daya Acara Kecil",
+                        oldPrice: "Rp 4.000.000",
+                        price: "Rp 3.500.000",
+                        duration: "Max 9 Hours",
+                        features_en: ["20 kVA Capacity", "Fuel Included (9 hours)", "Ideal for small sound/lighting"],
+                        features_id: ["Kapasitas 20 kVA", "Termasuk Bahan Bakar (9 jam)", "Ideal untuk sound/lighting kecil"],
+                    },
+                    {
+                        name_en: "Medium Event Power",
+                        name_id: "Daya Acara Menengah",
+                        oldPrice: "Rp 7.000.000",
+                        price: "Rp 6.000.000",
+                        duration: "Max 9 Hours",
+                        features_en: ["60 kVA Capacity", "Fuel Included (9 hours)", "Covers medium-sized events"],
+                        features_id: ["Kapasitas 60 kVA", "Termasuk Bahan Bakar (9 jam)", "Mencakup acara ukuran sedang"],
+                    },
+                    {
+                        name_en: "Large Scale Event Power",
+                        name_id: "Daya Acara Skala Besar",
+                        oldPrice: "Rp 8.500.000",
+                        price: "Rp 7.500.000",
+                        duration: "Max 9 Hours",
+                        features_en: ["100 kVA Capacity", "Fuel Included (9 hours)", "For large stages & productions"],
+                        features_id: ["Kapasitas 100 kVA", "Termasuk Bahan Bakar (9 jam)", "Untuk panggung & produksi besar"],
+                    },
+                ]
+            },
+            { 
+                id: 'fotografer', 
+                name_en: "Photographer", 
+                name_id: "Fotografer", 
+                type: 'major', 
+                isOpen: false,
+                packages: [
+                    {
+                        name_en: "Half-Day Session",
+                        name_id: "Sesi Setengah Hari",
+                        oldPrice: "Rp 600.000",
+                        price: "Rp 500.000",
+                        duration: "Max 4 Hours",
+                        features_en: ["1 Photographer", "Standard Color Adjustment", "All Raw JPEGs Included", "Digital Delivery"],
+                        features_id: ["1 Fotografer", "Penyesuaian Warna Standar", "Semua JPEG Mentah Termasuk", "Pengiriman Digital"],
+                    },
+                    {
+                        name_en: "Full-Day Event Coverage",
+                        name_id: "Liputan Acara Sehari Penuh",
+                        oldPrice: "Rp 1.000.000",
+                        price: "Rp 800.000",
+                        duration: "Max 8 Hours",
+                        features_en: ["1 Photographer", "Standard Color Adjustment", "All Raw JPEGs Included", "Digital Delivery"],
+                        features_id: ["1 Fotografer", "Penyesuaian Warna Standar", "Semua JPEG Mentah Termasuk", "Pengiriman Digital"],
+                    },
+                    {
+                        name_en: "Custom Request",
+                        name_id: "Permintaan Khusus",
+                        price: "...",
+                        duration: "",
+                        features_en: [""],
+                        features_id: [""],
+                    },
+                ]
+            },
+            { 
+                id: 'videografer', 
+                name_en: "Videographer", 
+                name_id: "Videografer", 
+                type: 'major', 
+                isOpen: false,
+                packages: [
+                    {
+                        name_en: "Standard Event Documentation",
+                        name_id: "Dokumentasi Acara Standar",
+                        oldPrice: "Rp 1.500.000",
+                        price: "Rp 1.000.000",
+                        duration: "Max 4 Hours",
+                        features_en: ["1 Videographer", "1 Main Highlight Video (2-3 min)", "Digital Delivery"],
+                        features_id: ["1 Videografer", "1 Video Sorotan Utama (2-3 menit)", "Pengiriman Digital"],
+                    },
+                    {
+                        name_en: "Cinematic Event Film",
+                        name_id: "Film Acara Sinematik",
+                        oldPrice: "Rp 3.000.000",
+                        price: "Rp 2.500.000",
+                        duration: "Max 5 Hours",
+                        features_en: ["1 Videographers", "1 Main Highlight Video (2-3 min)", "1 Drone + Pilot"],
+                        features_id: ["1 Videografer", "1 Video Sorotan Utama (2-3 menit)",  "1 Drone + Pilot"],
+                    },
+                    {
+                        name_en: "Custom Request",
+                        name_id: "Permintaan Khusus",
+                        price: "...",
+                        duration: "",
+                        features_en: [""],
+                        features_id: [""],
+                    },
+                ]
+            },
+            { 
+                id: 'dronegrafer', 
+                name_en: "Drone Operator", 
+                name_id: "Dronegrafer", 
+                type: 'major', 
+                isOpen: false,
+                packages: [
+                    {
+                        name_en: "Basic Photo & Video Shots",
+                        name_id: "Foto & Video Dasar",
+                        price: "Rp 1.500.000",
+                        duration: "2 hours on site",
+                        features_en: ["10 Minutes Raw Footage", "Single Location Only", "1 Operator"],
+                        features_id: ["10 Menit Rekaman Mentah", "Hanya Satu Lokasi", "1 Operator"],
+                    },
+                    {
+                        name_en: "Custom Request",
+                        name_id: "Permintaan Khusus",
+                        price: "...",
+                        duration: "",
+                        features_en: [""],
+                        features_id: [""],
+                    },
+                ]
+            },
+            // { 
+            //     id: 'lighting', 
+            //     name_en: "Lighting Setup", 
+            //     name_id: "Penyiapan Pencahayaan", 
+            //     type: 'major', 
+            //     isOpen: false,
+            //     packages: [
+            //         {
+            //             name_en: "Basic Studio/Interview",
+            //             name_id: "Studio/Wawancara Dasar",
+            //             price: "Rp 700.000",
+            //             duration: "Daily Rental",
+            //             features_en: ["3 Point Lighting (LED)", "Softboxes & Stands Included", "Ideal for close-up shots", "Set-up/Tear-down Assistance"],
+            //             features_id: ["Pencahayaan 3 Titik (LED)", "Softbox & Stand Termasuk", "Ideal untuk bidikan jarak dekat", "Bantuan Penyiapan/Pembongkaran"],
+            //         },
+            //         {
+            //             name_en: "Stage Accent Lighting",
+            //             name_id: "Pencahayaan Aksen Panggung",
+            //             price: "Rp 1.800.000",
+            //             duration: "Per Event",
+            //             features_en: ["6x Par LED Units (Color)", "Simple Controller/DMX Setup", "Static or Basic Color Change", "1 Technician"],
+            //             features_id: ["6x Unit Par LED (Warna)", "Pengontrol Sederhana/Pengaturan DMX", "Perubahan Warna Statis atau Dasar", "1 Teknisi"],
+            //         },
+            //         {
+            //             name_en: "Full Event Lighting",
+            //             name_id: "Pencahayaan Acara Penuh",
+            //             price: "Rp 4.500.000",
+            //             duration: "Per Event",
+            //             features_en: ["12x Par LED + 4x Moving Heads", "Advanced DMX Control Console", "Fog Machine / Hazer Included", "2 Technicians (Live Operation)"],
+            //             features_id: ["12x Par LED + 4x Moving Heads", "Konsol Kontrol DMX Tingkat Lanjut", "Termasuk Mesin Kabut / Hazer", "2 Teknisi (Operasi Langsung)"],
+            //         },
+            //     ]
+            // },
+            { 
+                id: 'sound-system', 
+                name_en: "Sound System", 
+                name_id: "Sound System", 
+                type: 'major', 
+                isOpen: false,
+                packages: [
+                    {
+                        name_en: "Standard setup",
+                        name_id: "Standard setup",
+                        oldPrice: "Rp 2.500.000",
+                        price: "Rp 2.000.000",
+                        duration: "Max 8 Hours",
+                        features_en: ["4 Huper AK15 Active Speakers", "1 Hardwell Monitor Speaker", "2 Wireless Mic", "1 Yamaha MG12XU Mixer", "Yamaha PSR S-970 Keyboard"],
+                        features_id: ["4 Speaker Aktif Huper AK15", "1 Speaker Monitor Hardwell", "2 Mic Wireless", "Mixer Yamaha MG12XU", "Keyboard Yamaha PSR S-970"],
+                    },
+                    {
+                        name_en: "Medium Setup 5.000 watt",
+                        name_id: "Medium Setup 5.000 watt",
+                        oldPrice: "Rp 6.000.000",
+                        price: "Rp 5.000.000",
+                        duration: "Max 8 Hours",
+                        features_en: ["2 Box 2 x 15 Inch Yamaha DSR 215", "2 Box 2 x 18 Inch Subwoofer", "Mixer Behringer X32 MIDAS", "4 Monitor Speaker Hupper AK15", "Mic Wireless Shure & Ashley", "Mic Cable Shure", "Drum Electric Yamaha DTX 432"],
+                        features_id: ["2 Kotak 2 x 15 Inci Yamaha DSR 215", "2 Kotak 2 x Subwoofer 18 Inci", "Mixer Behringer X32 MIDAS", "4 Speaker Monitor Hupper AK15", "Mikrofon Nirkabel Shure & Ashley", "Kabel Mikrofon Shure", "Drum Elektrik Yamaha DTX 432"],
+                    },
+                    {
+                        name_en: "Large Setup 10.000 watt",
+                        name_id: "Large Setup 10.000 watt",
+                        oldPrice: "Rp 8.500.000",
+                        price: "Rp 7.500.000",
+                        duration: "Max 8 Hours",
+                        features_en: ["4 Box Wisdom M10 2x10 Line Array", "2 Box 2 x 18 Inch Subwoofer", "Mixer Behringer X32 MIDAS", "4 Monitor Speaker Hupper AK15", "Mic Wireless Shure & Ashley", "Mic Cable Shure", "Drum Electric Yamaha DTX 432"],
+                        features_id: ["4 Box Wisdom M10 2x10 Line Array", "2 Kotak 2 x Subwoofer 18 Inci", "Mixer Behringer X32 MIDAS", "4 Speaker Monitor Hupper AK15", "Mikrofon Nirkabel Shure & Ashley", "Kabel Mikrofon Shure", "Drum Elektrik Yamaha DTX 432"],
+                    },
+                    {
+                        name_en: "Custom Request",
+                        name_id: "Permintaan Khusus",
+                        price: "...",
+                        duration: "",
+                        features_en: [""],
+                        features_id: [""],
+                    },
+                ]
+            },
+            { 
+                id: 'videobooth360', 
+                name_en: "360 Overhead Video Booth", 
+                name_id: "Videobooth 360", 
+                type: 'major', 
+                isOpen: false,
+                packages: [
+                    {
+                        name_en: "Basic Rental",
+                        name_id: "Penyewaan Dasar Booth 360",
+                        oldPrice: "Rp 2.500.000",
+                        price: "Rp 2.000.000",
+                        duration: "Max 2.5 Hours",
+                        features_en: ["Platform 10-15 people", "Basic Event Overlay/Branding", "Instant Digital Sharing", "Various kinds of accessories", "RGB Lights & Smoke Machine"],
+                        features_id: ["Platform 10-15 orang", "Overlay/Branding Acara Dasar", "Berbagi Digital Instan", "Berbagai macam aksesoris", "Lampu RGB & Mesin Asap"],
+                    },
+                    {
+                        name_en: "Best Experience",
+                        name_id: "Pengalaman Terbaik",
+                        oldPrice: "Rp 5.000.000",
+                        price: "Rp 4.500.000",
+                        duration: "Max 4 Hours",
+                        features_en: ["Platform 10-15 people", "Basic Event Overlay/Branding", "Instant Digital Sharing", "Various kinds of accessories", "RGB Lights & Smoke Machine", "Water Balloon Machine"],
+                        features_id: ["Platform 10-15 orang", "Overlay/Branding Acara Dasar", "Berbagi Digital Instan", "Berbagai macam aksesoris", "Lampu RGB & Mesin Asap", "Mesin Balon Air"],
+                    },
+                ]
+            },
+            // { 
+            //     id: 'camera-rental', 
+            //     name_en: "Camera Rental", 
+            //     name_id: "Penyewaan Kamera", 
+            //     type: 'major', 
+            //     isOpen: false,
+            //     packages: [
+            //         {
+            //             name_en: "DSLR Basic Kit",
+            //             name_id: "Kit Dasar DSLR",
+            //             price: "Rp 300.000",
+            //             duration: "Per Day (24 Hours)",
+            //             features_en: ["Entry-level DSLR Body", "Standard Zoom Lens (Kit)", "1 Battery + 1 SD Card", "Ideal for students/beginners"],
+            //             features_id: ["Bodi DSLR Tingkat Pemula", "Lensa Zoom Standar (Kit)", "1 Baterai + 1 Kartu SD", "Ideal untuk pelajar/pemula"],
+            //         },
+            //         {
+            //             name_en: "Mirrorless Standard Kit",
+            //             name_id: "Kit Standar Mirrorless",
+            //             price: "Rp 750.000",
+            //             duration: "Per Day (24 Hours)",
+            //             features_en: ["Mid-range Mirrorless Body (Sony/Canon)", "Prime Lens Option (50mm/35mm)", "2 Batteries + External Charger", "Suitable for professional projects"],
+            //             features_id: ["Bodi Mirrorless Menengah (Sony/Canon)", "Opsi Lensa Prime (50mm/35mm)", "2 Baterai + Pengisi Daya Eksternal", "Cocok untuk proyek profesional"],
+            //         },
+            //         {
+            //             name_en: "Cinema Camera Package",
+            //             name_id: "Paket Kamera Sinema",
+            //             price: "Rp 1.500.000",
+            //             duration: "Per Day (24 Hours)",
+            //             features_en: ["Cinema Camera Body (Blackmagic/RED)", "V-Mount Batteries + Cage", "Matte Box & Filters", "Dedicated Support Specialist (optional)"],
+            //             features_id: ["Bodi Kamera Sinema (Blackmagic/RED)", "Baterai V-Mount + Cage", "Kotak Matte & Filter", "Spesialis Dukungan Khusus (opsional)"],
+            //         },
+            //     ]
+            // },
+            
+            // --- Grouped Additional Services (Now using Card Design) ---
+            { 
+                id: 'additional-equipment', 
+                name_en: "Additional Equipment Rental", 
+                name_id: "Penyewaan Peralatan Tambahan",
+                type: 'additional', // Keep type 'additional' for orange styling
+                isOpen: false,
+                packages: [
+                    {
+                        name_en: "TV LED/Monitor 40 Inch",
+                        name_id: "TV LED/Monitor 40 Inch",
+                        price: "Rp 500.000",
+                        duration: "Max 8 hours",
+                        features_en: ["Includes Floor Stand or Standing", "HDMI + Power Cable"],
+                        features_id: ["Termasuk Stand Lantai atau Berdiri", "Kabel HDMI + Power"],
+                    },
+                    {
+                        name_en: "Videotron",
+                        name_id: "Videotron",
+                        oldPrice: "Rp 1.000.000/m2",
+                        price: "Rp 900.000/m2",
+                        duration: "Max 8 hours",
+                        features_en: ["P3.9 Indoor Modules", "Full Set-up and Teardown", "1 Technician"],
+                        features_id: ["Modul Indoor P3.9", "Penyiapan dan Pembongkaran Penuh", "1 Teknisi"],
+                    },
+                    {
+                        name_en: "TV LED/Monitor 55 Inch",
+                        name_id: "TV LED/Monitor 55 Inch",
+                        price: "Rp 900.000",
+                        duration: "Max 8 hours",
+                        features_en: ["Includes Floor Stand or Standing", "HDMI + Power Cable"],
+                        features_id: ["Termasuk Stand Lantai atau Berdiri", "Kabel HDMI + Power"],
+                    },
+                ]
+            }
+        ];
+
+
+        // =========================================================================
+        // ACCORDION FUNCTIONS
+        // =========================================================================
+        
+        /**
+         * Toggles the open/closed state of an accordion item and closes others.
+         * @param {string} groupId - The ID of the group to toggle.
+         */
+        function toggleAccordion(groupId) {
+            const currentContent = document.getElementById(`content-panel-${groupId}`);
+            const currentIcon = document.getElementById(`icon-${groupId}`);
+            const isOpening = !currentContent.classList.contains('open');
+
+            // 1. Close all other accordions
+            serviceGroups.forEach(group => {
+                const content = document.getElementById(`content-panel-${group.id}`);
+                const icon = document.getElementById(`icon-${group.id}`);
+                if (content && icon && group.id !== groupId) {
+                    content.classList.remove('open');
+                    // Find the group object and update its state (for initialization later)
+                    const groupToUpdate = serviceGroups.find(g => g.id === group.id);
+                    if (groupToUpdate) groupToUpdate.isOpen = false;
+                    
+                    icon.innerHTML = '<i data-lucide="chevron-down" class="w-6 h-6"></i>';
+                }
+            });
+
+            // 2. Open or close the clicked accordion
+            const groupToToggle = serviceGroups.find(g => g.id === groupId);
+            if (groupToToggle) groupToToggle.isOpen = isOpening;
+
+            if (isOpening) {
+                currentContent.classList.add('open');
+                currentIcon.innerHTML = '<i data-lucide="chevron-up" class="w-6 h-6"></i>';
+            } else {
+                currentContent.classList.remove('open');
+                currentIcon.innerHTML = '<i data-lucide="chevron-down" class="w-6 h-6"></i>';
+            }
+
+            // Re-render lucide icons after updating innerHTML
+            lucide.createIcons();
+        }
+
+        /**
+         * Renders the services accordion UI into the designated section.
+         * @param {string} currentLang - The currently active language ('en' or 'id').
+         */
+        function renderServicesAccordion(currentLang) {
+            const accordionContainer = document.getElementById('services-accordion');
+            if (!accordionContainer) return;
+
+            let htmlContent = '';
+
+            serviceGroups.forEach(group => {
+                const groupName = currentLang === 'en' ? group.name_en : group.name_id;
+                const isGroupOpen = group.isOpen;
+                
+                // Determine classes based on group type (styling)
+                const isMajor = group.type === 'major';
+                const headerClass = isMajor ? 'major-header text-gray-100 dark:text-gray-900' : 'additional-header text-gray-100 dark:text-gray-900';
+                const contentPanelClass = isMajor ? 'major-content-panel' : 'additional-content-panel';
+                const iconColor = isMajor ? 'text-blue-400 dark:text-blue-600' : 'text-orange-400 dark:text-orange-600';
+                const checkColor = isMajor ? 'text-blue-500 dark:text-blue-700' : 'text-orange-500 dark:text-orange-700';
+                
+                // Determine card specific colors
+                const cardBorderColor = isMajor ? 'border-blue-500 dark:border-blue-700' : 'border-orange-500 dark:border-orange-700';
+                const cardTextColor = isMajor ? 'text-blue-400 dark:text-blue-700' : 'text-orange-400 dark:text-orange-700';
+
+
+                // Group Header (Button)
+                htmlContent += `
+                    <div>
+                        <button id="header-${group.id}"
+                                class="w-full flex justify-between items-center p-4 my-2 text-left rounded-lg transition duration-150 ease-in-out cursor-pointer interactive-element ${headerClass}"
+                                onclick="toggleAccordion('${group.id}')">
+                            <span class="text-lg font-semibold">${groupName}</span>
+                            <span id="icon-${group.id}" class="${iconColor} transition-transform duration-300">
+                                ${isGroupOpen
+                                    ? '<i data-lucide="chevron-up" class="w-6 h-6"></i>'
+                                    : '<i data-lucide="chevron-down" class="w-6 h-6"></i>'
+                                }
+                            </span>
+                        </button>
+                        
+                        <!-- Group Content Panel -->
+                        <div id="content-panel-${group.id}" class="accordion-content-panel ${isGroupOpen ? 'open' : ''} px-6 pt-0 pb-4 rounded-b-lg ${contentPanelClass}">
+                            <div class="space-y-4 py-4">
+                            
+                            <!-- CONTENT RENDERING: RESPONSIVE GRID IS SET HERE -->
+                            <!-- grid-cols-1: Mobile (1 column) -->
+                            <!-- md:grid-cols-2: Tablet/Desktop (2 columns) -->
+                            <!-- lg:grid-cols-2: Large Desktop (2 columns) -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 mt-4">
+                                ${group.packages && group.packages.length > 0 ? 
+                                    group.packages.map(pkg => {
+                                        const packageName = currentLang === 'en' ? pkg.name_en : pkg.name_id;
+                                        const packageFeatures = currentLang === 'en' ? pkg.features_en : pkg.features_id;
+                                        
+                                        // Dynamic HTML for oldPrice (Promo Price)
+                                        const oldPriceHtml = pkg.oldPrice 
+                                            ? `<span class="text-base line-through text-red-500 dark:text-red-600 mb-0.5">${pkg.oldPrice}</span>` 
+                                            : '';
+                                        
+                                        return `
+                                        <div class="package-card p-5 rounded-xl interactive-element border-l-4 ${cardBorderColor} shadow-lg">
+                                            <h3 class="text-xl font-bold mb-2 ${cardTextColor}">${packageName}</h3>
+                                            
+                                            <!-- PRICE BLOCK: Adjusted for flex-col to stack old price -->
+                                            <div class="flex flex-col items-start mb-4">
+                                                ${oldPriceHtml}
+                                                <div class="flex justify-between items-baseline w-full">
+                                                    <span class="text-2xl font-extrabold text-white dark:text-gray-900">${pkg.price}</span>
+                                                    <span class="text-sm font-medium text-gray-400 dark:text-gray-600">${pkg.duration}</span>
+                                                </div>
+                                            </div>
+                                            <!-- END PRICE BLOCK -->
+
+                                            <p class="text-sm font-semibold mb-2 text-gray-300 dark:text-gray-700">
+                                                <span class="lang-switchable" data-lang="en">Key Features:</span>
+                                                <span class="lang-switchable hidden" data-lang="id">Fitur Utama:</span>
+                                            </p>
+                                            <ul class="space-y-1">
+                                                ${packageFeatures.map(feature => `
+                                                    <li class="flex items-start text-sm text-gray-300 dark:text-gray-700">
+                                                        <i data-lucide="check" class="lucide w-4 h-4 mr-2 mt-0.5 flex-shrink-0 ${checkColor}"></i> 
+                                                        <span>${feature}</span>
+                                                    </li>
+                                                `).join('')}
+                                            </ul>
+                                        </div>
+                                        `;
+                                    }).join('')
+                                : // Placeholder if no packages are defined yet
+                                `
+                                <div class="col-span-full">
+                                    <p class="service-text text-base italic text-center py-6">
+                                        <span class="lang-switchable" data-lang="en">Package details for **${groupName}** are currently not available. Please contact us for a custom quote.</span>
+                                        <span class="lang-switchable hidden" data-lang="id">Detail paket untuk **${groupName}** saat ini tidak tersedia. Silakan hubungi kami untuk penawaran khusus.</span>
+                                    </p>
+                                </div>
+                                `
+                                }
+                            </div>
+                            <!-- END OF CONTENT RENDERING -->
+                            
+                            <a href="#" class="whatsapp-link mt-6 inline-flex items-center justify-center space-x-2 px-6 py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-500 transition duration-300 interactive-element whatsapp-cta">
+                                <img src="https://placehold.co/24x24/10B981/ffffff?text=WA" alt="WhatsApp Icon" class="w-6 h-6 rounded-full object-cover">
+                                <span class="lang-switchable" data-lang="en">Inquire Now</span>
+                                <span class="lang-switchable hidden" data-lang="id">Tanya Sekarang</span>
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            accordionContainer.innerHTML = htmlContent;
+            
+            // The language placeholders need to be updated after the HTML insertion
+            const currentActiveLang = localStorage.getItem('lang') || 'en'; // Use 'en' default here
+            document.querySelectorAll('.lang-switchable').forEach(el => {
+                const elLang = el.getAttribute('data-lang');
+                if (elLang === currentActiveLang) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+
+            lucide.createIcons(); // Initialize Lucide icons after rendering HTML
+        }
+
+
+        // =========================================================================
+        // REUSABLE HEADER & FOOTER FUNCTIONS
+        // =========================================================================
+        
+        // Modified to use 'fixed w-full' and controlled opacity/blur for scroll effect
+        function generateHeaderHTML() {
+            return `
+            <header id="main-header" class="fixed top-0 w-full z-20 transition-all duration-300 animate-in" 
+                    style="animation-delay: 0.1s;">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+                    
+                    <a href="/" id="company_logo_link" class="flex items-center space-x-3 cursor-pointer">
+                        <img id="company_logo" 
+                             src="/images/logo/2024/2024 logo n name black - alphacast.id.png" 
+                             alt="Company Logo" 
+                             class="h-12 w-58 rounded-full object-cover"
+                             data-logo-light="/images/logo/2024/2024 logo n name black - alphacast.id.png"
+                             data-logo-dark="/images/logo/2024/2024 logo n name white - alphacast.id.png"
+                        >
+                        <span class="hidden md:block text-xl font-bold text-gray-100 dark:text-gray-900 tracking-wider">
+                            alphacast.id
+                        </span>
+                        </a>
+
+                    <div class="flex items-center space-x-4">
+                        <!-- Added w-10 h-10 and flex centering for fixed square size -->
+                        <button id="themeToggle" title="Toggle Theme" class="w-10 h-10 flex items-center justify-center text-xl text-blue-300 dark:text-yellow-500 hover:text-blue-400 dark:hover:text-yellow-600 p-1 rounded-full bg-slate-800 dark:bg-gray-100 transition interactive-element">
+                            <!-- JS will update this text -->
+                        </button>
+                        
+                        <!-- Added w-10 h-10 and flex centering for fixed square size -->
+                        <button id="langToggle" title="Switch Language" class="w-10 h-10 flex items-center justify-center p-1 rounded-full bg-slate-800 dark:bg-gray-100 transition interactive-element">
+                            <img id="langFlag" src="https://placehold.co/24x24/0A3161/FFFFFF?text=ID" alt="Language Flag" class="w-6 h-6 rounded-full object-cover">
+                        </button>
+                    </div>
+                </div>
+            </header>
+            `;
+        }
+
+        function generateFooterHTML() {
+            return `
+            <footer class="bg-slate-900/90 dark:bg-gray-100/90 border-t border-blue-900/50 dark:border-blue-200 mt-16 pt-10 pb-6 animate-in" style="animation-delay: 0.7s;">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <img id="footer_logo" 
+                                    src="/img/mainthings/medium1 - wagiuroger_productions logoremake1.png" 
+                                    alt="Company Logo" 
+                                    class="h-12 w-64 rounded-full object-cover"
+                                    data-logo-light="/img/mainthings/medium1 - wagiuroger_productions logoremake1-dark.png"
+                                    data-logo-dark="/img/mainthings/medium1 - wagiuroger_productions logoremake1.png"
+                                >
+                                <p class="text-xl font-bold text-gray-100 dark:text-gray-900">alphacast.id</p>
+                            </div>
+                            <p class="text-sm text-gray-400 dark:text-gray-600">Screen live cam, video production, online meeting host, virtual & hybrid event tech support.</p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <p class="text-md font-semibold text-blue-400 dark:text-blue-700 uppercase tracking-wider mb-2">Contact</p>
+                            <p class="text-sm text-gray-300 dark:text-gray-700">
+                                <span class="font-medium block">Address:</span> 
+                                <a href="https://goo.gl/maps/EJrUVrc1SbLcQ2UW6" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 dark:hover:text-blue-500 underline transition">
+                                    (alamat baru) Reko Bawah, Kolongan, Kec. Kalawat, Kabupaten Minahasa Utara, Sulawesi Utara
+                                </a>
+                            </p>
+                            <p class="text-sm text-gray-300 dark:text-gray-700">
+                                <span class="font-medium block">Phone/WA:</span> 
+                                <a href="#" class="whatsapp-link hover:text-green-400 underline transition">+62 877-0910-6468</a>
+                            </p>
+                            <p class="text-sm text-gray-300 dark:text-gray-700">
+                                <span class="font-medium block">Email:</span> 
+                                <a href="mailto:halo.alphacast@gmail.com" class="hover:text-blue-400 dark:hover:text-blue-500 underline transition">davidrogerwagiu@gmail.com</a>
+                            </p>
+                        </div>
+
+                        <div class="flex flex-col items-start md:items-end">
+                            <p class="text-md font-semibold text-blue-400 dark:text-blue-700 uppercase tracking-wider mb-3 md:mb-4">Quick Help</p>
+                            <a href="#" id="footerWhatsappButton"
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                class="whatsapp-link whatsapp-cta flex items-center justify-center space-x-2 px-6 py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-500 transition duration-300 w-full md:w-auto interactive-element">
+                                <img src="https://placehold.co/24x24/10B981/ffffff?text=WA" alt="WhatsApp Icon" class="w-6 h-6 rounded-full object-cover">
+                                <span>Chat via WhatsApp</span>
+                            </a>
+                            <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">Available 24/7 for urgent inquiries.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-4 border-t border-blue-900/50 dark:border-blue-200 text-center">
+                        <p class="text-xs text-gray-500 dark:text-gray-500">&copy; 2025 alphacast.id. All Rights Reserved.</p>
+                        </div>
+                </div>
+            </footer>
+            `;
+        }
+
+        // =========================================================================
+        // INITIALIZATION LOGIC
+        // =========================================================================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Insert Header and Footer HTML into their respective placeholders
+            document.getElementById('header-placeholder').innerHTML = generateHeaderHTML();
+            document.getElementById('footer-placeholder').innerHTML = generateFooterHTML();
+            
+            // 2. Element references must now be retrieved AFTER insertion
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('themeToggle');
+            const langToggle = document.getElementById('langToggle');
+            const langFlag = document.getElementById('langFlag');
+            const companyLogo = document.getElementById('company_logo');
+            const footerLogo = document.getElementById('footer_logo');
+            const header = document.getElementById('main-header'); // Get the fixed header element
+            
+            // Note: The logo attributes were swapped to ensure correct dark/light defaults
+            const logoDark = companyLogo.getAttribute('data-logo-dark');
+            const logoLight = companyLogo.getAttribute('data-logo-light');
+            
+            const WA_NUMBER = '6287709106468';
+            const BASE_MESSAGE_EN = encodeURIComponent("Hello! I saw your pricelist and I'm interested in the services listed: ");
+            const BASE_MESSAGE_ID = encodeURIComponent("Halo! Saya melihat daftar harga Anda dan saya tertarik dengan layanan yang tercantum: ");
+
+            const US_FLAG_SRC = 'https://placehold.co/24x24/0A3161/FFFFFF?text=US';
+            const ID_FLAG_SRC = 'https://placehold.co/24x24/D93025/FFFFFF?text=ID';
+
+            // --- Theme Toggler Logic ---
+            let currentTheme = localStorage.getItem('theme') || 'light'; 
+            
+            function updateLogos(isLightMode) {
+                const logoSrc = isLightMode ? logoLight : logoDark;
+                if (companyLogo) companyLogo.src = logoSrc;
+                if (footerLogo) footerLogo.src = logoSrc;
+            }
+
+            function initializeTheme() {
+                const isLight = currentTheme === 'light';
+                if (isLight) {
+                    html.classList.add('dark');
+                    themeToggle.textContent = '☀︎';
+                } else {
+                    html.classList.remove('dark');
+                    themeToggle.textContent = '☾';
+                }
+                updateLogos(isLight);
+            }
+
+            themeToggle.addEventListener('click', () => {
+                const isLight = html.classList.toggle('dark');
+                if (isLight) {
+                    currentTheme = 'light';
+                    localStorage.setItem('theme', 'light');
+                    themeToggle.textContent = '☀︎';
+                } else {
+                    currentTheme = 'dark';
+                    localStorage.setItem('theme', 'dark');
+                    themeToggle.textContent = '☾';
+                }
+                updateLogos(isLight);
+            });
+
+            initializeTheme();
+
+            // --- Language Toggler Logic ---
+            let currentLang = localStorage.getItem('lang') || 'en'; 
+            
+            function updateLanguageDisplay() {
+                langFlag.src = (currentLang === 'en') ? US_FLAG_SRC : ID_FLAG_SRC;
+
+                document.querySelectorAll('.lang-switchable').forEach(el => {
+                    const elLang = el.getAttribute('data-lang');
+                    if (elLang === currentLang) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                });
+                
+                // Re-render the accordion content based on the new language
+                renderServicesAccordion(currentLang);
+                updateWhatsappLinks(currentLang);
+            }
+
+            langToggle.addEventListener('click', () => {
+                currentLang = (currentLang === 'en') ? 'id' : 'en';
+                localStorage.setItem('lang', currentLang);
+                updateLanguageDisplay();
+            });
+
+            // --- Dynamic WhatsApp Link Logic ---
+            function updateWhatsappLinks(lang) {
+                const pageLink = encodeURIComponent(window.location.href);
+                const baseMessage = lang === 'en' ? BASE_MESSAGE_EN : BASE_MESSAGE_ID;
+                const waUrl = `https://wa.me/${WA_NUMBER}?text=${baseMessage}${pageLink}`;
+                
+                document.querySelectorAll('.whatsapp-link').forEach(link => {
+                    link.href = waUrl;
+                });
+            }
+
+            // 3. Setup Scroll Listener for Header Blur Effect
+            if (header) {
+                const handleScroll = () => {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                };
+
+                window.addEventListener('scroll', handleScroll);
+                // Run once on load in case the page is already scrolled
+                handleScroll();
+            }
+
+
+            // Initialize language setting and render accordion on load
+            updateLanguageDisplay();
+        });
+    </script>
+</body>
+</html>
