@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Title is dynamically set by JavaScript at the end of the file -->
+    <title>Memuat Invoice...</title> 
+
+    <!-- NEW: Placeholder Favicon menggunakan SVG Inline (Base64 encoded) -->
+    <!-- Ikon kotak biru sederhana untuk Placeholder -->
+    <!-- <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%233B82F6'/%3E%3C/svg%3E" type="image/svg+xml"> -->
+    <link rel="icon" type="image/png" href="/images/logo/(smallforwebsite)  color1 - alphacast.id logo.png">
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Load Font Awesome for the WhatsApp icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Custom Tailwind Configuration */
+        /* Adjusted conditional colors to complement dark mode */
+        :root {
+            --color-not-paid: #991B1B; /* Dark Red (Maroon-like) */
+            --color-partial-paid: #B45309; /* Dark Amber (Gold-like) */
+            --color-fully-paid: #047857; /* Dark Emerald (Green-like) */
+        }
+        
+        /* Apply smooth transition for card color change */
+        .status-card {
+            transition: background-color 0.5s ease-in-out, transform 0.5s ease-out;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInSlideUp 0.8s forwards ease-out;
+        }
+
+        /* Load Animation Keyframes */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Dark Mode Background */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0A0A0A; /* Very dark background */
+            color: #E0E0E0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Ensure main content takes up remaining space */
+        .main-content {
+            flex-grow: 1;
+        }
+
+        /* PDF Viewer styling */
+        #pdf-viewer {
+            width: 100%;
+            height: 80vh; /* Responsive height */
+            min-height: 500px;
+        }
+
+        /* Header Glass Blur Effect */
+        .header-glass {
+            background-color: rgba(18, 18, 18, 0.9); /* Slightly transparent dark background */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        
+        /* Custom styling for the WhatsApp CTA button to look different from social links */
+        .whatsapp-cta {
+            transition: transform 0.2s ease;
+        }
+        .whatsapp-cta:hover {
+            transform: scale(1.02);
+        }
+
+        /* --- PERBAIKAN CSS Tombol Sosial Media (Dibuat Non-Tailwind agar Lebih Robust) --- */
+        .social-icon-wrapper {
+            /* Pastikan bentuk lingkaran sempurna (rounded-full) */
+            height: 32px; /* h-8 */
+            width: 32px; /* w-8 */
+            border-radius: 9999px; /* rounded-full */
+            background-color: #4B5563; /* bg-gray-700 - Warna dasar abu-abu gelap */
+            padding: 6px; /* p-1.5 */
+            color: white;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .social-icon-wrapper:hover {
+            transform: scale(1.1); /* hover:scale-110 - Animasi Hover */
+        }
+        /* --------------------------------------------------------------------------------- */
+
+        /* Specific hover colors for social media */
+        .facebook-icon:hover { background-color: #1877F2; }
+        .instagram-icon:hover { background-image: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .youtube-icon:hover { background-color: #FF0000; }
+        .tiktok-icon:hover { background-color: #000000; }
+
+        /* Ensure card title adjusts height automatically - no fixed height needed */
+        #project-name {
+            /* Text wrapping and natural height adjustment */
+            height: auto; 
+            min-height: 0;
+            word-break: break-word; /* Ensure long words break */
+        }
+
+    </style>
+</head>
+<body class="dark">
+
+    <!-- Header - LOGO on left, with glass blur effect -->
+    <header class="header-glass shadow-2xl border-b border-gray-700 sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            
+            <!-- Company Logo (Left Side) - Now linked to the root file (/) -->
+            <a href="/" class="flex items-center space-x-3 group" title="Kembali ke Halaman Utama">
+                <!-- LOGO PLACEHOLDER: Easily replaceable SVG -->
+                <!-- <svg id="company-logo" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500 transition duration-300 group-hover:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1v-3.25m-7-11.5l-2.5 5h17l-2.5-5a1.5 1.5 0 00-1.75-1h-11.5a1.5 1.5 0 00-1.75 1zM9 14h6m-6-4h6" />
+                </svg> -->
+                <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="Company Logo" class="h-16 w-50 rounded-full object-cover">
+            </a>
+
+            <!-- Empty space on right for balance -->
+            <div class="h-8 w-8"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 w-full space-y-10">
+        
+        <!-- Moved Invoice Tracker Title here -->
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-6 text-center">Pelacak Invoice</h1>
+
+        <!-- 1. Payment Status Card (Animated on Load) -->
+        <section id="payment-card" class="status-card bg-gray-800 shadow-2xl rounded-xl p-6 md:p-8 lg:p-10 border border-gray-700 transition duration-500">
+            <h2 class="text-3xl font-extrabold mb-4 text-white" id="project-name">Project alphacast.id ...</h2>
+            
+            <div class="space-y-4">
+                <!-- Status Badge -->
+                <div class="flex items-center space-x-3">
+                    <span class="text-lg font-semibold text-gray-300">Status Pembayaran:</span>
+                    <span id="payment-status-badge" class="px-4 py-1 text-sm font-bold rounded-full shadow-md">
+                        Memuat...
+                    </span>
+                </div>
+                
+                <!-- Description -->
+                <div>
+                    <p class="text-sm font-medium text-gray-400 mb-1">Detail Pembayaran:</p>
+                    <p class="text-white text-lg" id="payment-description">
+                        Silakan periksa sebentar lagi untuk detail status pembayaran.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. PDF Downloader & Viewer -->
+        <section class="space-y-6">
+            <h2 class="text-2xl font-semibold text-gray-200 border-b border-gray-700 pb-2">Dokumen Invoice</h2>
+            
+            <!-- Tombol Aksi PDF -->
+            <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                
+                <!-- Download Button -->
+                <a id="download-link" href="#" download="Invoice_Project.pdf"
+                   class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-800 transition transform hover:scale-[1.01]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Unduh Invoice (PDF)
+                </a>
+
+                <!-- Open in New Tab Button -->
+                <a id="open-pdf-link" href="#" target="_blank"
+                   class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 text-lg font-medium text-blue-600 border border-blue-600 rounded-lg shadow-lg hover:bg-blue-900/50 focus:outline-none focus:ring-4 focus:ring-blue-800 transition transform hover:scale-[1.01]">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    Buka PDF di Tab Baru
+                </a>
+
+            </div>
+
+            <!-- PDF Viewer (using iframe for wide support) -->
+            <div class="bg-gray-800 rounded-xl shadow-2xl overflow-hidden border border-gray-700">
+                <iframe id="pdf-viewer" src="" frameborder="0">
+                    Browser Anda tidak mendukung berkas PDF tertanam. Silakan gunakan tautan unduhan di atas.
+                </iframe>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer - Hover effects for Email and Address unified -->
+    <footer class="bg-gray-900 border-t border-gray-700 mt-10 p-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 text-gray-400 text-sm pb-8">
+                
+                <!-- Company Info & Logo (Column 1) -->
+                <div class="space-y-4 lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-2">
+                        <a href="/" class="flex items-center space-x-3 group" title="Kembali ke Halaman Utama">
+                            <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="Company Logo" class="h-16 w-50 rounded-full object-cover">
+                        </a>
+                        
+                    </div>
+                    <p class="text-gray-400 text-base">
+                        Penyedia Layanan Media Live Streaming, Online Meeting Host, Virtual dan Hybrid Event Tech Support Yang Berbasis di Kota Manado, Sulawesi Utara.
+                    </p>
+                </div>
+
+                <!-- Contact & Address (Column 2) - Unified hover behavior -->
+                <div class="space-y-2">
+                    <h3 class="text-white font-semibold mb-2">Kontak & Alamat</h3>
+                    
+                    <!-- Email Link: Using standard Tailwind classes for subtle hover -->
+                    <a href="mailto:halo.alphacast@gmail.com" class="inline-flex items-center text-gray-400 hover:text-white py-1 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 flex-shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        halo.alphacast@gmail.com
+                    </a>
+                    
+                    <!-- Address Link: Using standard Tailwind classes for subtle hover -->
+                    <a href="https://goo.gl/maps/EJrUVrc1SbLcQ2UW6" target="_blank" class="flex items-start text-gray-400 hover:text-white py-1 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 mt-1 flex-shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        <span class="text-sm">Reko Bawah, Kolongan, Kec. Kalawat, Kabupaten Minahasa Utara, Sulawesi Utara</span>
+                    </a>
+                    
+                    <!-- CTA Whatsapp Button - ID added for JS dynamic Href -->
+                    <a id="whatsapp-cta-link" href="#" target="_blank" class="whatsapp-cta mt-4 inline-flex items-center px-4 py-2 font-semibold text-white bg-green-600 rounded-lg shadow-lg hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-800 transition transform hover:scale-[1.02]">
+                        <i class="fa-brands fa-whatsapp text-xl mr-2"></i>
+                        Whatsapp (+62)877-0910-6468
+                    </a>
+                </div>
+
+                <!-- Social Media (Column 3) - Circular Icons Confirmed -->
+                <div class="space-y-4 lg:col-span-1">
+                    <h3 class="text-white font-semibold mb-2">Ikuti Kami</h3>
+                    <div class="flex space-x-3 sm:space-x-4">
+                        
+                        <!-- Facebook (fa-facebook) - CIRCLE CONFIRMED VIA CSS -->
+                        <a href="https://fb.com/alphacast.id" target="_blank" class="group transition" title="Facebook">
+                            <div class="social-icon-wrapper facebook-icon">
+                                <i class="fa-brands fa-facebook-f text-xl"></i>
+                            </div>
+                        </a>
+                        
+                        <!-- Instagram (fa-instagram) - CIRCLE CONFIRMED VIA CSS -->
+                        <a href="https://instagram.com/alphacast.id" target="_blank" class="group transition" title="Instagram">
+                            <div class="social-icon-wrapper instagram-icon">
+                                <i class="fa-brands fa-instagram text-xl"></i>
+                            </div>
+                        </a>
+                        
+                        <!-- YouTube (fa-youtube) - CIRCLE CONFIRMED VIA CSS -->
+                        <a href="https://www.youtube.com/@alphacastid8988" target="_blank" class="group transition" title="YouTube">
+                            <div class="social-icon-wrapper youtube-icon">
+                                <i class="fa-brands fa-youtube text-xl"></i>
+                            </div>
+                        </a>
+                        
+                        <!-- TikTok (fa-tiktok) - CIRCLE CONFIRMED VIA CSS -->
+                        <a href="https://www.tiktok.com/@alphacast.id" target="_blank" class="group transition" title="TikTok">
+                            <div class="social-icon-wrapper tiktok-icon">
+                                <i class="fa-brands fa-tiktok text-xl"></i>
+                            </div>
+                        </a>
+                        
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Copyright (Separate line, centered on desktop) - UPDATED YEAR -->
+            <div class="pt-6 border-t border-gray-700 mt-4 text-center">
+                 <p class="text-gray-500 text-xs sm:text-sm">&copy; 2025 alphacast.id. Semua hak dilindungi.</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- JavaScript for Status Logic and Dynamic Content Update -->
+    <script>
+        // =========================================================================================
+        // 💡 KONFIGURASI INVOICE (SILAKAN UBAH HANYA DI BAGIAN INI UNTUK INVOICE BARU)
+        // =========================================================================================
+        
+        const projectConfig = {
+            // 1. NAMA PROJECT: Akan muncul di judul halaman dan kartu status
+            // ---------------------------------------------------------------------
+            projectName: "2511201_BROADCAST_ALPHACAST - CRC’S MINI CONCERT 2025", 
+            
+            // 2. STATUS PEMBAYARAN: 
+            //    Gunakan: 0 (BELUM DIBAYAR), 50 (DIBAYAR SEBAGIAN), atau 100 (LUNAS)
+            // ---------------------------------------------------------------------
+            paymentStatus: 100, 
+
+            // 3. URL FILE PDF: Ganti dengan nama file PDF di folder yang sama.
+            // ---------------------------------------------------------------------
+            pdfFileUrl: "Invoice alphacast.id - 2511201_BROADCAST_ALPHACAST - CRC’S MINI CONCERT 2025.pdf",
+            
+            // 4. DETAIL PEMBAYARAN MANUAL (BARU):
+            //    Teks ini akan ditampilkan di bawah status. Ubah sesuai kebutuhan.
+            // ---------------------------------------------------------------------
+            paymentDetails: {
+                0: "Anda memiliki tagihan sebesar Rp 10.000.000,- yang jatuh tempo pada 30 November 2025. Mohon segera diproses.",
+                50: "Pembayaran tahap 1 (DP 50%) sebesar Rp 5.000.000,- telah diterima. Sisa saldo Rp 5.000.000,- jatuh tempo 10 Desember 2025.",
+                100: "Invoice ini telah lunas pada 19 November 2025 melalui Transfer (A) ke Bank Central Asia. Terima kasih atas pembayaran tepat waktu!"
+            }
+        };
+        
+        // =========================================================================================
+        // PETA STATUS (JANGAN DIUBAH KECUALI PERLU MENGGANTI TEKS ATAU WARNA)
+        // =========================================================================================
+        const statusMap = {
+            // Status 0: Belum Dibayar
+            0: { 
+                statusText: "BELUM DIBAYAR", 
+                bgColor: "bg-red-800 border-red-700", 
+                badgeColor: "bg-red-600 text-white"
+            },
+            // Status 50: Dibayar Sebagian
+            50: { 
+                statusText: "DIBAYAR SEBAGIAN", 
+                bgColor: "bg-amber-700 border-amber-600", 
+                badgeColor: "bg-amber-500 text-white"
+            },
+            // Status 100: LUNAS
+            100: { 
+                statusText: "LUNAS", 
+                bgColor: "bg-emerald-700 border-emerald-600", 
+                badgeColor: "bg-emerald-500 text-white"
+            }
+        };
+
+        /**
+         * Mengaplikasikan teks, styling, dan menautkan URL PDF ke elemen di halaman.
+         */
+        function updateInvoiceData() {
+            const statusValue = projectConfig.paymentStatus;
+            
+            // Tentukan deskripsi berdasarkan statusValue atau default ke 0 jika status tidak valid
+            const details = projectConfig.paymentDetails[statusValue] || projectConfig.paymentDetails[0];
+
+            // 1. Ambil data status yang sesuai, default ke 0 jika tidak valid
+            const status = statusMap[statusValue] || statusMap[0];
+
+            // 2. Update Elemen Teks dan Tautan
+            const cardElement = document.getElementById('payment-card');
+            const badgeElement = document.getElementById('payment-status-badge');
+            const descElement = document.getElementById('payment-description');
+            const nameElement = document.getElementById('project-name');
+            const downloadLink = document.getElementById('download-link');
+            const openPdfLink = document.getElementById('open-pdf-link');
+            const pdfViewer = document.getElementById('pdf-viewer');
+
+            // Update Judul Halaman
+            document.title = `alphacast.id - Invoice - ${projectConfig.projectName}`;
+
+            // Update Card Content
+            nameElement.textContent = projectConfig.projectName;
+            // Menggunakan variabel paymentDetails baru
+            descElement.textContent = details; 
+            badgeElement.textContent = status.statusText;
+
+            // Update PDF Links
+            downloadLink.href = projectConfig.pdfFileUrl;
+            openPdfLink.href = projectConfig.pdfFileUrl;
+            // Membuat nama file unduhan bersih
+            downloadLink.download = `Invoice_${projectConfig.projectName.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`; 
+            pdfViewer.src = projectConfig.pdfFileUrl;
+
+            // 3. Update Card Styling (Background and Border)
+            // Hapus kelas warna sebelumnya
+            cardElement.className = cardElement.className
+                .replace(/bg-(red|yellow|green|amber|emerald)-\d+|border-(red|yellow|green|amber|emerald)-\d+/g, '')
+                .trim();
+            
+            // Tambahkan kelas warna baru
+            cardElement.classList.add(...status.bgColor.split(' '));
+
+            // 4. Update Badge Styling
+            badgeElement.className = "px-4 py-1 text-sm font-bold rounded-full shadow-md"; // Reset base classes
+            badgeElement.classList.add(...status.badgeColor.split(' '));
+        }
+
+        // Jalankan fungsi update setelah DOM dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            updateInvoiceData();
+            
+            // Pemicu animasi slide-up pada card status
+            const cardElement = document.getElementById('payment-card');
+            setTimeout(() => {
+                cardElement.style.opacity = 1;
+                cardElement.style.transform = 'translateY(0)';
+            }, 100); 
+
+            // 5. Update WhatsApp CTA Link with dynamic page address (Pembaruan Href Dinamis)
+            const whatsappCtaLink = document.getElementById('whatsapp-cta-link');
+            if (whatsappCtaLink) {
+                // Mendapatkan URL saat ini
+                const pageUrl = window.location.href; 
+                
+                // Membuat pesan personalisasi
+                const message = `Halo admin alphacast.id, saya datang dari halaman ${pageUrl}`;
+                const encodedMessage = encodeURIComponent(message);
+                
+                // Nomor WhatsApp (diambil dari teks di HTML, tapi kita gunakan yang sudah pasti)
+                const phoneNumber = '6287709106468';
+                
+                // Set Href baru
+                whatsappCtaLink.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            }
+        });
+        
+    </script>
+
+</body>
+</html>
