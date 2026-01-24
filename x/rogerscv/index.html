@@ -1,392 +1,222 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Roger Wagiu</title>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akses Terbatas | www.alphacast.id</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="shortcut icon"
+      href="/images/logo/(smallforwebsite)  color1 - alphacast.id logo.png"
     />
 
     <style>
-      #videos iframe {
-        height: 10em;
-        width: 20em;
-      }
+        :root {
+            --primary-maroon: #4a0404;
+            --dark-maroon: #2d0505;
+            --surface-color: #1a0202;
+            --text-primary: #ffffff;
+            --text-secondary: #d1d1d1;
+            --accent-red: #ff5252;
+            --whatsapp-green: #25D366;
+        }
 
-      #pictures img {
-        height: 15em;
-      }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-      /* Dark theme styles */
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: "Poppins", sans-serif;
-        background-color: #1a1a1a;
-        color: #ffffff;
-      }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--surface-color);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-      .container {
-        max-width: 800px; /* Adjust as needed */
-        margin: 0 auto; /* Center horizontally */
-        padding: 20px;
-        background-color: #333333;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-      h1 {
-        font-size: 24px;
-        color: #ffcc00;
-      }
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
 
-      p {
-        font-size: 16px;
-        color: #cccccc;
-      }
+        /* Header */
+        header {
+            background-color: var(--dark-maroon);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            z-index: 10;
+        }
 
-      a {
-        color: #00bfff; /* Light blue link color */
-        text-decoration: none; /* Remove underline from links */
-      }
+        .logo {
+            height: 45px;
+            filter: brightness(0) invert(1);
+        }
 
-      a:hover {
-        text-decoration: underline; /* Add underline on hover */
-      }
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .card {
+            max-width: 550px;
+            width: 100%;
+            background-color: var(--dark-maroon);
+            padding: 50px 40px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.08);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .icon-alert {
+            font-size: 70px;
+            color: var(--accent-red);
+            margin-bottom: 20px;
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 20px;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .divider {
+            height: 2px;
+            width: 50px;
+            background: var(--accent-red);
+            margin: 0 auto 25px;
+            border-radius: 2px;
+        }
+
+        .description {
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            font-size: 0.95rem;
+        }
+
+        .reason-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent-red);
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        /* CTA Button */
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--whatsapp-green);
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .btn-whatsapp span {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 25px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #666;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 480px) {
+            .card { padding: 35px 25px; }
+            h1 { font-size: 1.4rem; }
+        }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <section id="intro">
-        <img
-          src="./66466461_2851531558255475_8477395767261134848_n.jpg"
-          alt="profile picture"
-          style="height: 15em"
-        />
-        <h1>Roger Wagiu</h1>
-        <p>Manado, North Sulawesi, Indonesia</p>
-        <p>+62-851-5955-6468 (Mobile, Whatsapp & Telegram)</p>
-        <p>davidrogerwagiu@gmail.com</p>
-        <a
-          href="https://www.linkedin.com/in/roger-wagiu-5a1bb0218"
-          target="_blank"
-          >www.linkedin.com/in/roger-wagiu-5a1bb0218
-        </a>
-      </section>
+</head>
+<body>
 
-      <section id="videos">
-        <h2>Videos</h2>
+    <header>
+        <img src="/images/logo/2024/2024 logo name slogan white - alphacast.id.png" alt="Logo www.alphacast.id" class="logo" style="margin: -1em; height: 5em;">
+    </header>
 
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/Ak6Qb6FF1uo?si=e8Ce2o7jc_mXTkIE"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
+    <main>
+        <div class="card">
+            <span class="material-icons-round icon-alert">priority_high</span>
+            <h1>Akses Dibatasi</h1>
+            <div class="divider"></div>
+            
+            <div class="description">
+                Mohon maaf, otoritas Anda untuk mengakses halaman ini telah dicabut secara permanen demi melindungi integritas sistem dan hak cipta konten kami.
+            </div>
 
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/QpVSPyRyBUM?si=i8lleNlb2jd2jx-o"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
+            <div class="reason-box">
+                <strong>Catatan Keamanan:</strong><br>
+                Pembatasan ini diterapkan akibat adanya indikasi pelanggaran kebijakan, tindakan penjiplakan tanpa izin, serta penggunaan konten secara ilegal.
+            </div>
 
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/VHCZjlMvRY8?si=9irL_7BpxmaCkV8x"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
+            <a href="#" id="waLink" class="btn-whatsapp" target="_blank">
+                <span class="material-icons-round">chat</span>
+                Ajukan Izin Akses melalui Whatsapp
+            </a>
+        </div>
+    </main>
 
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/I6NYgRnf8-c?si=XuRak0RKOz8D-qe9"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
+    <footer>
+        &copy; 2026 www.alphacast.id • Hak Cipta Dilindungi
+    </footer>
 
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/1ucizD13EUc?si=I-lqt5gzroz419xM"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
+    <script>
+        // Script untuk generate link WA otomatis dengan URL saat ini
+        const waNumber = "6281234567890"; // Ganti dengan nomor Anda
+        const currentUrl = window.location.href;
+        const message = `Halo Admin, saya ingin mengajukan izin akses secara resmi untuk halaman berikut: ${currentUrl}`;
+        
+        const fullWaLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+        document.getElementById('waLink').href = fullWaLink;
+    </script>
 
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/muALAHW-WC8?si=Ukiq5JL8MCvzM8sN"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/Q571AW5KCNU?si=cr8j8_IudS9Bjwor"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/eOjLo5QL5D4?si=w2rDkVkTO07Gabi3"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/2smgkgbydxM?si=cwVHbcNDChwxWhoh"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/gMgFP-UtoR0?si=fI-bjrFV6hEneMyI"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/Fo8t0EOnarY?si=u_Oxf7Eem_kmAqPm"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/wZt16LLrlt0?si=MoYrY41LTDG4Kv89"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/6pBB4jxZvNI?si=d27XxrS95QOJ8rAB"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/XpxkA1J_oSA?si=QjirAbsBakbxXxUS"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/421NiOJrJHM?si=R8a4g95kcOL8QH4Q"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/iV5QzOeqSPk?si=X7esntr0kfNYCuXb"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/0hc5Ti-sJe8?si=7bWVS3TiluafVxhA"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/2yTuB8NSUpI?si=YDZ9QU7EO8Wgcahl"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/shbS979P7K0?si=6ZVsQstfsBDAiXRa"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/rV4fEyaqW50?si=ZMJ1GEQJPlFvTAF5"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/Klwbo0Vn87o?si=Zt6F8AKg34de3fA4"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-
-        <iframe
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/A2CJN8mccEA?si=Zl77Ptjts3nZMUm5"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-      </section>
-
-      <section id="pictures">
-        <h2>Pictures</h2>
-
-        <img src="./photo portofolio/l_acer/01525 - alfastudio.id.jpg" alt="" />
-        <img src="./photo portofolio/l_acer/01579 - alfastudio.id.jpg" alt="" />
-        <img src="./photo portofolio/l_acer/01789 - alfastudio.id.jpg" alt="" />
-        <img src="./photo portofolio/l_acer/0180 - RD-.jpg" alt="" />
-        <img src="./photo portofolio/l_acer/0186 - RD-.jpg" alt="" />
-        <img src="./photo portofolio/l_acer/02152 - alfastudio.id.jpg" alt="" />
-        <img src="./photo portofolio/l_acer/0247 - RD-.jpg" alt="" />
-        <img
-          src="./photo portofolio/l_acer/WhatsApp Image 2024-07-04 at 4.10.27 PM.jpeg"
-          alt=""
-        />
-        <img
-          src="./photo portofolio/l_acer/WhatsApp Image 2024-07-04 at 4.10.55 PM.jpeg"
-          alt=""
-        />
-        <img
-          src="./photo portofolio/l_acer/WhatsApp Image 2024-07-04 at 4.13.04 PM.jpeg"
-          alt=""
-        />
-        <img
-          src="./photo portofolio/l_acer/WhatsApp Image 2024-07-04 at 4.13.06 PM.jpeg"
-          alt=""
-        />
-        <!-- <img
-        src="./photo portofolio/l_acer/WhatsApp Image 2024-07-04 at 4.14.11 PM.jpeg"
-        alt=""
-      /> -->
-        <img
-          src="./photo portofolio/l_acer/WhatsApp Image 2024-07-04 at 4.15.07 PM.jpeg"
-          alt=""
-        />
-        <!-- <img
-        src="./photo portofolio/l_acer/WhatsApp Image 2024-07-04 at 4.17.55 PM.jpeg"
-        alt=""
-      /> -->
-
-        <img src="./photo portofolio/drive/alphacast_id-00003.jpg" alt="" />
-        <img src="./photo portofolio/drive/alphacast_id-00039.jpg" alt="" />
-        <img src="./photo portofolio/drive/alphacast_id-00094.jpg" alt="" />
-        <img
-          src="./photo portofolio/drive/www.alphacast.id - 07762.jpg"
-          alt=""
-        />
-        <img
-          src="./photo portofolio/drive/www.alphacast.id - 07787.jpg"
-          alt=""
-        />
-
-        <img
-          src="./photo portofolio/l_hp/3912-wagiurogerproductions.jpg"
-          alt=""
-        />
-        <img
-          src="./photo portofolio/l_hp/3934-wagiurogerproductions.jpg"
-          alt=""
-        />
-        <img src="./photo portofolio/l_hp/Slide2.PNG" alt="" />
-        <img src="./photo portofolio/l_hp/Slide3.PNG" alt="" />
-        <img src="./photo portofolio/l_hp/wagiuroger_-9203.jpg" alt="" />
-      </section>
-
-      <h2>Thank you.</h2>
-    </div>
-  </body>
+</body>
 </html>
