@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akses Terbatas | www.alphacast.id</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <link
+      rel="shortcut icon"
+      href="/images/logo/(smallforwebsite)  color1 - alphacast.id logo.png"
+    />
+
+    <style>
+        :root {
+            --primary-maroon: #4a0404;
+            --dark-maroon: #2d0505;
+            --surface-color: #1a0202;
+            --text-primary: #ffffff;
+            --text-secondary: #d1d1d1;
+            --accent-red: #ff5252;
+            --whatsapp-green: #25D366;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--surface-color);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-maroon);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            z-index: 10;
+        }
+
+        .logo {
+            height: 45px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .card {
+            max-width: 550px;
+            width: 100%;
+            background-color: var(--dark-maroon);
+            padding: 50px 40px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.08);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .icon-alert {
+            font-size: 70px;
+            color: var(--accent-red);
+            margin-bottom: 20px;
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 20px;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .divider {
+            height: 2px;
+            width: 50px;
+            background: var(--accent-red);
+            margin: 0 auto 25px;
+            border-radius: 2px;
+        }
+
+        .description {
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            font-size: 0.95rem;
+        }
+
+        .reason-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent-red);
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        /* CTA Button */
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--whatsapp-green);
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .btn-whatsapp span {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 25px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #666;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 480px) {
+            .card { padding: 35px 25px; }
+            h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="/images/logo/2024/2024 logo name slogan white - alphacast.id.png" alt="Logo www.alphacast.id" class="logo" style="margin: -1em; height: 5em;">
+    </header>
+
+    <main>
+        <div class="card">
+            <span class="material-icons-round icon-alert">priority_high</span>
+            <h1>Akses Dibatasi</h1>
+            <div class="divider"></div>
+            
+            <div class="description">
+                Mohon maaf, otoritas Anda untuk mengakses halaman ini telah dicabut secara permanen demi melindungi integritas sistem dan hak cipta konten kami.
+            </div>
+
+            <div class="reason-box">
+                <strong>Catatan Keamanan:</strong><br>
+                Pembatasan ini diterapkan akibat adanya indikasi pelanggaran kebijakan, tindakan penjiplakan tanpa izin, serta penggunaan konten secara ilegal.
+            </div>
+
+            <a href="#" id="waLink" class="btn-whatsapp" target="_blank">
+                <span class="material-icons-round">chat</span>
+                Ajukan Izin Akses melalui Whatsapp
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 www.alphacast.id • Hak Cipta Dilindungi
+    </footer>
+
+    <script>
+        // Script untuk generate link WA otomatis dengan URL saat ini
+        const waNumber = "6285159556468"; // Ganti dengan nomor Anda
+        const currentUrl = window.location.href;
+        const message = `Halo Admin, saya ingin mengajukan izin akses secara resmi untuk halaman berikut: ${currentUrl}`;
+        
+        const fullWaLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+        document.getElementById('waLink').href = fullWaLink;
+    </script>
+
+</body>
+</html>
