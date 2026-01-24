@@ -1,234 +1,222 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <title>Siladen - RSUD Sam Ratulangi Tondano</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akses Terbatas | www.alphacast.id</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
     <link
       rel="shortcut icon"
-      href="../img/New Logo rev color 1 - Siladen App Icon - rogerwagiu.png"
+      href="/images/logo/(smallforwebsite)  color1 - alphacast.id logo.png"
     />
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Raleway"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+
     <style>
-      body,
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-family: "Raleway", sans-serif;
-      }
+        :root {
+            --primary-maroon: #4a0404;
+            --dark-maroon: #2d0505;
+            --surface-color: #1a0202;
+            --text-primary: #ffffff;
+            --text-secondary: #d1d1d1;
+            --accent-red: #ff5252;
+            --whatsapp-green: #25D366;
+        }
 
-      body,
-      html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        line-height: 1.8;
-      }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--surface-color);
+            color: var(--text-primary);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-      /* Full height image header */
-      .bgimg-1 {
-        background-position: center;
-        background-size: cover;
-        background-image: url("../img/\(roger\ edit3\)\ rsud\ samrat\ tondano\ \(rs\ baru\ -\ peleloan\)\ \(compressed\).jpg");
-        min-height: 100%;
-      }
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-      .w3-bar .w3-button {
-        padding: 16px;
-      }
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-maroon);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            z-index: 10;
+        }
+
+        .logo {
+            height: 45px;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .card {
+            max-width: 550px;
+            width: 100%;
+            background-color: var(--dark-maroon);
+            padding: 50px 40px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.08);
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .icon-alert {
+            font-size: 70px;
+            color: var(--accent-red);
+            margin-bottom: 20px;
+            animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-bottom: 20px;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .divider {
+            height: 2px;
+            width: 50px;
+            background: var(--accent-red);
+            margin: 0 auto 25px;
+            border-radius: 2px;
+        }
+
+        .description {
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 35px;
+            font-size: 0.95rem;
+        }
+
+        .reason-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid var(--accent-red);
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        /* CTA Button */
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--whatsapp-green);
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.3);
+            filter: brightness(1.1);
+        }
+
+        .btn-whatsapp span {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 25px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #666;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 480px) {
+            .card { padding: 35px 25px; }
+            h1 { font-size: 1.4rem; }
+        }
     </style>
-  </head>
-  <body>
-    <!-- Header with full-height image -->
-    <header class="bgimg-1 w3-display-container" id="home">
-      <div class="w3-display-left w3-text-white" style="padding: 48px">
-        <img
-          src="../img/New Logo rev color 1 - Siladen App Icon - rogerwagiu.png"
-          alt="logo emblem minahasa"
-          style="width: 4em"
-        />
-        <br />
+</head>
+<body>
 
-        <span class="w3-jumbo w3-hide-small" style="color: #007fa4"
-          >Siladen</span
-        ><br />
-        <span
-          class="w3-xxlarge w3-hide-large w3-hide-medium"
-          style="color: #007fa4"
-          >Siladen</span
-        ><br />
-        <span class="w3-large" style="color: rgb(53, 53, 53)"
-          ><b>Aplikasi Pelaporan Insiden</b> <br />
-        </span>
-        <span class="w3-small" style="color: rgb(53, 53, 53)">
-          (versi final 2024 dari tim magang)
-        </span>
-        <p style="padding: 0; margin: 0">
-          <a
-            href="./Siladen (Final1) - RSUD Sam Ratulangi Tondano.apk"
-            class="w3-button w3-white w3-padding-large w3-margin-top w3-opacity w3-hover-opacity-off"
-            style="padding: 0; margin: 0; width: 15em"
-            ><img
-              src="../img/(Android icon (png logo symbol) black) icone-android-noir.png"
-              alt="android"
-              style="width: 2em"
-            />
-            Tekan disini <br />
-            untuk download!</a
-          >
-        </p>
-        <span class="w3-small" style="color: rgb(53, 53, 53)"
-          >Jika ada pesan muncul, tekan <b>"Download Anyway"</b> atau
-          semacamnya.</span
-        >
-      </div>
+    <header>
+        <img src="/images/logo/2024/2024 logo name slogan white - alphacast.id.png" alt="Logo www.alphacast.id" class="logo" style="margin: -1em; height: 5em;">
     </header>
 
-    <!-- Team Section -->
-    <div class="w3-container" style="padding: 128px 16px" id="team">
-      <h3 class="w3-center">
-        Tim dibalik aplikasi <b style="color: #007fa4">Siladen</b>
-      </h3>
-      <p class="w3-center w3-large">
-        Mahasiswa magang Fakultas Ilmu Komputer Universitas Klabat & Karyawan IT
-        RSUD Sam Ratulangi Tondano
-      </p>
-      <div class="w3-row-padding w3-grayscale" style="margin-top: 64px">
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-card">
-            <!-- <img src="/.jpg" alt="Roger" style="width: 100%" /> -->
-            <div class="w3-container">
-              <h3>Roger Wagiu</h3>
-              <p class="w3-opacity">UI/UX</p>
-              <p>Mahasiswa magang Fakultas Ilmu Komputer Universitas Klabat</p>
+    <main>
+        <div class="card">
+            <span class="material-icons-round icon-alert">priority_high</span>
+            <h1>Akses Dibatasi</h1>
+            <div class="divider"></div>
+            
+            <div class="description">
+                Mohon maaf, otoritas Anda untuk mengakses halaman ini telah dicabut secara permanen demi melindungi integritas sistem dan hak cipta konten kami.
             </div>
-          </div>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-card">
-            <!-- <img src="/.jpg" alt="Roger" style="width: 100%" /> -->
-            <div class="w3-container">
-              <h3>Defitry Praise Utomo</h3>
-              <p class="w3-opacity">Data Analyst</p>
-              <p>Mahasiswa magang Fakultas Ilmu Komputer Universitas Klabat</p>
-            </div>
-          </div>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-card">
-            <!-- <img src="/.jpg" alt="Roger" style="width: 100%" /> -->
-            <div class="w3-container">
-              <h3>Ovel R. Maramis Tjia</h3>
-              <p class="w3-opacity">Front-End Developer</p>
-              <p>Mahasiswa magang Fakultas Ilmu Komputer Universitas Klabat</p>
-            </div>
-          </div>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-card">
-            <!-- <img src="/.jpg" alt="Roger" style="width: 100%" /> -->
-            <div class="w3-container">
-              <h3>Jerico Imanuel Katong</h3>
-              <p class="w3-opacity">Back-End Developer</p>
-              <p>Mahasiswa magang Fakultas Ilmu Komputer Universitas Klabat</p>
-            </div>
-          </div>
-        </div>
-        <div class="w3-col l3 m6 w3-margin-bottom">
-          <div class="w3-card">
-            <!-- <img
-              src="../img/logo emblem Minahasa.png"
-              alt="logo emblem minahasa"
-              style="width: 5em"
-            /> -->
-            <div class="w3-container">
-              <h3>IT RSUD Sam Ratulangi Tondano</h3>
-              <p class="w3-opacity">
-                Karyawan IT dari RSUD Sam Ratulangi Tondano
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Contact Section -->
-    <!-- <div
-      class="w3-container w3-light-grey"
-      style="padding: 128px 16px"
-      id="contact"
-    >
-      <h3 class="w3-center">CONTACT</h3>
-      <p class="w3-center w3-large">Lets get in touch. Send us a message:</p>
-      <div style="margin-top: 48px">
-        <p>
-          <i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i>
-          Chicago, US
-        </p>
-        <p>
-          <i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Phone:
-          +00 151515
-        </p>
-        <p>
-          <i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i>
-          Email: mail@mail.com
-        </p>
-        <br />
-      </div>
-    </div> -->
+            <div class="reason-box">
+                <strong>Catatan Keamanan:</strong><br>
+                Pembatasan ini diterapkan akibat adanya indikasi pelanggaran kebijakan, tindakan penjiplakan tanpa izin, serta penggunaan konten secara ilegal.
+            </div>
 
-    <div
-      class="w3-center w3-padding-large"
-      style="
-        background-color: #007fa4;
-        color: white;
-        margin-bottom: -1em;
-        height: 8em;
-      "
-    >
-      <p style="margin: 0">Contact person tim magang</p>
-      <a
-        target="_blank"
-        href="https://wa.me/6285159556468?text=Halo%20admin%2C%20saya%20datang%20dari%20website%20alphacast.id(Siladen)!"
-        class="w3-button w3-white w3-margin-top w3-opacity w3-hover-opacity-off"
-      >
-        melalui whatsapp
-      </a>
-    </div>
-    <!-- Footer -->
-    <footer
-      class="w3-center w3-padding-20"
-      style="background-color: #005a75; color: white; margin: 0"
-    >
-      <!-- <a href="#home" class="w3-button w3-light-grey"
-        ><i class="fa fa-arrow-up w3-margin-right"></i>Kembali ke atas</a
-      > -->
-      <p>
-        <a
-          href="/"
-          title="alphacast.id"
-          target="_blank"
-          class="w3-hover-text-blue"
-          style="text-decoration: none"
-          ><img
-            src="/images/logo/colorWHITE - alphacast.id logo.png"
-            alt=""
-            style="width: 4em"
-          />alphacast.id, rogerwagiu</a
-        >
-      </p>
+            <a href="#" id="waLink" class="btn-whatsapp" target="_blank">
+                <span class="material-icons-round">chat</span>
+                Ajukan Izin Akses melalui Whatsapp
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 www.alphacast.id • Hak Cipta Dilindungi
     </footer>
-  </body>
+
+    <script>
+        // Script untuk generate link WA otomatis dengan URL saat ini
+        const waNumber = "6285159556468"; // Ganti dengan nomor Anda
+        const currentUrl = window.location.href;
+        const message = `Halo Admin, saya ingin mengajukan izin akses secara resmi untuk halaman berikut: ${currentUrl}`;
+        
+        const fullWaLink = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+        document.getElementById('waLink').href = fullWaLink;
+    </script>
+
+</body>
 </html>
