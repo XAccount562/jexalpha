@@ -246,6 +246,7 @@
         <div class="video-grid" id="livestream-grid"></div>
 
         <h2 style="margin-top: 60px;"><i class="fas fa-video"></i> Video Projects</h2>
+        <p>(sebagian projects yang dihighlight)</p>
         <div class="video-grid" id="video-grid"></div>
 
         <h2 style="margin-top: 60px;"><i class="fas fa-camera"></i> Photography</h2>
@@ -293,11 +294,11 @@
 
         // LIST VIDEO PROJECTS (ID Saja)
         const videoIds = [
-            'Ak6Qb6FF1uo','QpVSPyRyBUM','VHCZjlMvRY8','I6NYgRnf8-c','1ucizD13EUc',
+            'Ak6Qb6FF1uo','QpVSPyRyBUM','VHCZjlMvRY8','I6NYgRnf8-c','BohaGTVA-WU','tW8D1KTYom8','CAgLIfDd3qw','1ucizD13EUc', 'wQPrRlCjFz0',
             'muALAHW-WC8','Q571AW5KCNU','eOjLo5QL5D4','2smgkgbydxM','gMgFP-UtoR0',
             'Fo8t0EOnarY','wZt16LLrlt0','6pBB4jxZvNI','XpxkA1J_oSA','421NiOJrJHM',
-            'iV5QzOeqSPk','0hc5Ti-sJe8','2yTuB8NSUpI','shbS979P7K0','rV4fEyaqW50',
-            'Klwbo0Vn87o','A2CJN8mccEA'
+            'iV5QzOeqSPk','0hc5Ti-sJe8','N5KBttiuLXg','pJR630pHdog','2yTuB8NSUpI','shbS979P7K0','rV4fEyaqW50',
+            'Klwbo0Vn87o','A2CJN8mccEA', 'lAvn3J9KwqQ'
         ];
 
         // LIST PHOTO PATHS
@@ -328,20 +329,17 @@
 
         // --- FUNGSI BARU: Ambil Judul Youtube Otomatis ---
         async function fetchVideoTitle(id) {
-            try {
-                // Mengambil data dari noembed (public API gratis)
-                const response = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
-                const data = await response.json();
-                
-                // Masukkan judul ke elemen yang sesuai
-                const titleElement = document.getElementById(`title-${id}`);
-                if (titleElement) {
-                    titleElement.innerText = data.title || "Video Project";
-                }
-            } catch (e) {
-                // Jika gagal (misal offline), biarkan loading atau set default
+        try {
+            // Trik: Pakai format 'youtu.be' agar Noembed menganggap ini link baru & mengambil judul tersigar
+            const res = await fetch(`https://noembed.com/embed?url=https://youtu.be/${id}&t=${Date.now()}`);
+            const data = await res.json();
+            if(data.title) {
+                document.getElementById(`title-${id}`).innerText = data.title;
             }
+        } catch (e) { 
+            document.getElementById(`title-${id}`).innerText = "Project Video";
         }
+    }
 
         // Render Livestreams (Gunakan sistem Grid agar urutan Rapi)
         const lGrid = document.getElementById('livestream-grid');
