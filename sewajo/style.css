@@ -23,7 +23,7 @@ html, body {
     background-color: var(--dark-bg);
     color: var(--on-surface);
     line-height: 1.6;
-    padding-top: 60px; /* Sesuai dengan tinggi header agar konten tidak 'tenggelam' */
+    padding-top: 16px; /* Sesuai dengan tinggi header agar konten tidak 'tenggelam' */
 }
 
 /* Loader */

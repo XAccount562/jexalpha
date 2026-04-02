@@ -1,0 +1,115 @@
+:root {
+    --primary-blue: #2196F3;
+    --primary-hover: #1976D2;
+    --dark-bg: #121212;
+    --surface: #1e1e1e;
+    --on-surface: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    -webkit-tap-highlight-color: transparent; /* Hilangkan highlight biru di mobile */
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Update pada Body untuk memberi ruang bagi header fixed */
+html, body {
+    width: 100%;
+    overflow-x: hidden; 
+    background-color: var(--dark-bg);
+    color: var(--on-surface);
+    line-height: 1.6;
+    padding-top: 16px; /* Sesuai dengan tinggi header agar konten tidak 'tenggelam' */
+}
+
+/* Header */
+/* Header diubah menjadi Fixed (seperti tombol checkout) */
+header {
+    background-color: var(--surface); 
+    padding: 10px 15px;
+    position: fixed; /* Dikunci di posisi layar */
+    top: 0; 
+    left: 0; /* Pastikan menempel ke kiri */
+    width: 100%; /* Memenuhi lebar layar */
+    z-index: 1100; /* Lebih tinggi dari elemen lain */
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    height: 60px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6); /* Sedikit lebih tegas bayangannya */
+}
+.logo-header-img {
+    height: 60px; /* Atur tinggi yang pas */
+    width: auto;
+    object-fit: contain;
+}
+
+/* Hero Banner (Video Support) */
+.hero { position: relative; padding: 50px 20px; text-align: center; overflow: hidden; border-bottom: 1px solid #333; }
+.hero-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.4; }
+/* Pastikan konten hero membungkus secara vertikal di tengah */
+.hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Menengahkan secara horizontal */
+    justify-content: center;
+}
+
+.hero-logo {
+    /* Gunakan lebar maksimal yang pas di mata, tinggi akan mengikuti otomatis (Auto Ratio) */
+    width: 220px; 
+    height: auto; 
+    margin-bottom: 20px;
+    
+    /* Menghilangkan distorsi */
+    object-fit: contain; 
+    
+    /* Opsional: Hapus background/border-radius jika logomu sudah transparan */
+    background: transparent;
+    border-radius: 0; 
+    box-shadow: none; 
+}
+.hero h1 { font-size: 1.8rem; margin-bottom: 8px; color: var(--primary-blue); }
+.hero p { color: var(--text-secondary); font-size: 0.95rem; max-width: 500px; margin: auto; }
+
+@media (max-width: 600px) { header:focus-within .logo-header-img { display: none; } }
+
+/* Terms & Conditions Styling */
+.terms-section {
+    background-color: var(--dark-bg);
+}
+
+.bg-surface {
+    background-color: var(--surface);
+    transition: var(--transition);
+}
+
+.bg-surface:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+.terms-section h3 {
+    color: var(--on-surface);
+}
+
+.terms-section ul li {
+    position: relative;
+    padding-left: 5px;
+}
+
+/* Responsivitas untuk Mobile */
+@media (max-width: 768px) {
+    .terms-section {
+        padding: 40px 15px;
+    }
+    .terms-section h2 {
+        font-size: 1.4rem;
+    }
+}
