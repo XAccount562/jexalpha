@@ -1,0 +1,97 @@
+---
+layout: default
+---
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Hub - Professional Video Gear</title>
+    <link rel="icon" type="image/png" href="/images/logo/(smallforwebsite)  color1 - alphacast.id logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body id="bodyTag">
+
+<div id="loader">
+    <div class="spinner"></div>
+    <p>Menyiapkan katalog alat, mohon menunggu...</p>
+</div>
+
+<header>
+    <img src="/images/logo/colorWHITE - alphacast.id logo.png" alt="Logo Perusahaan" class="logo-header-img">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Cari sesuatu..." onkeyup="filterItems()">
+    </div>
+</header>
+
+<div class="hero">
+    <video class="hero-video" autoplay loop muted playsinline poster="images/poster-fallback.jpg">
+        <source src="/videos/(H264) (LANDSCAPE) loop video for website - www.alphacast.id.mp4" type="video/mp4">
+        <p>Browser Anda tidak mendukung pemutaran video.</p>
+    </video>
+    
+    <div class="hero-content">
+        <img src="https://via.placeholder.com/100/2196F3/ffffff?text=RP" class="hero-logo">
+        <h1>Professional Video Gear</h1>
+        <p>Solusi sewa alat produksi dan operator livestreaming untuk event Anda.</p>
+    </div>
+</div>
+
+<div class="category-bar" id="categoryBar"></div>
+<div class="container" id="itemList"></div>
+
+<div id="checkout-page">
+    <h3 style="margin-bottom: 15px; border-bottom: 2px solid var(--primary-blue); padding-bottom: 10px;">Ringkasan Pesanan</h3>
+    <div id="receiptContent"></div>
+    
+    <div style="margin: 20px 0; padding: 20px; background: var(--surface); border-radius: 12px; display: flex; justify-content: space-between; font-weight: bold; font-size: 1.2rem;">
+        <span>Total Bayar</span>
+        <span id="checkoutTotalText" style="color: var(--primary-blue);">Rp 0</span>
+    </div>
+
+    <div style="font-size: 0.8rem; color: var(--text-secondary); text-align: center; margin-bottom: 15px;">
+        Kode Pesanan: <span id="cartCodeString" style="color: var(--primary-blue); font-family: monospace;">-</span>
+    </div>
+
+    <div class="checkout-actions">
+        <button class="btn-action btn-wa" onclick="sendWhatsApp()">Kirim Pesanan Ke WhatsApp</button>
+        <button class="btn-action btn-back" onclick="toggleCheckout(false)">Kembali</button>
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 10px;">
+            <button class="btn-action btn-reset" onclick="resetOrder()">Reset</button>
+            <button class="btn-action btn-qr" onclick="showQR()">QR</button>
+        </div>
+    </div>
+</div>
+
+<div id="qrModal" class="modal">
+    <div class="modal-content">
+        <h3>QR Code Pesanan</h3>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 15px;">Tunjukkan kode ini kepada admin</p>
+        <img id="qrImage" src="" alt="QR Code">
+        <p id="qrText" style="font-family: monospace; font-size: 1.2rem; margin: 15px 0; color: var(--primary-blue);"></p>
+        <button class="btn-action btn-back" style="width: 100%;" onclick="hideQR()">Tutup</button>
+    </div>
+</div>
+
+<!-- <div class="company-footer" id="mainCompanyFooter">
+    <img src="https://via.placeholder.com/50/2196F3/ffffff?text=RP" class="footer-logo">
+    <p><strong>Rental Pro Indonesia</strong></p>
+    <p>Layanan Sewa Alat & Produksi Video Profesional</p>
+    <p style="font-size: 0.75rem; margin-top: 10px;">&copy; 2026 Rental Pro Team.</p>
+</div> -->
+{% include footer.html %}
+
+<footer id="mainFooter">
+    <button class="btn-order" onclick="toggleCheckout(true)">
+        <span id="cartCount">0 Item</span>
+        <span>Lihat Detail Pesanan</span>
+        <span id="cartTotal">Rp 0</span>
+    </button>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
