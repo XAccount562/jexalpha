@@ -1,0 +1,123 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="id">
+    <!-- page /rental/cekkode untuk copypaste kode pesanan yang dikirim di wa agar data yang didapatkan tetap akurat walaupun user sengaja atau tidak sengaja merubah pesanan yang dikirim di whatsapp -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cek Kode Pesanan - Rental Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Style khusus untuk halaman cek kode */
+        .checker-container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+        }
+        .instruction-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        .paste-area {
+            width: 100%;
+            height: 180px;
+            background: var(--surface);
+            border: 2px dashed #444;
+            border-radius: 15px;
+            color: white;
+            padding: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+            resize: none;
+        }
+        .paste-area:focus {
+            border-color: var(--primary-blue);
+        }
+        .btn-process {
+            width: 100%;
+            margin-top: 20px;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .btn-process:hover {
+            transform: translateY(-2px);
+            background: var(--primary-hover);
+        }
+    </style>
+</head>
+<body>
+
+<div id="loader">
+    <div class="spinner"></div>
+    <p>Menyiapkan sistem verifikasi...</p>
+</div>
+
+{% include header.html %}
+
+<div class="checker-container">
+    <h2 style="margin-bottom: 10px;">Cek Pesanan - Verifikasi Kode</h2>
+    <p class="instruction-text">Tempel (Paste) keseluruhan chat pesanan dari WhatsApp di bawah ini untuk memverifikasi item.</p>
+    <p class="instruction-text">Halaman ini bukan untuk akses ke publik, hanya untuk internal!</p>
+    
+    <textarea id="waChatInput" class="paste-area" placeholder="Tempel chat di sini..."></textarea>
+    
+    <button class="btn-process" onclick="extractAndRedirect()">Proses & Lihat Pesanan</button>
+    
+    <a href="../" style="display: block; margin-top: 20px; color: var(--text-secondary); text-decoration: none; font-size: 0.8rem;">← Kembali ke Katalog</a>
+</div>
+
+{% include footer.html %}
+
+<script>
+    // Sembunyikan loader saat muat
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('loader').style.opacity = '0';
+            setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500);
+        }, 300);
+    });
+
+    function extractAndRedirect() {
+        const inputText = document.getElementById('waChatInput').value;
+        
+        // Regex untuk mencari teks di dalam [[ ]]
+        // Pola: mencari [[ diikuti oleh karakter apa pun (non-greedy) lalu diakhiri ]]
+        const regex = /\[\[(.*?)\]\]/;
+        const match = inputText.match(regex);
+
+        if (match && match[1]) {
+            const kodePesanan = match[1].trim();
+            
+            // Tampilkan feedback sedikit sebelum redirect
+            const btn = document.querySelector('.btn-process');
+            btn.innerText = "Kode Ditemukan! Mengalihkan...";
+            btn.style.background = "#25D366";
+
+            // Redirect ke halaman utama dengan parameter kode
+            // Pastikan index.html adalah nama file halaman utamamu
+            setTimeout(() => {
+                window.location.href = `../?kode=${kodePesanan}`;
+            }, 800);
+            
+        } else {
+            alert("Maaf, kode pesanan tidak ditemukan dalam teks tersebut. Pastikan teks mengandung [[KODE-PESANAN]].");
+        }
+    }
+</script>
+
+</body>
+</html>

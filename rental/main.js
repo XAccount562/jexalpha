@@ -344,7 +344,9 @@ function renderReceipt() {
 
 function sendWhatsApp() {
     const codeString = generateCartCode();
-    let text = `*KODE PESANAN: ${codeString}*\n--------------------------\n`;
+    // let text = `*KODE PESANAN: ${codeString}*\n--------------------------\n`;
+    //jexxmodified 02-04-26 - supaya bisa langsung mudah terlacak kalo pake braket [[]]
+    let text = `*KODE PESANAN: [[${codeString}]]*\n--------------------------\n`;
     let total = 0;
     Object.values(cart).forEach(c => {
         const subtotal = c.varRef.harga * c.qty;
