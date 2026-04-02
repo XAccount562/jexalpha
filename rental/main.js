@@ -1,23 +1,55 @@
 // Database tetap sama
 const items = [
-    { 
-        id: 1, kodeItem: "In4", kategori: "Kamera", nama: "Insta360 X4", 
-        desc: "Kamera 360 resolusi 8K untuk event interaktif.", status: "Tersedia",
-        gambar: "https://images.unsplash.com/photo-1623912733306-4444654924c5?q=80&w=200", 
-        variants: [{ nama: "6 Jam", kodeVar: "A", harga: 150000 }, { nama: "24 Jam", kodeVar: "B", harga: 250000 }] 
+
+    {
+        id: 1, kodeItem: "C600D", kategori: "Kamera", nama: "Canon EOS 600D", 
+        desc: "Paket Kamera: 1x Kamera ● 1x Baterai Kamera LP-E8 ● 1x Charger LP-E8 ● 1x Tali Kamera ● 1x Tas Kamera", status: "PROMO!",
+        gambar: "./img/alatrental/canon 600d body only (Canon EOS 600D Body Only, B - CeX (UK) - Buy, Sell, Donate).webp", 
+        variants: [
+            { nama: "Paket Kamera + Lensa Kit 18-55 (12 Jam)", kodeVar: "A", harga: 50000 },
+            { nama: "Paket Kamera + Lensa Kit 18-55 (24 Jam)", kodeVar: "B", harga: 100000 },
+            { nama: "Paket Kamera + Lensa Fix 50mm (12 Jam)", kodeVar: "C", harga: 50000 },
+            { nama: "Paket Kamera + Lensa Fix 50mm (24 Jam)", kodeVar: "D", harga: 100000 },
+            { nama: "+ Tambahan Baterai Kamera LP-E8", kodeVar: "E", harga: 10000 },
+        ] 
     },
-    { 
-        id: 2, kodeItem: "Ca6", kategori: "Kamera", nama: "Canon EOS R6", 
-        desc: "Mirrorless Full-frame andalan cinematic.", status: "PROMO!",
-        gambar: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=200", 
-        variants: [{ nama: "Body Only", kodeVar: "A", harga: 300000 }, { nama: "Full Kit", kodeVar: "B", harga: 450000 }] 
+    {
+        id: 2, kodeItem: "C700D", kategori: "Kamera", nama: "Canon EOS 700D", 
+        desc: "Paket Kamera: 1x Kamera ● 1x Baterai Kamera LP-E8 ● 1x Charger LP-E8 ● 1x Tali Kamera ● 1x Tas Kamera", status: "Tersedia",
+        gambar: "./img/alatrental/canon 700d body only (Buy Canon EOS 700D Digital SLR Camera Body best price online  Camera Warehouse  Camera Warehouse).webp", 
+        variants: [
+            { nama: "Paket Kamera + Lensa Kit 18-55 (12 Jam)", kodeVar: "A", harga: 100000 },
+            { nama: "Paket Kamera + Lensa Kit 18-55 (24 Jam)", kodeVar: "B", harga: 150000 },
+            { nama: "Paket Kamera + Lensa Fix 50mm (12 Jam)", kodeVar: "C", harga: 100000 },
+            { nama: "Paket Kamera + Lensa Fix 50mm (24 Jam)", kodeVar: "D", harga: 150000 },
+            { nama: "+ Tambahan Baterai Kamera LP-E8", kodeVar: "E", harga: 10000 },
+        ] 
     },
-    { 
-        id: 3, kodeItem: "Op1", kategori: "Service", nama: "Operator Livestream", 
-        desc: "Tenaga ahli untuk vMix & OBS.", status: "Tersedia",
-        gambar: "https://images.unsplash.com/photo-1478737270239-2fccd27ee086?q=80&w=200", 
-        variants: [{ nama: "Half Day", kodeVar: "A", harga: 500000 }, { nama: "Full Day", kodeVar: "B", harga: 850000 }] 
-    }
+
+    //tambahkan catatan:
+    //ada kompensasi 1 jam terlambat, semenit setalah akan dicharge 30% dari harga sewa
+    //promo berubah sewaktu-waktu, hubungi kami terus untuk mengecek promo terkini
+    //item-item baru akan segera hadir, pantau terus media sosial kami!
+
+
+    // { 
+    //     id: 1, kodeItem: "In4", kategori: "Kamera", nama: "Insta360 X4", 
+    //     desc: "Kamera 360 resolusi 8K untuk event interaktif.", status: "Tersedia",
+    //     gambar: "https://images.unsplash.com/photo-1623912733306-4444654924c5?q=80&w=200", 
+    //     variants: [{ nama: "6 Jam", kodeVar: "A", harga: 150000 }, { nama: "24 Jam", kodeVar: "B", harga: 250000 }] 
+    // },
+    // { 
+    //     id: 2, kodeItem: "Ca6", kategori: "Kamera", nama: "Canon EOS R6", 
+    //     desc: "Mirrorless Full-frame andalan cinematic.", status: "PROMO!",
+    //     gambar: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=200", 
+    //     variants: [{ nama: "Body Only", kodeVar: "A", harga: 300000 }, { nama: "Full Kit", kodeVar: "B", harga: 450000 }] 
+    // },
+    // { 
+    //     id: 3, kodeItem: "Op1", kategori: "Service", nama: "Operator Livestream", 
+    //     desc: "Tenaga ahli untuk vMix & OBS.", status: "Tersedia",
+    //     gambar: "https://images.unsplash.com/photo-1478737270239-2fccd27ee086?q=80&w=200", 
+    //     variants: [{ nama: "Half Day", kodeVar: "A", harga: 500000 }, { nama: "Full Day", kodeVar: "B", harga: 850000 }] 
+    // }
 ];
 
 let cart = {}; 
