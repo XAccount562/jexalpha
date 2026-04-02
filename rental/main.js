@@ -3,7 +3,7 @@ const items = [
 
     {
         id: 1, kodeItem: "C600D", kategori: "Kamera", nama: "Canon EOS 600D", 
-        desc: "Paket Kamera: 1x Kamera ● 1x Baterai Kamera LP-E8 ● 1x Charger LP-E8 ● 1x Tali Kamera ● 1x Tas Kamera", status: "PROMO!",
+        desc: "Paket Kamera: 1x Kamera ● 1x Baterai Kamera LP-E8 ● 1x Charger LP-E8 ● 1x Tali Kamera ● 1x Tas Kamera", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
         gambar: "./img/alatrental/canon 600d body only (Canon EOS 600D Body Only, B - CeX (UK) - Buy, Sell, Donate).webp", 
         variants: [
             { nama: "Paket Kamera + Lensa Kit 18-55 🕓12 Jam", kodeVar: "A", harga: 50000 },
@@ -27,7 +27,7 @@ const items = [
     },
     {
         id: 3, kodeItem: "C50mm", kategori: "Lensa", nama: "Canon EF 50mm f/1.8 STM", 
-        desc: "Lensa Canon EF", status: "PROMO!",
+        desc: "Lensa Canon EF", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
         gambar: "./img/alatrental/canon ef 50mm f1.8 stm (Canon EF 50mm F1.8 STM real-world samples gallery DPReview Photography News, Gear Reviews & Community).webp", 
         variants: [
             { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 40000 },
@@ -36,7 +36,7 @@ const items = [
     },
     {
         id: 4, kodeItem: "YN50mm", kategori: "Lensa", nama: "Yongnuo 50mm f/1.8 for Canon", 
-        desc: "Lensa Yongnuo buat Kamera Canon", status: "PROMO!",
+        desc: "Lensa Yongnuo buat Kamera Canon", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
         gambar: "./img/alatrental/yongnuo 50mm f1.8 (Yongnuo 50mm f1.8 Lens Review ePHOTOzine).webp", 
         variants: [
             { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 30000 },
@@ -45,7 +45,7 @@ const items = [
     },
     {
         id: 5, kodeItem: "C1855mm", kategori: "Lensa", nama: "Canon EF-S 18-55mm f/3.5-5.6", 
-        desc: "Lensa Canon EF-S IS/non IS (tergantung stok)", status: "PROMO!",
+        desc: "Lensa Canon EF-S IS/non IS (tergantung stok)", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
         gambar: "./img/alatrental/Canon EF-S 18-55mm f3.5-5.6 IS II Lens 2042B002 B&H Photo Video.webp", 
         variants: [
             { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 30000 },
@@ -72,7 +72,7 @@ const items = [
     },
     {
         id: 8, kodeItem: "WLNKDC1", kategori: "Komunikasi", nama: "HT WLN KD-C1", 
-        desc: "HT/Walkie Talkie UHF (400-470MHz), 16 Channel, baterai Li-ion 1000mAh, jangkauan 1-3 km (tergantung kondisi lapangan)", status: "PROMO!",
+        desc: "HT/Walkie Talkie UHF (400-470MHz), 16 Channel, baterai Li-ion 1000mAh, jangkauan 1-3 km (tergantung kondisi lapangan)", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
         gambar: "./img/alatrental/HT WLN KD-C1 (HANDY TALKY WLN KD-C1(ISI 1 PCS) , 16 Channel Walkie Talkie Transceiver Two Way, Channel 400 - 470MHz untuk berkomunikasi antar walkie talkie Lazada).webp", 
         variants: [
             { nama: "HT/Walkie Talkie 🕓12 Jam", kodeVar: "A", harga: 50000 },
@@ -99,12 +99,12 @@ const items = [
     },
     {
         id: 11, kodeItem: "TV", kategori: "Layar", nama: "Televisi", 
-        desc: "Paket TV: 1x Televisi ● 1x Standing / Floor (Matador) Bracket ● 1x Kabel Listrik 30 meter ● 1x Kabel HDMI 30 meter", status: "PROMO!",
+        desc: "Paket TV: 1x Televisi ● 1x Standing / Floor (Matador) Bracket ● 1x Kabel Listrik 30 meter ● 1x Kabel HDMI 30 meter", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
         gambar: "./img/alatrental/tv on tripod (Portable Tripod TV Stand 35 to 75 VIVO - desk solutions, screen mounting, and more).webp", 
         variants: [
             { nama: "Paket TV ukuran 40-43 inch Standing 🕓12 Jam", kodeVar: "A", harga: 500000 },
-            { nama: "Paket TV ukuran 40-43 inch Standing 🕓12 Jam", kodeVar: "B", harga: 500000 },
-            { nama: "Paket TV ukuran 60-65 inch Floor (Matador) 🕓12 Jam", kodeVar: "C", harga: 1500000 },
+            { nama: "Paket TV ukuran 40-43 inch Floor (Matador) 🕓12 Jam", kodeVar: "B", harga: 500000 },
+            { nama: "Paket TV ukuran 60-65 inch Standing 🕓12 Jam", kodeVar: "C", harga: 1500000 },
             { nama: "Paket TV ukuran 60-65 inch Floor (Matador) 🕓12 Jam", kodeVar: "D", harga: 1500000 },
         ] 
     },
@@ -299,7 +299,7 @@ function filterByCategory(cat) {
 
 function getStatusClass(status) {
     if(status === "Kosong" || status === "Sedang di Service") return { card: "card-kosong", badge: "badge-kosong" };
-    if(status === "PROMO!" || status === "Lagi PROMO!") return { card: "card-promo", badge: "badge-promo" };
+    if(status === "PROMO! PROMO! PROMO! Lagi PROMO ini!" || status === "PROMO!") return { card: "card-promo", badge: "badge-promo" };
     return { card: "", badge: "" };
 }
 
@@ -352,7 +352,7 @@ function sendWhatsApp() {
         total += subtotal;
     });
     text += `--------------------------\n*TOTAL BAYAR: Rp ${total.toLocaleString()}*`;
-    window.open(`https://api.whatsapp.com/send?phone=628123456789&text=${encodeURIComponent(text)}`);
+    window.open(`https://api.whatsapp.com/send?phone=6285159556468&text=${encodeURIComponent(text)}`);
 }
 
 function showQR() {

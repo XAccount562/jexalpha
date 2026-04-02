@@ -8,8 +8,21 @@
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* { box-sizing: border-box; font-family: 'Roboto', sans-serif; margin: 0; padding: 0; }
-body { background-color: var(--dark-bg); color: var(--on-surface); line-height: 1.6; }
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    -webkit-tap-highlight-color: transparent; /* Hilangkan highlight biru di mobile */
+    font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* Mencegah layar melar ke samping */
+    background-color: var(--dark-bg);
+    color: var(--on-surface);
+    line-height: 1.6;
+}
 
 /* Loader */
 #loader {
@@ -33,7 +46,11 @@ header {
     display: flex; align-items: center; gap: 15px; height: 60px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
-.logo-header-img { height: 35px; object-fit: contain; }
+.logo-header-img {
+    height: 60px; /* Atur tinggi yang pas */
+    width: auto;
+    object-fit: contain;
+}
 .search-container { flex-grow: 1; transition: var(--transition); }
 .search-container input {
     width: 100%; background: #333; border: 2px solid transparent;
@@ -118,7 +135,12 @@ header {
     flex-grow: 1;
     min-width: 0; /* Penting agar teks panjang tidak merusak layout */
 }
-.item-title { font-weight: 500; font-size: 1.1rem; margin-bottom: 2px; }
+.item-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+    color: #fff;
+}
 .item-tag { font-size: 0.7rem; color: var(--primary-blue); border: 1px solid; padding: 1px 8px; border-radius: 10px; margin-left: 8px; text-transform: uppercase; }
 .item-desc { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px; }
 
