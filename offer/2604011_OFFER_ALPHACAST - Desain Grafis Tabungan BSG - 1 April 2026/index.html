@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title is dynamically set by JavaScript at the end of the file -->
-    <title>Invoice - alphacast.id - Broadcasting & media production company</title> 
+    <title>alphacast.id - Broadcasting & media production company</title> 
 
     <!-- NEW: Placeholder Favicon menggunakan SVG Inline (Base64 encoded) -->
     <!-- Ikon kotak biru sederhana untuk Placeholder -->
@@ -169,13 +169,13 @@
 
         <!-- 2. PDF Downloader & Viewer -->
         <section class="space-y-6">
-            <h2 class="text-2xl font-semibold text-gray-200 border-b border-gray-700 pb-2">Dokumen Invoice</h2>
+            <h2 class="text-2xl font-semibold text-gray-200 border-b border-gray-700 pb-2">Dokumen alphacast.id</h2>
             
             <!-- Tombol Aksi PDF -->
             <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                 
                 <!-- Download Button -->
-                <a id="download-link" href="#" download="Invoice_Project.pdf"
+                <a id="download-link" href="#" download="alphacast.id_document_Project.pdf"
                    class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-800 transition transform hover:scale-[1.01]">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -375,7 +375,7 @@
             const pdfViewer = document.getElementById('pdf-viewer');
 
             // Update Judul Halaman
-            document.title = `alphacast.id - Invoice - ${projectConfig.projectName}`;
+            document.title = `alphacast.id - ${projectConfig.projectName}`;
 
             // Update Card Content
             nameElement.textContent = projectConfig.projectName;
@@ -387,7 +387,8 @@
             downloadLink.href = projectConfig.pdfFileUrl;
             openPdfLink.href = projectConfig.pdfFileUrl;
             // Membuat nama file unduhan bersih
-            downloadLink.download = `Invoice_${projectConfig.projectName.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`; 
+            // downloadLink.download = `Offer_${projectConfig.projectName.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`; 
+            downloadLink.download = `${projectConfig.projectName.replace(/[^a-zA-Z0-9]/, '_')}.pdf`;
             pdfViewer.src = projectConfig.pdfFileUrl;
 
             // 3. Update Card Styling (Background and Border)
