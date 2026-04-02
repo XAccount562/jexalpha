@@ -94,7 +94,7 @@ header {
 .btn-qty { background: transparent; color: white; border: none; font-size: 1.2rem; width: 25px; cursor: pointer; }
 
 /* Footers & Checkout Logic */
-footer#mainFooter {
+#mainFooter {
     position: fixed; bottom: 0; width: 100%; background: var(--surface); padding: 15px;
     display: none; justify-content: center; z-index: 1001; box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
 }

@@ -1,11 +1,33 @@
 <style>
-    .social-icon-wrapper {
-        height: 32px; width: 32px; border-radius: 9999px;
-        background-color: #4B5563; padding: 6px; color: white;
-        transition: transform 0.3s ease; display: flex;
-        align-items: center; justify-content: center;
+    /* Custom styling for the WhatsApp CTA button to look different from social links */
+    .whatsapp-cta {
+        transition: transform 0.2s ease;
     }
-    .social-icon-wrapper:hover { transform: scale(1.1); }
+    .whatsapp-cta:hover {
+        transform: scale(1.02);
+    }
+
+    /* --- PERBAIKAN CSS Tombol Sosial Media (Dibuat Non-Tailwind agar Lebih Robust) --- */
+    .social-icon-wrapper {
+        /* Pastikan bentuk lingkaran sempurna (rounded-full) */
+        height: 32px; /* h-8 */
+        width: 32px; /* w-8 */
+        border-radius: 9999px; /* rounded-full */
+        background-color: #4B5563; /* bg-gray-700 - Warna dasar abu-abu gelap */
+        padding: 6px; /* p-1.5 */
+        color: white;
+        transition: transform 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .social-icon-wrapper:hover {
+        transform: scale(1.1); /* hover:scale-110 - Animasi Hover */
+    }
+    /* --------------------------------------------------------------------------------- */
+
+    /* Specific hover colors for social media */
     .facebook-icon:hover { background-color: #1877F2; }
     .instagram-icon:hover { background-image: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
     .youtube-icon:hover { background-color: #FF0000; }
@@ -15,36 +37,95 @@
 <footer class="bg-gray-900 border-t border-gray-700 mt-10 p-8">
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 text-gray-400 text-sm pb-8">
+            
             <div class="space-y-4 lg:col-span-2">
-                <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="Company Logo" class="h-16 w-50 rounded-full object-cover">
-                <p class="text-gray-400 text-base">Livestream & Multimedia Specialist. Based in Manado.</p>
+                <div class="flex items-center space-x-3 mb-2">
+                    <a href="/" class="flex items-center space-x-3 group" title="Kembali ke Halaman Utama">
+                        <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="Company Logo" class="h-16 w-50 rounded-full object-cover">
+                    </a>
+                </div>
+                <p class="text-gray-400 text-base">
+                    Livestream & Multimedia Specialist: Professional Video Production, Virtual & Hybrid Event Solutions. Based in Manado, North Sulawesi. 
+                </p>
             </div>
+
             <div class="space-y-2">
-                <h3 class="text-white font-semibold mb-2">Contact</h3>
-                <a id="footer-wa" href="#" target="_blank" class="inline-flex items-center px-4 py-2 font-semibold text-white bg-green-600 rounded-lg hover:bg-green-500 transition">
-                    <i class="fa-brands fa-whatsapp text-xl mr-2"></i> Chat Whatsapp
+                <h3 class="text-white font-semibold mb-2">Contact & Address</h3>
+                
+                <a href="mailto:halo.alphacast@gmail.com" class="inline-flex items-center text-gray-400 hover:text-white py-1 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 flex-shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                    halo.alphacast@gmail.com
+                </a>
+                
+                <a href="https://goo.gl/maps/EJrUVrc1SbLcQ2UW6" target="_blank" class="flex items-start text-gray-400 hover:text-white py-1 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 mt-1 flex-shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                    <span class="text-sm">Reko Bawah, Kolongan, Kec. Kalawat, Kabupaten Minahasa Utara, Sulawesi Utara</span>
+                </a>
+                
+                <a id="whatsapp-cta-link" href="#" target="_blank" class="whatsapp-cta mt-4 inline-flex items-center px-4 py-2 font-semibold text-white bg-green-600 rounded-lg shadow-lg hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-800 transition transform hover:scale-[1.02]">
+                    <i class="fa-brands fa-whatsapp text-xl mr-2"></i>
+                    Whatsapp (+62)851-5955-6468
                 </a>
             </div>
-            <div class="space-y-4">
+
+            <div class="space-y-4 lg:col-span-1">
                 <h3 class="text-white font-semibold mb-2">Follow Us</h3>
-                <div class="flex space-x-3">
-                    <a href="https://instagram.com/alphacast.id" class="social-icon-wrapper instagram-icon"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://www.youtube.com/@alphacastid8988" class="social-icon-wrapper youtube-icon"><i class="fa-brands fa-youtube"></i></a>
+                <div class="flex space-x-3 sm:space-x-4">
+                    
+                    <a href="https://fb.com/alphacast.id" target="_blank" class="group transition" title="Facebook">
+                        <div class="social-icon-wrapper facebook-icon">
+                            <i class="fa-brands fa-facebook-f text-xl"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="https://instagram.com/alphacast.id" target="_blank" class="group transition" title="Instagram">
+                        <div class="social-icon-wrapper instagram-icon">
+                            <i class="fa-brands fa-instagram text-xl"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.youtube.com/@alphacastid8988" target="_blank" class="group transition" title="YouTube">
+                        <div class="social-icon-wrapper youtube-icon">
+                            <i class="fa-brands fa-youtube text-xl"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.tiktok.com/@alphacast.id" target="_blank" class="group transition" title="TikTok">
+                        <div class="social-icon-wrapper tiktok-icon">
+                            <i class="fa-brands fa-tiktok text-xl"></i>
+                        </div>
+                    </a>
+                    
                 </div>
             </div>
+
         </div>
+        
         <div class="pt-6 border-t border-gray-700 mt-4 text-center">
-             <p class="text-gray-500 text-xs">&copy; 2025 alphacast.id.</p>
+             <p class="text-gray-500 text-xs sm:text-sm">&copy; 2025 alphacast.id. All rights reserved</p>
         </div>
+
     </div>
 </footer>
 
 <script>
-    // Link WA otomatis berdasarkan halaman aktif
-    (function() {
-        const wa = document.getElementById('footer-wa');
-        if (wa) {
-            wa.href = `https://wa.me/6285159556468?text=${encodeURIComponent('Halo alphacast.id, saya dari: ' + window.location.href)}`;
+    // Update WhatsApp CTA Link with dynamic page address (Pembaruan Href Dinamis)
+    // Script ini saya pisahkan dari script utama agar otomatis berjalan di semua halaman yang pakai footer ini
+    document.addEventListener('DOMContentLoaded', () => {
+        const whatsappCtaLink = document.getElementById('whatsapp-cta-link');
+        if (whatsappCtaLink) {
+            // Mendapatkan URL saat ini
+            const pageUrl = window.location.href; 
+            
+            // Membuat pesan personalisasi
+            const message = `Halo admin alphacast.id, saya datang dari halaman ${pageUrl}`;
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Nomor WhatsApp (diambil dari teks di HTML)
+            const phoneNumber = '6285159556468';
+            
+            // Set Href baru
+            whatsappCtaLink.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
         }
-    })();
+    });
 </script>
