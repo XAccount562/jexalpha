@@ -1,168 +1,37 @@
-// Database tetap sama
-const items = [
-
-    {
-        id: 1, kodeItem: "C600D", kategori: "Kamera", nama: "Canon EOS 600D", 
-        desc: "Paket Kamera: 1x Kamera ● 1x Baterai Kamera LP-E8 ● 1x Charger LP-E8 ● 1x Tali Kamera ● 1x Tas Kamera", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
-        gambar: "./img/alatrental/canon 600d body only (Canon EOS 600D Body Only, B - CeX (UK) - Buy, Sell, Donate).webp", 
-        variants: [
-            { nama: "Paket Kamera + Lensa Kit 18-55 🕓12 Jam", kodeVar: "A", harga: 50000 },
-            { nama: "Paket Kamera + Lensa Kit 18-55 🕓24 Jam", kodeVar: "B", harga: 100000 },
-            { nama: "Paket Kamera + Lensa Fix 50mm 🕓12 Jam", kodeVar: "C", harga: 50000 },
-            { nama: "Paket Kamera + Lensa Fix 50mm 🕓24 Jam", kodeVar: "D", harga: 100000 },
-            { nama: "+ Tambahan Baterai Kamera LP-E8", kodeVar: "E", harga: 10000 },
-        ] 
-    },
-    {
-        id: 2, kodeItem: "C700D", kategori: "Kamera", nama: "Canon EOS 700D", 
-        desc: "Paket Kamera: 1x Kamera ● 1x Baterai Kamera LP-E8 ● 1x Charger LP-E8 ● 1x Tali Kamera ● 1x Tas Kamera", status: "Tersedia",
-        gambar: "./img/alatrental/canon 700d body only (Buy Canon EOS 700D Digital SLR Camera Body best price online  Camera Warehouse  Camera Warehouse).webp", 
-        variants: [
-            { nama: "Paket Kamera + Lensa Kit 18-55 🕓12 Jam", kodeVar: "A", harga: 100000 },
-            { nama: "Paket Kamera + Lensa Kit 18-55 🕓24 Jam", kodeVar: "B", harga: 150000 },
-            { nama: "Paket Kamera + Lensa Fix 50mm 🕓12 Jam", kodeVar: "C", harga: 100000 },
-            { nama: "Paket Kamera + Lensa Fix 50mm 🕓24 Jam", kodeVar: "D", harga: 150000 },
-            { nama: "+ Tambahan Baterai Kamera LP-E8", kodeVar: "E", harga: 10000 },
-        ] 
-    },
-    {
-        id: 3, kodeItem: "C50mm", kategori: "Lensa", nama: "Canon EF 50mm f/1.8 STM", 
-        desc: "Lensa Canon EF", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
-        gambar: "./img/alatrental/canon ef 50mm f1.8 stm (Canon EF 50mm F1.8 STM real-world samples gallery DPReview Photography News, Gear Reviews & Community).webp", 
-        variants: [
-            { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 40000 },
-            { nama: "Lensa 🕓24 Jam", kodeVar: "B", harga: 60000 },
-        ] 
-    },
-    {
-        id: 4, kodeItem: "YN50mm", kategori: "Lensa", nama: "Yongnuo 50mm f/1.8 for Canon", 
-        desc: "Lensa Yongnuo buat Kamera Canon", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
-        gambar: "./img/alatrental/yongnuo 50mm f1.8 (Yongnuo 50mm f1.8 Lens Review ePHOTOzine).webp", 
-        variants: [
-            { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 30000 },
-            { nama: "Lensa 🕓24 Jam", kodeVar: "B", harga: 50000 },
-        ] 
-    },
-    {
-        id: 5, kodeItem: "C1855mm", kategori: "Lensa", nama: "Canon EF-S 18-55mm f/3.5-5.6", 
-        desc: "Lensa Canon EF-S IS/non IS (tergantung stok)", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
-        gambar: "./img/alatrental/Canon EF-S 18-55mm f3.5-5.6 IS II Lens 2042B002 B&H Photo Video.webp", 
-        variants: [
-            { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 30000 },
-            { nama: "Lensa 🕓24 Jam", kodeVar: "B", harga: 50000 },
-        ] 
-    },
-    {
-        id: 6, kodeItem: "C18135mm", kategori: "Lensa", nama: "Canon EF-S 18-135mm f/3.5-5-6 IS", 
-        desc: "Lensa Canon EF-S IS", status: "Tersedia",
-        gambar: "./img/alatrental/Canon EF-S 18-135mm f3.5-5.6 IS STM Lens 6097B002 B&H Photo.webp", 
-        variants: [
-            { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 100000 },
-            { nama: "Lensa 🕓24 Jam", kodeVar: "B", harga: 150000 },
-        ] 
-    },
-    {
-        id: 7, kodeItem: "GdxTT600", kategori: "Kamera - Aksesoris", nama: "Godox TT600", 
-        desc: "Flash External (Speedlight) manual universal", status: "Tersedia",
-        gambar: "./img/alatrental/Godox TT600 (Jual Flash Godox TT600 - Batamkamera.com).webp", 
-        variants: [
-            { nama: "Flash External 🕓12 Jam", kodeVar: "A", harga: 50000 },
-            { nama: "Flash External 🕓24 Jam", kodeVar: "B", harga: 90000 },
-        ] 
-    },
-    {
-        id: 8, kodeItem: "WLNKDC1", kategori: "Komunikasi", nama: "HT WLN KD-C1", 
-        desc: "HT/Walkie Talkie UHF (400-470MHz), 16 Channel, baterai Li-ion 1000mAh, jangkauan 1-3 km (tergantung kondisi lapangan)", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
-        gambar: "./img/alatrental/HT WLN KD-C1 (HANDY TALKY WLN KD-C1(ISI 1 PCS) , 16 Channel Walkie Talkie Transceiver Two Way, Channel 400 - 470MHz untuk berkomunikasi antar walkie talkie Lazada).webp", 
-        variants: [
-            { nama: "HT/Walkie Talkie 🕓12 Jam", kodeVar: "A", harga: 50000 },
-            { nama: "HT/Walkie Talkie 🕓24 Jam", kodeVar: "B", harga: 70000 },
-        ] 
-    },
-    {
-        id: 9, kodeItem: "WLNKDC1", kategori: "Pendingin Ruangan", nama: "Kipas Angin Blower Uap", 
-        desc: "Kipas Angin Blower Uap", status: "Tersedia",
-        gambar: "./img/alatrental/kipas angin blower (Krisbow 60 Ltr Kipas Angin Uap 330 Watt - Hitamputih).webp", 
-        variants: [
-            { nama: "Kipas Angin Blower Uap 🕓6 Jam", kodeVar: "A", harga: 450000 },
-            { nama: "Kipas Angin Blower Uap 🕓12 Jam", kodeVar: "B", harga: 650000 },
-        ] 
-    },
-    {
-        id: 10, kodeItem: "TripodLightStandKecil", kategori: "Kamera - Aksesoris", nama: "Tripod Light Stand Kecil", 
-        desc: "Tripod Light Stand Kecil", status: "Tersedia",
-        gambar: "./img/alatrental/tripod lampu kecil (Light Stand EA2TT Klein 260).webp", 
-        variants: [
-            { nama: "Tripod Light Stand Kecil 🕓12 Jam", kodeVar: "A", harga: 20000 },
-            { nama: "Tripod Light Stand Kecil 🕓24 Jam", kodeVar: "B", harga: 30000 },
-        ] 
-    },
-    {
-        id: 11, kodeItem: "TV", kategori: "Layar", nama: "Televisi", 
-        desc: "Paket TV: 1x Televisi ● 1x Standing / Floor (Matador) Bracket ● 1x Kabel Listrik 30 meter ● 1x Kabel HDMI 30 meter", status: "PROMO! PROMO! PROMO! Lagi PROMO ini!",
-        gambar: "./img/alatrental/tv on tripod (Portable Tripod TV Stand 35 to 75 VIVO - desk solutions, screen mounting, and more).webp", 
-        variants: [
-            { nama: "Paket TV ukuran 40-43 inch Standing 🕓12 Jam", kodeVar: "A", harga: 500000 },
-            { nama: "Paket TV ukuran 40-43 inch Floor (Matador) 🕓12 Jam", kodeVar: "B", harga: 500000 },
-            { nama: "Paket TV ukuran 60-65 inch Standing 🕓12 Jam", kodeVar: "C", harga: 1500000 },
-            { nama: "Paket TV ukuran 60-65 inch Floor (Matador) 🕓12 Jam", kodeVar: "D", harga: 1500000 },
-        ] 
-    },
-    {
-        id: 12, kodeItem: "Videotron", kategori: "Layar", nama: "Videotron/Layar LED", 
-        desc: "Paket Layar LED: Panel sesuai ukuran (dihitung per 1 meter persegi) contoh 8m x 4m = 32m² x 700rb = 22,4jt ● Prosesor Videotron ● 1x Kabel HDMI 2 meter ● Operator Videotron ● Ukuran minimal 8m² ● Biaya bisa dinego untuk ukuran besar", status: "Tersedia",
-        gambar: "./img/alatrental/Led screen backdrop Vectors - Download Free High-Quality Vectors from Freepik Freepik.webp", 
-        variants: [
-            { nama: "Paket Videotron per 1 meter persegi 🕓1 Hari", kodeVar: "A", harga: 700000 },
-            { nama: "Paket Videotron per 1 meter persegi 🕓2 Hari", kodeVar: "B", harga: 600000 },
-        ] 
-    },
-
-    //tambahkan catatan:
-    //ada kompensasi 1 jam terlambat, semenit setalah akan dicharge 30% dari harga sewa.
-    //promo berubah sewaktu-waktu, hubungi kami terus untuk mengecek promo terkini.
-    //item-item baru akan segera hadir, pantau terus media sosial kami!
-    //harga yang tertera belum termasuk biaya antar-jemput jika tidak langsung di studio kami, hubungi kami untuk pengecekan biayanya.
-
-
-    // { 
-    //     id: 1, kodeItem: "In4", kategori: "Kamera", nama: "Insta360 X4", 
-    //     desc: "Kamera 360 resolusi 8K untuk event interaktif.", status: "Tersedia",
-    //     gambar: "https://images.unsplash.com/photo-1623912733306-4444654924c5?q=80&w=200", 
-    //     variants: [{ nama: "6 Jam", kodeVar: "A", harga: 150000 }, { nama: "24 Jam", kodeVar: "B", harga: 250000 }] 
-    // },
-    // { 
-    //     id: 2, kodeItem: "Ca6", kategori: "Kamera", nama: "Canon EOS R6", 
-    //     desc: "Mirrorless Full-frame andalan cinematic.", status: "PROMO!",
-    //     gambar: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=200", 
-    //     variants: [{ nama: "Body Only", kodeVar: "A", harga: 300000 }, { nama: "Full Kit", kodeVar: "B", harga: 450000 }] 
-    // },
-    // { 
-    //     id: 3, kodeItem: "Op1", kategori: "Service", nama: "Operator Livestream", 
-    //     desc: "Tenaga ahli untuk vMix & OBS.", status: "Tersedia",
-    //     gambar: "https://images.unsplash.com/photo-1478737270239-2fccd27ee086?q=80&w=200", 
-    //     variants: [{ nama: "Half Day", kodeVar: "A", harga: 500000 }, { nama: "Full Day", kodeVar: "B", harga: 850000 }] 
-    // }
-];
-
+let items = []; // Awalnya kosong, akan diisi dari JSON
 let cart = {}; 
 let currentCategory = "Semua";
 
-window.addEventListener('load', () => {
-    document.getElementById('loader').style.opacity = '0';
-    setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500);
-    
-    const urlParams = new URLSearchParams(window.location.search);
-    if(urlParams.has('kategori')) { currentCategory = urlParams.get('kategori'); }
-    setupCategories();
-    if(urlParams.has('cari')) { document.getElementById('searchInput').value = urlParams.get('cari'); }
-    
-    if(urlParams.has('kode')) {
-        urlParams.get('kode').split('-').forEach(k => parseAndAddCodeToCart(k));
-    }
+// Gunakan async agar kita bisa menunggu data JSON selesai didownload
+window.addEventListener('load', async () => {
+    try {
+        // 1. Ambil data dari file JSON
+        // Tambahkan timestamp agar browser selalu menganggap ini file baru
+const response = await fetch('peralatan.json?v=' + new Date().getTime());
+        items = await response.json();
 
-    renderItems(); // Render pertama kali
-    updateUI();    // Update tampilan cart awal
+        // 2. Sembunyikan loader
+        document.getElementById('loader').style.opacity = '0';
+        setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 500);
+        
+        // 3. Jalankan logika inisialisasi seperti biasa
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.has('kategori')) { currentCategory = urlParams.get('kategori'); }
+        
+        setupCategories(); // Pastikan kategori muncul berdasarkan data JSON
+        
+        if(urlParams.has('cari')) { document.getElementById('searchInput').value = urlParams.get('cari'); }
+        if(urlParams.has('kode')) {
+            urlParams.get('kode').split('-').forEach(k => parseAndAddCodeToCart(k));
+        }
+
+        renderItems(); // Render barang dari hasil fetch
+        updateUI();
+        
+    } catch (error) {
+        console.error("Gagal memuat data barang:", error);
+        alert("Terjadi kesalahan saat memuat katalog. Silakan refresh halaman.");
+    }
 });
 
 // LOGIK BARU: Update state tanpa re-render HTML gambar
@@ -346,14 +215,17 @@ function sendWhatsApp() {
     const codeString = generateCartCode();
     // let text = `*KODE PESANAN: ${codeString}*\n--------------------------\n`;
     //jexxmodified 02-04-26 - supaya bisa langsung mudah terlacak kalo pake braket [[]]
-    let text = `*KODE PESANAN: [[${codeString}]]*\n--------------------------\n`;
+    let text = `sewajo! by alphacast.id\n`
+    text += `www.alphacast.id/sewajo\n`
+    text += `*KODE PESANAN: [[${codeString}]]*\n--------------------------\n`;
     let total = 0;
     Object.values(cart).forEach(c => {
         const subtotal = c.varRef.harga * c.qty;
         text += `- ${c.qty}x ${c.itemRef.nama} (${c.varRef.nama}): Rp ${subtotal.toLocaleString()}\n`;
         total += subtotal;
     });
-    text += `--------------------------\n*TOTAL BAYAR: Rp ${total.toLocaleString()}*`;
+    text += `--------------------------\n*TOTAL BAYAR: Rp ${total.toLocaleString()}*\n\n`;
+    text += `Mohon jangan merubah apapun yang ada di pesan ini dan langsung menekan tombol kirim pesan, terima kasih.`
     window.open(`https://api.whatsapp.com/send?phone=6285159556468&text=${encodeURIComponent(text)}`);
 }
 
