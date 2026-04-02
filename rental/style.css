@@ -16,12 +16,14 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/* Update pada Body untuk memberi ruang bagi header fixed */
 html, body {
     width: 100%;
-    overflow-x: hidden; /* Mencegah layar melar ke samping */
+    overflow-x: hidden; 
     background-color: var(--dark-bg);
     color: var(--on-surface);
     line-height: 1.6;
+    padding-top: 60px; /* Sesuai dengan tinggi header agar konten tidak 'tenggelam' */
 }
 
 /* Loader */
@@ -40,11 +42,20 @@ html, body {
 #loader p { color: var(--text-secondary); font-size: 0.9rem; }
 
 /* Header */
+/* Header diubah menjadi Fixed (seperti tombol checkout) */
 header {
-    background-color: var(--surface); padding: 10px 15px;
-    position: sticky; top: 0; z-index: 1000;
-    display: flex; align-items: center; gap: 15px; height: 60px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    background-color: var(--surface); 
+    padding: 10px 15px;
+    position: fixed; /* Dikunci di posisi layar */
+    top: 0; 
+    left: 0; /* Pastikan menempel ke kiri */
+    width: 100%; /* Memenuhi lebar layar */
+    z-index: 1100; /* Lebih tinggi dari elemen lain */
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    height: 60px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6); /* Sedikit lebih tegas bayangannya */
 }
 .logo-header-img {
     height: 60px; /* Atur tinggi yang pas */
@@ -90,8 +101,14 @@ header {
 
 /* Kategori */
 .category-bar {
-    display: flex; overflow-x: auto; padding: 15px; gap: 10px;
-    background: var(--dark-bg); position: sticky; top: 60px; z-index: 999;
+    display: flex; 
+    overflow-x: auto; 
+    padding: 15px; 
+    gap: 10px;
+    background: var(--dark-bg); 
+    position: sticky; 
+    top: 60px; /* Menempel tepat di bawah header 60px */
+    z-index: 999;
 }
 .category-bar::-webkit-scrollbar { display: none; }
 .cat-btn {
@@ -103,12 +120,15 @@ header {
 /* Items & Status Colors */
 .container { 
     width: 100%;
-    max-width: 800px; /* Batas maksimal desktop */
-    margin: 0 auto;   /* Tengahkan kontainer */
-    padding: 15px;    /* Padding kiri kanan yang konsisten */
+    max-width: 800px; /* Mengunci lebar maksimal agar tidak terlalu lebar di desktop */
+    margin: 0 auto;   /* Menengahkan seluruh konten */
+    padding: 0 15px;  /* Padding kiri-kanan yang konsisten */
+    display: block;   /* Memastikan berperilaku sebagai block */
 }
 .item-card {
-    width: 100%; /* Pastikan kartu mengikuti lebar kontainer */
+    width: calc(100% - 2px); /* Menghindari tabrakan dengan border */
+    margin-left: auto;
+    margin-right: auto;
     background: var(--surface); 
     border-radius: 12px; 
     padding: 15px; 
@@ -196,3 +216,75 @@ body.checkout-mode #itemList, body.checkout-mode div#mainFooter { display: none 
 .modal-content img { width: 200px; height: 200px; background: white; padding: 10px; border-radius: 10px; }
 
 @media (max-width: 600px) { header:focus-within .logo-header-img { display: none; } }
+
+/* Info Banner Styling */
+.info-banner {
+    background: #1e2530; /* Warna biru gelap yang elegan */
+    border-left: 5px solid var(--primary-blue);
+    margin: 20px 15px; /* Margin kiri kanan agar sejajar dengan item card nantinya */
+    padding: 18px 45px 18px 20px;
+    border-radius: 12px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    animation: slideDown 0.5s ease-out;
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.info-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--primary-blue);
+}
+
+.info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-list li {
+    font-size: 0.85rem;
+    color: #cbd5e0;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 15px;
+}
+
+/* Titik poin kustom */
+.info-list li::before {
+    content: "•";
+    color: var(--primary-blue);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.close-banner {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    transition: 0.3s;
+}
+
+.close-banner:hover {
+    color: #fff;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

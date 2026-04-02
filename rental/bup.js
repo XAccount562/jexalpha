@@ -119,10 +119,10 @@ const items = [
     },
 
     //tambahkan catatan:
-    //ada kompensasi 1 jam terlambat, semenit setalah akan dicharge 30% dari harga sewa
-    //promo berubah sewaktu-waktu, hubungi kami terus untuk mengecek promo terkini
+    //ada kompensasi 1 jam terlambat, semenit setalah akan dicharge 30% dari harga sewa.
+    //promo berubah sewaktu-waktu, hubungi kami terus untuk mengecek promo terkini.
     //item-item baru akan segera hadir, pantau terus media sosial kami!
-    //harga diatas belum termasuk biaya antar-jemput jika tidak langsung di studio kami, hubungi kami untuk pengecekan biayanya.
+    //harga yang tertera belum termasuk biaya antar-jemput jika tidak langsung di studio kami, hubungi kami untuk pengecekan biayanya.
 
 
     // { 
