@@ -6,10 +6,10 @@ const items = [
         desc: "Paket Kamera: 1x Kamera ● 1x Baterai Kamera LP-E8 ● 1x Charger LP-E8 ● 1x Tali Kamera ● 1x Tas Kamera", status: "PROMO!",
         gambar: "./img/alatrental/canon 600d body only (Canon EOS 600D Body Only, B - CeX (UK) - Buy, Sell, Donate).webp", 
         variants: [
-            { nama: "Paket Kamera + Lensa Kit 18-55 (12 Jam)", kodeVar: "A", harga: 50000 },
-            { nama: "Paket Kamera + Lensa Kit 18-55 (24 Jam)", kodeVar: "B", harga: 100000 },
-            { nama: "Paket Kamera + Lensa Fix 50mm (12 Jam)", kodeVar: "C", harga: 50000 },
-            { nama: "Paket Kamera + Lensa Fix 50mm (24 Jam)", kodeVar: "D", harga: 100000 },
+            { nama: "Paket Kamera + Lensa Kit 18-55 🕓12 Jam", kodeVar: "A", harga: 50000 },
+            { nama: "Paket Kamera + Lensa Kit 18-55 🕓24 Jam", kodeVar: "B", harga: 100000 },
+            { nama: "Paket Kamera + Lensa Fix 50mm 🕓12 Jam", kodeVar: "C", harga: 50000 },
+            { nama: "Paket Kamera + Lensa Fix 50mm 🕓24 Jam", kodeVar: "D", harga: 100000 },
             { nama: "+ Tambahan Baterai Kamera LP-E8", kodeVar: "E", harga: 10000 },
         ] 
     },
@@ -18,11 +18,103 @@ const items = [
         desc: "Paket Kamera: 1x Kamera ● 1x Baterai Kamera LP-E8 ● 1x Charger LP-E8 ● 1x Tali Kamera ● 1x Tas Kamera", status: "Tersedia",
         gambar: "./img/alatrental/canon 700d body only (Buy Canon EOS 700D Digital SLR Camera Body best price online  Camera Warehouse  Camera Warehouse).webp", 
         variants: [
-            { nama: "Paket Kamera + Lensa Kit 18-55 (12 Jam)", kodeVar: "A", harga: 100000 },
-            { nama: "Paket Kamera + Lensa Kit 18-55 (24 Jam)", kodeVar: "B", harga: 150000 },
-            { nama: "Paket Kamera + Lensa Fix 50mm (12 Jam)", kodeVar: "C", harga: 100000 },
-            { nama: "Paket Kamera + Lensa Fix 50mm (24 Jam)", kodeVar: "D", harga: 150000 },
+            { nama: "Paket Kamera + Lensa Kit 18-55 🕓12 Jam", kodeVar: "A", harga: 100000 },
+            { nama: "Paket Kamera + Lensa Kit 18-55 🕓24 Jam", kodeVar: "B", harga: 150000 },
+            { nama: "Paket Kamera + Lensa Fix 50mm 🕓12 Jam", kodeVar: "C", harga: 100000 },
+            { nama: "Paket Kamera + Lensa Fix 50mm 🕓24 Jam", kodeVar: "D", harga: 150000 },
             { nama: "+ Tambahan Baterai Kamera LP-E8", kodeVar: "E", harga: 10000 },
+        ] 
+    },
+    {
+        id: 3, kodeItem: "C50mm", kategori: "Lensa", nama: "Canon EF 50mm f/1.8 STM", 
+        desc: "Lensa Canon EF", status: "PROMO!",
+        gambar: "./img/alatrental/canon ef 50mm f1.8 stm (Canon EF 50mm F1.8 STM real-world samples gallery DPReview Photography News, Gear Reviews & Community).webp", 
+        variants: [
+            { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 40000 },
+            { nama: "Lensa 🕓24 Jam", kodeVar: "B", harga: 60000 },
+        ] 
+    },
+    {
+        id: 4, kodeItem: "YN50mm", kategori: "Lensa", nama: "Yongnuo 50mm f/1.8 for Canon", 
+        desc: "Lensa Yongnuo buat Kamera Canon", status: "PROMO!",
+        gambar: "./img/alatrental/yongnuo 50mm f1.8 (Yongnuo 50mm f1.8 Lens Review ePHOTOzine).webp", 
+        variants: [
+            { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 30000 },
+            { nama: "Lensa 🕓24 Jam", kodeVar: "B", harga: 50000 },
+        ] 
+    },
+    {
+        id: 5, kodeItem: "C1855mm", kategori: "Lensa", nama: "Canon EF-S 18-55mm f/3.5-5.6", 
+        desc: "Lensa Canon EF-S IS/non IS (tergantung stok)", status: "PROMO!",
+        gambar: "./img/alatrental/Canon EF-S 18-55mm f3.5-5.6 IS II Lens 2042B002 B&H Photo Video.webp", 
+        variants: [
+            { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 30000 },
+            { nama: "Lensa 🕓24 Jam", kodeVar: "B", harga: 50000 },
+        ] 
+    },
+    {
+        id: 6, kodeItem: "C18135mm", kategori: "Lensa", nama: "Canon EF-S 18-135mm f/3.5-5-6 IS", 
+        desc: "Lensa Canon EF-S IS", status: "Tersedia",
+        gambar: "./img/alatrental/Canon EF-S 18-135mm f3.5-5.6 IS STM Lens 6097B002 B&H Photo.webp", 
+        variants: [
+            { nama: "Lensa 🕓12 Jam", kodeVar: "A", harga: 100000 },
+            { nama: "Lensa 🕓24 Jam", kodeVar: "B", harga: 150000 },
+        ] 
+    },
+    {
+        id: 7, kodeItem: "GdxTT600", kategori: "Kamera - Aksesoris", nama: "Godox TT600", 
+        desc: "Flash External (Speedlight) manual universal", status: "Tersedia",
+        gambar: "./img/alatrental/Godox TT600 (Jual Flash Godox TT600 - Batamkamera.com).webp", 
+        variants: [
+            { nama: "Flash External 🕓12 Jam", kodeVar: "A", harga: 50000 },
+            { nama: "Flash External 🕓24 Jam", kodeVar: "B", harga: 90000 },
+        ] 
+    },
+    {
+        id: 8, kodeItem: "WLNKDC1", kategori: "Komunikasi", nama: "HT WLN KD-C1", 
+        desc: "HT/Walkie Talkie UHF (400-470MHz), 16 Channel, baterai Li-ion 1000mAh, jangkauan 1-3 km (tergantung kondisi lapangan)", status: "PROMO!",
+        gambar: "./img/alatrental/HT WLN KD-C1 (HANDY TALKY WLN KD-C1(ISI 1 PCS) , 16 Channel Walkie Talkie Transceiver Two Way, Channel 400 - 470MHz untuk berkomunikasi antar walkie talkie Lazada).webp", 
+        variants: [
+            { nama: "HT/Walkie Talkie 🕓12 Jam", kodeVar: "A", harga: 50000 },
+            { nama: "HT/Walkie Talkie 🕓24 Jam", kodeVar: "B", harga: 70000 },
+        ] 
+    },
+    {
+        id: 9, kodeItem: "WLNKDC1", kategori: "Pendingin Ruangan", nama: "Kipas Angin Blower Uap", 
+        desc: "Kipas Angin Blower Uap", status: "Tersedia",
+        gambar: "./img/alatrental/kipas angin blower (Krisbow 60 Ltr Kipas Angin Uap 330 Watt - Hitamputih).webp", 
+        variants: [
+            { nama: "Kipas Angin Blower Uap 🕓6 Jam", kodeVar: "A", harga: 450000 },
+            { nama: "Kipas Angin Blower Uap 🕓12 Jam", kodeVar: "B", harga: 650000 },
+        ] 
+    },
+    {
+        id: 10, kodeItem: "TripodLightStandKecil", kategori: "Kamera - Aksesoris", nama: "Tripod Light Stand Kecil", 
+        desc: "Tripod Light Stand Kecil", status: "Tersedia",
+        gambar: "./img/alatrental/tripod lampu kecil (Light Stand EA2TT Klein 260).webp", 
+        variants: [
+            { nama: "Tripod Light Stand Kecil 🕓12 Jam", kodeVar: "A", harga: 20000 },
+            { nama: "Tripod Light Stand Kecil 🕓24 Jam", kodeVar: "B", harga: 30000 },
+        ] 
+    },
+    {
+        id: 11, kodeItem: "TV", kategori: "Layar", nama: "Televisi", 
+        desc: "Paket TV: 1x Televisi ● 1x Standing / Floor (Matador) Bracket ● 1x Kabel Listrik 30 meter ● 1x Kabel HDMI 30 meter", status: "PROMO!",
+        gambar: "./img/alatrental/tv on tripod (Portable Tripod TV Stand 35 to 75 VIVO - desk solutions, screen mounting, and more).webp", 
+        variants: [
+            { nama: "Paket TV ukuran 40-43 inch Standing 🕓12 Jam", kodeVar: "A", harga: 500000 },
+            { nama: "Paket TV ukuran 40-43 inch Standing 🕓12 Jam", kodeVar: "B", harga: 500000 },
+            { nama: "Paket TV ukuran 60-65 inch Floor (Matador) 🕓12 Jam", kodeVar: "C", harga: 1500000 },
+            { nama: "Paket TV ukuran 60-65 inch Floor (Matador) 🕓12 Jam", kodeVar: "D", harga: 1500000 },
+        ] 
+    },
+    {
+        id: 12, kodeItem: "Videotron", kategori: "Layar", nama: "Videotron/Layar LED", 
+        desc: "Paket Layar LED: Panel sesuai ukuran (dihitung per 1 meter persegi) contoh 8m x 4m = 32m² x 700rb = 22,4jt ● Prosesor Videotron ● 1x Kabel HDMI 2 meter ● Operator Videotron ● Ukuran minimal 8m² ● Biaya bisa dinego untuk ukuran besar", status: "Tersedia",
+        gambar: "./img/alatrental/Led screen backdrop Vectors - Download Free High-Quality Vectors from Freepik Freepik.webp", 
+        variants: [
+            { nama: "Paket Videotron per 1 meter persegi 🕓1 Hari", kodeVar: "A", harga: 700000 },
+            { nama: "Paket Videotron per 1 meter persegi 🕓2 Hari", kodeVar: "B", harga: 600000 },
         ] 
     },
 
@@ -30,6 +122,7 @@ const items = [
     //ada kompensasi 1 jam terlambat, semenit setalah akan dicharge 30% dari harga sewa
     //promo berubah sewaktu-waktu, hubungi kami terus untuk mengecek promo terkini
     //item-item baru akan segera hadir, pantau terus media sosial kami!
+    //harga diatas belum termasuk biaya antar-jemput jika tidak langsung di studio kami, hubungi kami untuk pengecekan biayanya.
 
 
     // { 
