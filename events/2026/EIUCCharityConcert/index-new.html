@@ -1,0 +1,119 @@
+---
+layout: null
+---
+
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "w5cs1v4by0");
+        </script>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>alphacast.id - Livestream & Multimedia Specialist</title>
+        <link rel="shortcut icon" href="/images/logo/(smallforwebsite)  color1 - alphacast.id logo.png" />
+        <link rel="icon" type="image/png" href="/images/logo/2026/website icon thumbnail for sosmed link sharing - alphacast.id 2026.png">
+
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    </head>
+
+    <body id="bodyTag">
+
+        <div class="hero">
+            <video class="hero-video" autoplay loop muted playsinline poster="images/poster-fallback.jpg">
+                <source src="/videos/(H264) (LANDSCAPE) loop video for website - www.alphacast.id.mp4" type="video/mp4">
+                <p>Browser Anda tidak mendukung pemutaran video.</p>
+            </video>
+            
+            <div class="hero-content">
+                <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" class="hero-logo">
+                <p>Livestream & Multimedia Specialist: Professional Video Production, Virtual & Hybrid Event Solutions. Based in Manado, North Sulawesi.</p>
+            </div>
+        </div>
+
+        <section id="infoBanner" class="info-banner">
+            <div class="info-content">
+                <div class="info-header">
+                    <span class="info-icon">📢</span>
+                    <span class="info-title">Informasi Penting Sebelum Memesan</span>
+                </div>
+                <ul class="info-list">
+                    <li>Harga tertera adalah harga langsung datang ke studio. Kami menyediakan layanan <b>antar-jemput</b>, silakan hubungi kami untuk pengecekan biaya sesuai lokasi Anda. <br>Tidak menerima penukaran unit ketika diantar, uang muka & biaya pengantaran tidak bisa dikembalikan jika adanya pembatalan.</li>
+                    <li>Kami memberikan <b>toleransi keterlambatan hingga 1 jam</b>. Ketika 1 menit terlewatkan, akan dibulatkan menjadi 1 jam terlambat dan akan dikenakan biaya tambahan 30% dari harga sewa per jam keterlambatannya. <br>Mohon kerja samanya ya!</li>
+                    <li>Setiap pelanggan hanya dapat menyewa 1 unit promo untuk item yang sama dalam satu waktu transaksi. Yuk, berbagi kesempatan promo dengan pelanggan lainnya.</li>
+                    <li>Promo kami dapat berubah sewaktu-waktu. Yuk, hubungi kami untuk cek <b>promo terbaru & harga terkini</b> hari ini.</li>
+                    <li>Koleksi alat/item baru akan segera hadir! Pantau terus media sosial kami agar tidak ketinggalan update.</li>
+                </ul>
+            </div>
+        </section>
+
+        <main class="container main-content">
+            <h1 class="title-h1">Selamat Datang di alphacast.id</h1>
+            <h2 class="title-h2">Livestream & Multimedia Specialist</h2>
+            <h3 class="title-h3">Solusi Event Profesional Anda</h3>
+            <p class="desc-p">Kami menyediakan layanan produksi video, virtual, dan hybrid event terbaik. Percayakan dokumentasi dan penyiaran acara Anda bersama tim profesional kami agar berjalan lancar dan berkesan.</p>
+            
+            <div class="platform-buttons">
+                <a href="#" class="btn-mat btn-fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+                <a href="#" class="btn-mat btn-yt"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="#" class="btn-mat btn-ig"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#" class="btn-mat btn-tt"><i class="fab fa-tiktok"></i> TikTok</a>
+                <a href="#" class="btn-mat btn-drive"><i class="fab fa-google-drive"></i> Google Drive</a>
+            </div>
+
+            <div class="countdown-container">
+                <h3 class="title-h3">Hitung Mundur Event / Promo:</h3>
+                <div id="countdown" class="countdown">
+                    <div class="cd-box"><span id="cd-days">00</span><small>Hari</small></div>
+                    <div class="cd-box"><span id="cd-hours">00</span><small>Jam</small></div>
+                    <div class="cd-box"><span id="cd-minutes">00</span><small>Menit</small></div>
+                    <div class="cd-box"><span id="cd-seconds">00</span><small>Detik</small></div>
+                </div>
+                <p id="cd-message" class="cd-message"></p>
+            </div>
+        </main>
+        
+        {% include footer.html %}
+    </body>
+
+    <script>
+            // Mengatur tanggal target: 23 April 2026 14:30 WITA (GMT+0800)
+            const countDownDate = new Date("Apr 23, 2026 14:30:00 GMT+0800").getTime();
+
+            const timerInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                // Jika waktu sudah lewat
+                if (distance < 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById("cd-days").innerHTML = "00";
+                    document.getElementById("cd-hours").innerHTML = "00";
+                    document.getElementById("cd-minutes").innerHTML = "00";
+                    document.getElementById("cd-seconds").innerHTML = "00";
+                    document.getElementById("cd-message").innerHTML = "Acara telah dimulai / Waktu telah habis!";
+                    return;
+                }
+
+                // Kalkulasi hari, jam, menit, dan detik
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Memasukkan hasil ke dalam elemen HTML (tambah angka 0 di depan jika di bawah 10)
+                document.getElementById("cd-days").innerHTML = days < 10 ? "0" + days : days;
+                document.getElementById("cd-hours").innerHTML = hours < 10 ? "0" + hours : hours;
+                document.getElementById("cd-minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("cd-seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
+            }, 1000);
+        </script>
+</html>
