@@ -100,6 +100,61 @@
       })(window, document, "clarity", "script", "w5cs1v4by0");
     </script>
 
+    <link
+      rel="shortcut icon"
+      href="/images/logo/(smallforwebsite)  color1 - alphacast.id logo.png"
+    />
+
+    <link rel="icon" type="image/png" href="/images/logo/2026/website icon thumbnail for sosmed link sharing - alphacast.id 2026.png">
+    
+    <!-- CSS untuk mematikan interaksi klik/tahan pada gambar -->
+    <style>
+        /* Mencegah user mengklik kanan atau menahan jari pada layar (mobile) */
+        img, video, canvas, svg {
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none;   /* Safari */
+            -khtml-user-select: none;    /* Konqueror HTML */
+            -moz-user-select: none;      /* Firefox */
+            -ms-user-select: none;       /* Internet Explorer/Edge */
+            user-select: none;           /* Chrome dan Opera */
+            pointer-events: none;        /* Mencegah klik sama sekali pada elemen ini */
+        }
+
+        /* Jika Anda tetap ingin tombol video berfungsi, 
+          gunakan class khusus agar video tidak terblokir total */
+        .video-protected {
+            pointer-events: auto !important;
+        }
+    </style>
+
+    <script>
+        // 1. Matikan Klik Kanan di Seluruh Halaman
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // 2. Matikan Shortcut Keyboard (Ctrl+S, Ctrl+U, Ctrl+Shift+I)
+        document.addEventListener('keydown', function(e) {
+            // Blokir Save (Ctrl+S atau Cmd+S)
+            if ((e.ctrlKey || e.metaKey) && e.keyCode == 83) {
+                e.preventDefault();
+            }
+            // Blokir View Source (Ctrl+U)
+            if ((e.ctrlKey || e.metaKey) && e.keyCode == 85) {
+                e.preventDefault();
+            }
+            // Blokir Inspect Element (F12 atau Ctrl+Shift+I)
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) {
+                e.preventDefault();
+            }
+        });
+
+        // 3. Mencegah Drag-and-Drop Gambar/Video ke Tab Baru
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.nodeName === 'IMG' || e.target.nodeName === 'VIDEO') {
+                e.preventDefault();
+            }
+        });
+    </script>
+
   </head>
   <body class="is-preload">
     <!-- Google Tag Manager (noscript) -->
