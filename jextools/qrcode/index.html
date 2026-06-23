@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Utility - alphacast.id</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #121212; color: #e3e3e3; }
+        .google-input { background-color: #1e1e1e; border: 1px solid #3c4043; color: #e8eaed; transition: all 0.2s ease-in-out; }
+        .google-input:focus { border-color: #8ab4f8; outline: none; box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.2); }
+        .google-btn-primary { background-color: #8ab4f8; color: #202124; transition: all 0.2s ease; }
+        .google-btn-primary:hover { background-color: #aecbfa; transform: translateY(-1px); }
+        .google-btn-success { background-color: #81c995; color: #202124; transition: all 0.2s ease; }
+        .google-btn-success:hover { background-color: #a8dab5; transform: translateY(-1px); }
+        .card-surface { background-color: #1d1e21; border: 1px solid #303134; }
+        /* Style adjustments for HTML5-QRCode internal elements to match dark UI */
+        #reader button {
+            background-color: #3c4043 !important; color: #e8eaed !important;
+            border: 1px solid #5f6368 !important; padding: 8px 16px !important;
+            border-radius: 6px !important; cursor: pointer !important; font-size: 13px !important;
+            margin: 4px !important; transition: background 0.2s;
+        }
+        #reader button:hover { background-color: #4f5357 !important; }
+        #reader select {
+            background-color: #1e1e1e !important; color: #e8eaed !important;
+            border: 1px solid #3c4043 !important; padding: 6px !important;
+            border-radius: 6px !important; margin: 4px !important; font-size: 13px !important;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    {% include header.html %}
+
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
+        <div class="flex flex-col items-center mb-8 text-center">
+            <img src="https://alphacast.id/images/logo/2024/2024%20logo%20name%20slogan%20white%20-%20alphacast.id.png" alt="alphacast.id logo" class="h-14 md:h-16 w-auto object-contain mb-4">
+            <h1 class="text-xl md:text-2xl font-medium text-[#8ab4f8]">All-in-One QR Code Utility</h1>
+            <p class="text-gray-400 text-sm mt-1">Buat cepat dan pindai QR Code secara instan dalam satu platform.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+            
+            <div class="lg:col-span-6 card-surface p-6 rounded-xl shadow-xl flex flex-col justify-between">
+                <div>
+                    <h2 class="text-lg font-medium text-white mb-5 flex items-center gap-2">
+                        <i class="fa-solid fa-qrcode text-[#8ab4f8]"></i> QR Code Generator
+                    </h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-1.5">Teks atau URL Link</label>
+                            <input type="text" id="qrTextIn" class="w-full google-input rounded-lg p-3 text-sm font-sans" value="https://alphacast.id" placeholder="Masukkan URL atau teks di sini...">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1.5">Ukuran (Pixel)</label>
+                                <select id="qrSizeSel" class="w-full google-input rounded-lg p-3 text-sm cursor-pointer">
+                                    <option value="128">128 x 128 px</option>
+                                    <option value="256" selected>256 x 256 px</option>
+                                    <option value="384">384 x 384 px</option>
+                                    <option value="512">512 x 512 px</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-1.5">Tingkat Koreksi Error</label>
+                                <select id="qrCorrectSel" class="w-full google-input rounded-lg p-3 text-sm cursor-pointer">
+                                    <option value="L">Low (7%)</option>
+                                    <option value="M" selected>Medium (15%)</option>
+                                    <option value="Q">Quarter (25%)</option>
+                                    <option value="H">High (30%)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex flex-col items-center justify-center p-6 bg-[#161719] rounded-xl border border-gray-800 min-h-[260px]">
+                        <div id="qrcodeCanvas" class="bg-white p-3 rounded-lg inline-block"></div>
+                        <p class="text-xs text-gray-500 mt-3 text-center">Pratinjau otomatis diperbarui saat Anda mengetik</p>
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <button onclick="downloadQRCode()" class="w-full google-btn-primary font-medium rounded-lg py-3 px-4 text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-cloud-arrow-down"></i> Unduh Gambar QR Code
+                    </button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-6 card-surface p-6 rounded-xl shadow-xl border-t-2 border-[#81c995] flex flex-col justify-between">
+                <div class="h-full flex flex-col">
+                    <h2 class="text-lg font-medium text-white mb-5 flex items-center gap-2">
+                        <i class="fa-solid fa-expand text-green-400"></i> QR Code Scanner
+                    </h2>
+
+                    <div class="relative bg-[#161719] rounded-xl border border-gray-800 overflow-hidden mb-4 min-h-[260px] flex flex-col justify-center">
+                        <div id="reader" class="w-full text-sm text-gray-400"></div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="block text-xs font-medium text-gray-400 mb-1">Atau Pindai via Upload File Gambar:</label>
+                        <input type="file" id="qrFileInput" accept="image/*" class="w-full text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-[#3c4043] file:text-white hover:file:bg-[#4f5357] cursor-pointer">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1.5">Hasil Pemindaian (Scan Result)</label>
+                        <div class="relative">
+                            <textarea id="scanResultBox" readonly class="w-full google-input rounded-xl p-3 text-sm font-sans h-24 resize-none leading-relaxed" placeholder="Arahkan kamera ke QR Code atau unggah file untuk melihat hasil..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button onclick="copyScanResult()" id="btnCopyScan" class="google-btn-success font-medium rounded-lg py-3 px-4 text-sm flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-copy"></i> <span id="btnCopyScanText">Salin Hasil Scan</span>
+                    </button>
+                    <button onclick="openScanResultLink()" id="btnOpenLink" disabled class="bg-transparent border border-gray-600 text-gray-500 font-medium rounded-lg py-3 px-4 text-sm flex items-center justify-center gap-2 cursor-not-allowed">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Tautan
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-surface p-4 rounded-xl shadow-xl border-l-4 border-blue-500 text-xs text-gray-400 flex items-center gap-3">
+            <i class="fa-solid fa-circle-info text-blue-400 text-base flex-shrink-0"></i>
+            <div>
+                <strong>Catatan Keamanan Browser:</strong> Modul Scanner membutuhkan izin akses kamera Anda. Seluruh proses pemindaian dan pembuatan QR Code dilakukan secara lokal di perangkat Anda tanpa mengirim data teks atau gambar ke server mana pun (*privacy-secured*).
+            </div>
+        </div>
+    </main>
+
+    {% include footer.html %}
+
+    <script>
+        // --- SELEKTOR ELEMENT GLOBAL ---
+        const qrTextInEl = document.getElementById('qrTextIn');
+        const qrSizeSelEl = document.getElementById('qrSizeSel');
+        const qrCorrectSelEl = document.getElementById('qrCorrectSel');
+        const qrcodeCanvasEl = document.getElementById('qrcodeCanvas');
+        const scanResultBoxEl = document.getElementById('scanResultBox');
+        const qrFileInputEl = document.getElementById('qrFileInput');
+        const btnOpenLinkEl = document.getElementById('btnOpenLink');
+
+        let qrCodeInstance = null;
+        let html5QrcodeScanner = null;
+
+        // --- CODE LOGIC: QR CODE GENERATOR ---
+        function executeGenerateQR() {
+            const txt = qrTextInEl.value || '';
+            const size = parseInt(qrSizeSelEl.value) || 256;
+            const correctLevelStr = qrCorrectSelEl.value;
+
+            // Mapping string parameter to Library Constant Object
+            let cLevel = QRCode.CorrectLevel.M;
+            if (correctLevelStr === 'L') cLevel = QRCode.CorrectLevel.L;
+            else if (correctLevelStr === 'Q') cLevel = QRCode.CorrectLevel.Q;
+            else if (correctLevelStr === 'H') cLevel = QRCode.CorrectLevel.H;
+
+            // Clear previous element inner container
+            qrcodeCanvasEl.innerHTML = "";
+
+            if(txt.trim() !== "") {
+                qrCodeInstance = new QRCode(qrcodeCanvasEl, {
+                    text: txt,
+                    width: size,
+                    height: size,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : cLevel
+                });
+            } else {
+                qrcodeCanvasEl.innerHTML = "<div class='text-gray-600 text-xs py-10'>Teks kosong</div>";
+            }
+        }
+
+        function downloadQRCode() {
+            const img = qrcodeCanvasEl.querySelector('img');
+            if (img) {
+                const imgUrl = img.src;
+                const downloadLink = document.createElement('a');
+                downloadLink.href = imgUrl;
+                downloadLink.download = 'alphacast-qrcode.png';
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            } else {
+                alert("Gagal mengunduh. Pastikan teks QR Code sudah terisi.");
+            }
+        }
+
+        // --- CODE LOGIC: QR CODE SCANNER ---
+        function onScanSuccess(decodedText, decodedResult) {
+            scanResultBoxEl.value = decodedText;
+            validateAndToggleLinkButton(decodedText);
+        }
+
+        function onScanFailure(error) {
+            // Callback internal ini dijalankan terus menerus saat mencari kode QR di feed video.
+            // Diabaikan agar tidak membanjiri log konsol browser.
+        }
+
+        function validateAndToggleLinkButton(text) {
+            // Regex sederhana mendeteksi pola url HTTP/HTTPS
+            const urlPattern = /^(https?:\/\/[^\s]+)/i;
+            if (urlPattern.test(text.trim())) {
+                btnOpenLinkEl.disabled = false;
+                btnOpenLinkEl.classList.remove('text-gray-500', 'border-gray-600', 'cursor-not-allowed');
+                btnOpenLinkEl.classList.add('text-green-400', 'border-green-600', 'hover:bg-green-950/30');
+            } else {
+                btnOpenLinkEl.disabled = true;
+                btnOpenLinkEl.classList.remove('text-green-400', 'border-green-600', 'hover:bg-green-950/30');
+                btnOpenLinkEl.classList.add('text-gray-500', 'border-gray-600', 'cursor-not-allowed');
+            }
+        }
+
+        function copyScanResult() {
+            if(scanResultBoxEl.value.trim() === "") return;
+            scanResultBoxEl.select();
+            navigator.clipboard.writeText(scanResultBoxEl.value);
+            const btnText = document.getElementById('btnCopyScanText');
+            btnText.innerText = "Teks Disalin!";
+            setTimeout(() => { btnText.innerText = "Salin Hasil Scan"; }, 2000);
+        }
+
+        function openScanResultLink() {
+            const targetUrl = scanResultBoxEl.value.trim();
+            if(targetUrl !== "") {
+                window.open(targetUrl, '_blank');
+            }
+        }
+
+        // --- INTERACTIVE BINDING LISTENERS ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Initialize Generator
+            executeGenerateQR();
+
+            // Setup Event Listener Input untuk Live Update Preview (Mirip tool chat)
+            [qrTextInEl].forEach(el => el.addEventListener('input', executeGenerateQR));
+            [qrSizeSelEl, qrCorrectSelEl].forEach(el => el.addEventListener('change', executeGenerateQR));
+
+            // Initialize Camera Scanner Component Object
+            html5QrcodeScanner = new Html5QrcodeScanner("reader", { 
+                fps: 15, 
+                qrbox: { width: 200, height: 200 },
+                rememberLastUsedCamera: true,
+                aspectRatio: 1.0
+            }, false);
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+
+            // Setup File Upload Image Scanner Engine Logic
+            qrFileInputEl.addEventListener('change', e => {
+                if (e.target.files.length == 0) return;
+                const imageFile = e.target.files[0];
+                const html5QrCodeEngine = new Html5Qrcode("reader");
+                
+                scanResultBoxEl.value = "Sedang memproses berkas gambar...";
+                
+                html5QrCodeEngine.scanFile(imageFile, true)
+                    .then(decodedText => {
+                        scanResultBoxEl.value = decodedText;
+                        validateAndToggleLinkButton(decodedText);
+                    })
+                    .catch(err => {
+                        scanResultBoxEl.value = "Error: QR Code tidak terdeteksi atau gambar terlalu buram.";
+                        validateAndToggleLinkButton("");
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
