@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Generator - alphacast.id</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Roboto', sans-serif; background-color: #121212; color: #e3e3e3; }
+        .google-input { background-color: #1e1e1e; border: 1px solid #3c4043; color: #e8eaed; transition: all 0.2s ease-in-out; }
+        .google-input:focus { border-color: #8ab4f8; outline: none; box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.2); }
+        .google-btn-primary { background-color: #8ab4f8; color: #202124; transition: all 0.2s ease; }
+        .google-btn-primary:hover { background-color: #aecbfa; transform: translateY(-1px); }
+        .card-surface { background-color: #1d1e21; border: 1px solid #303134; }
+        .badge-placeholder { background-color: #2a3b5c; color: #8ab4f8; border: 1px solid #3d5afe; }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    {% include header.html %}
+
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
+        <div class="flex flex-col items-center mb-8 text-center">
+            <img src="https://alphacast.id/images/logo/2024/2024%20logo%20name%20slogan%20white%20-%20alphacast.id.png" alt="alphacast.id logo" class="h-14 md:h-16 w-auto object-contain mb-4">
+            <h1 class="text-xl md:text-2xl font-medium text-[#8ab4f8]">Client Chat Automation Tool</h1>
+            <p class="text-gray-400 text-sm mt-1">Generate template konfirmasi secara presisi.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+            <div class="lg:col-span-5 card-surface p-6 rounded-xl shadow-xl">
+                <h2 class="text-lg font-medium text-white mb-5 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-[#8ab4f8]"></i> Parameter Pesan
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1.5">Panggilan Client</label>
+                        <select id="panggilan" class="w-full google-input rounded-lg p-3 text-sm cursor-pointer">
+                            <option value="kakak">Kak / Kakak</option>
+                            <option value="bapak">Pak / Bapak</option>
+                            <option value="ibu">Bu / Ibu</option>
+                            <option value="bapak_ibu">Bapak/Ibu</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1.5">Judul Acara / Event</label>
+                        <input type="text" id="judulAcara" class="w-full google-input rounded-lg p-3 text-sm" value="'The Funeral of Bpk. Anggiat Situmorang, S.Sos'">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1.5">Tanggal Pelaksanaan</label>
+                        <input type="text" id="tanggalAcara" class="w-full google-input rounded-lg p-3 text-sm" value="9 April 2026">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-1.5">Link Rekaman Video</label>
+                        <input type="url" id="linkVideo" class="w-full google-input rounded-lg p-3 text-sm font-mono text-blue-300" value="[link]">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Pilihan Template</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 p-2.5 rounded-lg border border-[#3c4043] bg-[#242528] cursor-pointer hover:bg-[#2d2e31]">
+                                <input type="radio" name="templateChoice" value="template1" checked class="text-[#8ab4f8] focus:ring-0">
+                                <span class="text-xs text-gray-300"><strong>Template 1:</strong> Detail & Hangat</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2.5 rounded-lg border border-[#3c4043] bg-[#242528] cursor-pointer hover:bg-[#2d2e31]">
+                                <input type="radio" name="templateChoice" value="template2" class="text-[#8ab4f8] focus:ring-0">
+                                <span class="text-xs text-gray-300"><strong>Template 2:</strong> Singkat & Padat</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-2.5 rounded-lg border border-[#3c4043] bg-[#242528] cursor-pointer hover:bg-[#2d2e31]">
+                                <input type="radio" name="templateChoice" value="custom" class="text-[#8ab4f8] focus:ring-0">
+                                <span class="text-xs text-amber-400 font-medium">✨ Custom Template Saya</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 flex flex-col justify-between card-surface p-6 rounded-xl shadow-xl border-t-2 border-[#8ab4f8]">
+                <div class="h-full flex flex-col">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-medium text-white flex items-center gap-2">
+                            <i class="fa-solid fa-square-poll-horizontal text-green-400"></i> Live Output Preview
+                        </h2>
+                    </div>
+                    <div class="relative flex-grow min-h-[340px] flex flex-col">
+                        <textarea id="outputBox" readonly class="w-full flex-grow google-input rounded-xl p-4 text-sm font-sans resize-none leading-relaxed"></textarea>
+                    </div>
+                </div>
+                <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <button onclick="copyToClipboard()" id="btnCopy" class="google-btn-primary font-medium rounded-lg py-3 px-4 text-sm flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-copy"></i> <span id="btnCopyText">Salin Teks Pesan</span>
+                    </button>
+                    <button onclick="resetInputs()" class="bg-transparent border border-gray-600 text-gray-400 hover:text-white hover:border-gray-400 font-medium rounded-lg py-3 px-4 text-sm flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-arrow-rotate-left"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-surface p-6 rounded-xl shadow-xl border-l-4 border-amber-500">
+            <h2 class="text-lg font-medium text-white mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-code text-amber-500"></i> Workspace Custom Template Editor
+            </h2>
+            <div class="flex flex-wrap gap-2 mb-4 p-3 bg-[#161719] rounded-lg border border-gray-800">
+                <button onclick="copyPlaceholder('{judul}')" class="badge-placeholder text-xs px-2.5 py-1 rounded font-mono hover:opacity-80 transition">{judul}</button>
+                <button onclick="copyPlaceholder('{tanggal}')" class="badge-placeholder text-xs px-2.5 py-1 rounded font-mono hover:opacity-80 transition">{tanggal}</button>
+                <button onclick="copyPlaceholder('{link}')" class="badge-placeholder text-xs px-2.5 py-1 rounded font-mono hover:opacity-80 transition">{link}</button>
+            </div>
+            <textarea id="customTemplateInput" oninput="saveCustomTemplate()" class="w-full h-48 google-input rounded-xl p-4 text-sm font-mono leading-relaxed bg-[#161719]"></textarea>
+        </div>
+    </main>
+
+    {% include footer.html %}
+
+    <script>
+        const panggilanEl = document.getElementById('panggilan');
+        const judulAcaraEl = document.getElementById('judulAcara');
+        const tanggalAcaraEl = document.getElementById('tanggalAcara'); // <-- Benar (El)
+        const linkVideoEl = document.getElementById('linkVideo');
+        const outputBoxEl = document.getElementById('outputBox');
+        const customTemplateInputEl = document.getElementById('customTemplateInput');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTemplate = localStorage.getItem('alphacast_custom_template');
+            customTemplateInputEl.value = savedTemplate || `Halo {panggilan_pendek}, berikut dokumentasi {judul} tanggal {tanggal}. Silakan unduh di {link}. Terima kasih dari alphacast.id!`;
+            generateText();
+        });
+
+        function saveCustomTemplate() {
+            localStorage.setItem('alphacast_custom_template', customTemplateInputEl.value);
+            generateText();
+        }
+
+        function generateText() {
+            const panggilanType = panggilanEl.value;
+            const judul = judulAcaraEl.value || '';
+            const tanggal = tanggalAcaraEl.value || '';
+            const link = linkVideoEl.value || '';
+            const templateSelected = document.querySelector('input[name="templateChoice"]:checked').value;
+
+            let pPendek = "kak"; let pPanjang = "kakak"; let pHormat = "Bapak/Ibu";
+            if (panggilanType === "bapak") { pPendek = "pak"; pPanjang = "bapak"; pHormat = "Bapak"; }
+            else if (panggilanType === "ibu") { pPendek = "bu"; pPanjang = "ibu"; pHormat = "Ibu"; }
+            else if (panggilanType === "bapak_ibu") { pPendek = "bapak/ibu"; pPanjang = "bapak/ibu"; pHormat = "Bapak/Ibu"; }
+
+            let hasilPesan = "";
+
+            if (templateSelected === "template1") {
+                hasilPesan = `Selamat siang ${pPendek}. Mohon maaf mengganggu waktunya sebentar, kami dari tim alphacast.id ingin menyampaikan hasil dokumentasi rekaman ibadah '${judul}' yang dilaksanakan pada tanggal ${tanggal}.\n\nBerikut adalah tautan untuk mengakses rekaman tersebut:\n${link}\n\nKami mohon kesediaan ${pPanjang} untuk memeriksa tautan tersebut. Mohon informasikan kepada kami jika terdapat kendala saat mengakses atau mengunduh videonya. Sebagai informasi, tautan ini akan aktif selama 1 bulan ke depan.\n\nJika ada hal yang ingin ditanyakan atau dikonsultasikan lebih lanjut, silakan hubungi kami kembali. Sekali lagi, terima kasih banyak atas kepercayaan ${pHormat} kepada alphacast.id. Semoga di lain kesempatan kami dapat kembali dipercaya untuk membantu kebutuhan dokumentasi dan multimedia acara ${pPanjang} 🙏`;
+            } 
+            else if (templateSelected === "template2") {
+                hasilPesan = `Selamat siang ${pPendek}, kami dari tim alphacast.id berterima kasih atas kerjasamanya. Tautan hasil rekaman dan dokumentasi untuk acara '${judul}' (${tanggal}) sudah dapat diakses melalui link berikut:\n\n👉 ${link}\n\nMohon bantuannya untuk memeriksa kelancaran pemutaran video tersebut. Link aktif selama 1 bulan dari sekarang. Hubungi kami jika ada kendala. Terima kasih banyak atas kepercayaan ${pHormat} kepada layanan multimedia alphacast.id 🙏`;
+            } 
+            else if (templateSelected === "custom") {
+                hasilPesan = customTemplateInputEl.value
+                    .replace(/{judul}/g, judul)
+                    .replace(/{tanggal}/g, tanggal)
+                    .replace(/{link}/g, link)
+                    .replace(/{panggilan_pendek}/g, pPendek)
+                    .replace(/{panggilan_panjang}/g, pPanjang)
+                    .replace(/{panggilan_hormat}/g, pHormat);
+            }
+            outputBoxEl.value = hasilPesan;
+        }
+
+        function copyPlaceholder(text) { navigator.clipboard.writeText(text); alert("Placeholder " + text + " disalin!"); }
+
+        function copyToClipboard() {
+            outputBoxEl.select();
+            navigator.clipboard.writeText(outputBoxEl.value);
+            const btn = document.getElementById('btnCopyText');
+            btn.innerText = "Teks Disalin!"; setTimeout(() => btn.innerText = "Salin Teks Pesan", 2000);
+        }
+
+        function resetInputs() {
+            panggilanEl.value = "kakak"; judulAcaraEl.value = "'The Funeral of Bpk. Anggiat Situmorang, S.Sos'";
+            tanggalAcaraEl.value = "9 April 2026"; linkVideoEl.value = "[link]"; generateText();
+        }
+
+        // Perbaikan di bagian bawah: Menggunakan tanggalAcaraEl yang benar
+        [panggilanEl, judulAcaraEl, tanggalAcaraEl, linkVideoEl].forEach(el => {
+            el.addEventListener('input', generateText);
+        });
+        document.querySelectorAll('input[name="templateChoice"]').forEach(r => r.addEventListener('change', generateText));
+    </script>
+</body>
+</html>
