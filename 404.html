@@ -7,9 +7,13 @@ layout: null
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Halaman Tidak Ditemukan | alphacast.id</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
@@ -28,6 +32,7 @@ layout: null
             padding: 0;
         }
 
+        /* PERBAIKAN UTAMA: Struktur Flex Column Menjaga Posisi Header & Footer */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-main);
@@ -35,15 +40,21 @@ layout: null
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Kontainer Utama yang Mengisolasi Kotak Error 404 */
+        .main-error-wrapper {
+            flex-grow: 1;
+            display: flex;
             justify-content: center;
             align-items: center;
-            padding: 24px;
-            overflow-x: hidden;
+            padding: 40px 24px;
             position: relative;
         }
 
         /* Background Glow Effect khas Premium Dark Mode */
-        body::before {
+        .main-error-wrapper::before {
             content: '';
             position: absolute;
             width: 300px;
@@ -51,18 +62,18 @@ layout: null
             background: var(--accent-primary);
             filter: blur(150px);
             opacity: 0.12;
-            top: 20%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 0;
             pointer-events: none;
         }
 
-        /* Animasi Masuk Diperpanjang Menjadi 1 Detik Sesuai Permintaan */
+        /* Animasi Masuk Disesuaikan Menjadi Sempurna 1 Detik */
         @keyframes fadeInUp {
             0% {
                 opacity: 0;
-                transform: translateY(24px) scale(0.97);
+                transform: translateY(30px) scale(0.97);
             }
             100% {
                 opacity: 1;
@@ -78,23 +89,11 @@ layout: null
             border: 1px solid var(--border-color);
             border-radius: 24px;
             padding: 48px 32px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             position: relative;
             z-index: 1;
             backdrop-filter: blur(10px);
-            /* Durasi diubah menjadi 1s cubic-bezier agar terasa transisi in yang sinematik */
             animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        .logo-container {
-            margin-bottom: 28px;
-        }
-
-        /* Menggunakan path logo lokal */
-        .logo-img {
-            max-width: 220px;
-            height: auto;
-            display: inline-block;
         }
 
         .error-code {
@@ -110,7 +109,7 @@ layout: null
             letter-spacing: -2px;
         }
 
-        /* Tab / Grid Multi-bahasa */
+        /* Grid Penyajian Pesan Multi-bahasa */
         .lang-grid {
             text-align: left;
             background: rgba(0, 0, 0, 0.2);
@@ -125,7 +124,7 @@ layout: null
             overflow-y: auto;
         }
 
-        /* Kustomisasi Scrollbar */
+        /* Kustomisasi Scrollbar Minimalis */
         .lang-grid::-webkit-scrollbar {
             width: 6px;
         }
@@ -171,26 +170,27 @@ layout: null
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 14px 24px;
+            padding: 14px 20px;
             border-radius: 12px;
             font-size: 14px;
             font-weight: 600;
             text-decoration: none;
             transition: all 0.2s ease;
             cursor: pointer;
-            min-width: 230px; /* Menjaga ukuran tombol konstan saat teks berubah panjang */
+            min-width: 245px; /* Lebar konstan agar penataan layout tidak bergeser saat ganti bahasa */
         }
 
-        /* Elemen pembungkus teks di dalam tombol untuk efek Fade Loop */
+        /* Animasi Transisi Teks Tombol (Fade Loop) */
         .btn span {
             display: inline-block;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease, transform 0.3s ease;
             opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Class pemicu animasi fade out */
-        .btn.fade-out span {
+        .btn.text-fade-out span {
             opacity: 0;
+            transform: translateY(-4px);
         }
 
         .btn-primary {
@@ -222,86 +222,86 @@ layout: null
 
     {% include header.html %}
 
-    <div class="error-container">
-        <div class="logo-container">
-            <img src="/images/logo/2024/2024 logo name slogan white - alphacast.id.png" alt="alphacast.id Logo" class="logo-img">
+    <main class="main-error-wrapper">
+        
+        <div class="error-container">
+            <div class="error-code">404</div>
+
+            <div class="lang-grid">
+                <div class="lang-item">
+                    <strong>ID • Indonesia</strong>
+                    Halaman tidak ditemukan. Silakan periksa kembali URL Anda.
+                </div>
+                <div class="lang-item">
+                    <strong>EN • English</strong>
+                    Page not found. Please check your URL layout or return home.
+                </div>
+                <div class="lang-item">
+                    <strong>JA • 日本語</strong>
+                    ページが見つかりません。URLを確認するか、ホームに戻ってください。
+                </div>
+                <div class="lang-item">
+                    <strong>ZH • 中文</strong>
+                    未找到该页面。请检查您的网址或返回首页。
+                </div>
+                <div class="lang-item">
+                    <strong>KO • 한국어</strong>
+                    페이지를 찾을 수 없습니다. URL을 확인하거나 홈으로 돌아가세요.
+                </div>
+                <div class="lang-item">
+                    <strong>NL • Nederlands</strong>
+                    Pagina niet gevonden. Controleer de URL of ga terug naar de homepagina.
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <a href="/" class="btn btn-primary" id="btn-home-loop">
+                    <span>Kembali Ke Halaman Utama</span>
+                </a>
+                <button onclick="window.history.back()" class="btn btn-secondary" id="btn-back-loop">
+                    <span>Kembali Ke Halaman Sebelumnya</span>
+                </button>
+            </div>
         </div>
 
-        <div class="error-code">404</div>
-
-        <div class="lang-grid">
-            <div class="lang-item">
-                <strong>ID • Indonesia</strong>
-                Halaman tidak ditemukan. Silakan periksa kembali URL Anda.
-            </div>
-            <div class="lang-item">
-                <strong>EN • English</strong>
-                Page not found. Please check your URL layout or return home.
-            </div>
-            <div class="lang-item">
-                <strong>JA • 日本語</strong>
-                ページが見つかりません。URLを確認するか、ホームに戻ってください。
-            </div>
-            <div class="lang-item">
-                <strong>ZH • 中文</strong>
-                未找到该页面。请检查您的网址或返回首页。
-            </div>
-            <div class="lang-item">
-                <strong>KO • 한국어</strong>
-                페이지를 찾을 수 없습니다. URL을 확인하거나 홈으로 돌아가세요.
-            </div>
-            <div class="lang-item">
-                <strong>NL • Nederlands</strong>
-                Pagina niet gevonden. Controleer de URL of ga terug naar de homepagina.
-            </div>
-        </div>
-
-        <div class="btn-group">
-            <a href="/" class="btn btn-primary" id="btn-home">
-                <span>Kembali Ke Halaman Utama</span>
-            </a>
-            <button onclick="window.history.back()" class="btn btn-secondary" id="btn-back">
-                <span>Kembali Ke Halaman Sebelumnya</span>
-            </button>
-        </div>
-    </div>
+    </main>
 
     {% include footer.html %}
 
     <script>
-        // Data translasi tombol sesuai list bahasa di atas
-        const buttonTranslations = [
-            { home: "Kembali Ke Halaman Utama", back: "Kembali Ke Halaman Sebelumnya" }, // ID
-            { home: "Return To Main Page", back: "Back To Previous Page" },             // EN
-            { home: "メインページに戻る", back: "前のページに戻る" },                       // JA
-            { home: "返回到网站首页", back: "返回到上一页" },                            // ZH
-            { home: "메인 페이지로 돌아가기", back: "이전 페이지로 돌아가기" },             // KO
-            { home: "Terug Ke Hoofdpagina", back: "Terug Naar Vorige Pagina" }          // NL
+        // Array translasi tombol navigasi mengikuti urutan bahasa di list atas
+        const loopTranslations = [
+            { home: "Kembali Ke Halaman Utama", back: "Kembali Ke Halaman Sebelumnya" },
+            { home: "Return To Main Page", back: "Back To Previous Page" },
+            { home: "メインページに戻る", back: "前のページに戻る" },
+            { home: "返回到网站首页", back: "返回到上一页" },
+            { home: "메인 페이지로 돌아가기", back: "이전 페이지로 돌아가기" },
+            { home: "Terug Ke Hoofdpagina", back: "Terug Naar Vorige Pagina" }
         ];
 
-        let currentIndex = 0;
-        const btnHome = document.getElementById('btn-home');
-        const btnBack = document.getElementById('btn-back');
+        let currentLangIndex = 0;
+        const targetBtnHome = document.getElementById('btn-home-loop');
+        const targetBtnBack = document.getElementById('btn-back-loop');
 
-        // Looping interval setiap 4 detik
+        // Pergantian teks looping dijadwalkan berkala setiap 4 detik
         setInterval(() => {
-            // 1. Trigger Efek Fade Out (Teks memudar hilang)
-            btnHome.classList.add('fade-out');
-            btnBack.classList.add('fade-out');
+            // Step 1: Tambahkan class CSS fade-out (Teks memudar & bergeser naik tipis)
+            targetBtnHome.classList.add('text-fade-out');
+            targetBtnBack.classList.add('text-fade-out');
 
-            // 2. Tunggu 300ms (durasi CSS transition selesai), lalu ganti teks internalnya
+            // Step 2: Tunggu transisi redup selesai (300ms), ubah isi teks teks di dalam span
             setTimeout(() => {
-                currentIndex = (currentIndex + 1) % buttonTranslations.length;
+                currentLangIndex = (currentLangIndex + 1) % loopTranslations.length;
                 
-                btnHome.querySelector('span').textContent = buttonTranslations[currentIndex].home;
-                btnBack.querySelector('span').textContent = buttonTranslations[currentIndex].back;
+                targetBtnHome.querySelector('span').textContent = loopTranslations[currentLangIndex].home;
+                targetBtnBack.querySelector('span').textContent = loopTranslations[currentLangIndex].back;
 
-                // 3. Trigger Efek Fade In (Teks memudar muncul kembali)
-                btnHome.classList.remove('fade-out');
-                btnBack.classList.remove('fade-out');
+                // Step 3: Hapus class untuk memunculkan teks baru kembali (Fade In)
+                targetBtnHome.classList.remove('text-fade-out');
+                targetBtnBack.classList.remove('text-fade-out');
             }, 300);
 
-        }, 4000); // Berganti bahasa setiap 4000ms (4 detik)
+        }, 4000);
     </script>
 
 </body>
