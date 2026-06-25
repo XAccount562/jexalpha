@@ -1,0 +1,588 @@
+---
+layout: null
+---
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator - alphacast.id</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0f172a; /* Slate 900 - Dark Mode base */
+            color: #f1f5f9;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Custom Scrollbar untuk Editor */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+
+        /* A4 Paper Styling untuk Preview & PDF */
+        .a4-paper {
+            background: white;
+            color: black;
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 0 auto;
+            box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.25);
+            position: relative;
+        }
+
+        .page-break {
+            page-break-before: always;
+            break-before: page;
+        }
+
+        /* Sembunyikan elemen UI saat Print/PDF */
+        @media print {
+            body { background: white; }
+            .no-print { display: none !important; }
+            .a4-paper { box-shadow: none; margin: 0; padding: 0; width: auto; min-height: auto; }
+            header, footer { display: none !important; }
+        }
+
+        /* Material Design Input styling */
+        .input-field {
+            @apply w-full bg-gray-800 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
+        }
+        .input-label {
+            @apply block text-sm font-medium text-gray-300 mb-1;
+        }
+
+        /* Header/Footer Styles from User */
+        .header-glass {
+            background-color: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .whatsapp-cta { transition: transform 0.2s ease; }
+        .whatsapp-cta:hover { transform: scale(1.02); }
+        .social-icon-wrapper {
+            height: 32px; width: 32px; border-radius: 9999px;
+            background-color: #4B5563; padding: 6px; color: white;
+            transition: transform 0.3s ease; display: flex;
+            align-items: center; justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .social-icon-wrapper:hover { transform: scale(1.1); }
+        .facebook-icon:hover { background-color: #1877F2; }
+        .instagram-icon:hover { background-image: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .youtube-icon:hover { background-color: #FF0000; }
+        .tiktok-icon:hover { background-color: #000000; }
+    </style>
+</head>
+<body x-data="invoiceApp()" class="flex flex-col min-h-screen relative">
+
+    <header class="header-glass shadow-2xl border-b border-gray-700 sticky top-0 z-50 no-print">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <a href="/" class="flex items-center space-x-3 group" title="Kembali ke Halaman Utama">
+                <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="Company Logo" class="h-16 w-50 rounded-full object-cover" onerror="this.src='https://alphacast.id/images/logo/2024/2024%20logo%20name%20slogan%20white%20-%20alphacast.id.png'">
+            </a>
+            <div class="h-8 w-8"></div>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col lg:flex-row w-full max-w-[1600px] mx-auto p-4 gap-6 relative z-10 no-print">
+        
+        <div class="w-full lg:w-1/3 bg-gray-900 border border-gray-700 rounded-xl shadow-2xl shadow-blue-900/20 flex flex-col h-[85vh] sticky top-28">
+            
+            <div class="p-4 border-b border-gray-700 bg-gray-800 rounded-t-xl flex flex-wrap gap-2 justify-between items-center">
+                <h2 class="text-xl font-heading font-bold text-blue-400"><i class="fa-solid fa-file-invoice mr-2"></i>Editor</h2>
+                <div class="flex gap-2">
+                    <button @click="toggleLang()" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm border border-gray-600 transition" x-text="lang === 'id' ? '🇮🇩 ID' : '🇬🇧 EN'"></button>
+                    <label class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 rounded text-sm cursor-pointer transition flex items-center gap-2">
+                        <i class="fa-solid fa-folder-open"></i> <span x-text="t.load"></span>
+                        <input type="file" accept=".json" @change="importJSON" class="hidden">
+                    </label>
+                    <button @click="exportJSON()" class="px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-save"></i> <span x-text="t.save"></span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-5 overflow-y-auto flex-grow space-y-6">
+                
+                <div class="space-y-3 bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                    <h3 class="text-blue-400 font-semibold border-b border-gray-700 pb-2"><i class="fa-solid fa-building mr-2"></i>Branding & Kop Surat</h3>
+                    <div>
+                        <label class="input-label">Logo URL</label>
+                        <input type="text" x-model="data.logoUrl" class="input-field">
+                    </div>
+                    <div>
+                        <label class="input-label" x-text="`Ukuran Logo: ${data.logoWidth}px`"></label>
+                        <input type="range" x-model="data.logoWidth" min="50" max="400" class="w-full accent-blue-500">
+                    </div>
+                    <div>
+                        <label class="input-label">Kop Surat (Mendukung tag HTML seperti &lt;b&gt;, &lt;br&gt;)</label>
+                        <textarea x-model="data.companyInfo" rows="4" class="input-field font-mono text-sm"></textarea>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="input-label" x-text="t.invNo"></label>
+                        <input type="text" x-model="data.invoiceNo" class="input-field">
+                    </div>
+                    <div>
+                        <label class="input-label">Status</label>
+                        <select x-model="data.status" class="input-field">
+                            <option value="UNPAID">UNPAID</option>
+                            <option value="PAID">PAID</option>
+                            <option value="DRAFT">DRAFT</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="input-label" x-text="t.date"></label>
+                        <input type="date" x-model="data.date" class="input-field">
+                    </div>
+                    <div>
+                        <label class="input-label" x-text="t.dueDate"></label>
+                        <input type="date" x-model="data.dueDate" class="input-field">
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-blue-400 font-semibold border-b border-gray-700 pb-2"><i class="fa-solid fa-user mr-2"></i><span x-text="t.billTo"></span></h3>
+                    <input type="text" x-model="data.clientName" placeholder="Nama Klien / Perusahaan" class="input-field">
+                    <textarea x-model="data.clientAddress" rows="2" placeholder="Alamat Klien" class="input-field"></textarea>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                        <h3 class="text-blue-400 font-semibold"><i class="fa-solid fa-list mr-2"></i>Daftar Item / Paket</h3>
+                        <button @click="addItem()" class="text-xs bg-blue-600 hover:bg-blue-500 px-2 py-1 rounded">+ Tambah Item</button>
+                    </div>
+                    
+                    <template x-for="(item, index) in data.items" :key="item.id">
+                        <div class="bg-gray-800 p-3 rounded-lg border border-gray-600 space-y-3 relative">
+                            <button @click="removeItem(index)" class="absolute top-2 right-2 text-red-400 hover:text-red-300"><i class="fa-solid fa-times"></i></button>
+                            
+                            <input type="text" x-model="item.name" placeholder="Nama Paket / Item" class="input-field font-bold">
+                            <textarea x-model="item.desc" rows="2" placeholder="Keterangan detail (Bisa dikosongkan)" class="input-field text-sm"></textarea>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="text-xs text-gray-400">Qty</label>
+                                    <input type="number" x-model.number="item.qty" min="1" class="input-field">
+                                </div>
+                                <div>
+                                    <label class="text-xs text-gray-400">Harga Satuan (Rp)</label>
+                                    <input type="number" x-model.number="item.price" class="input-field">
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="space-y-3 bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                    <h3 class="text-blue-400 font-semibold border-b border-gray-700 pb-2"><i class="fa-solid fa-calculator mr-2"></i>Kalkulasi</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="input-label">Diskon (Rp)</label>
+                            <input type="number" x-model.number="data.discount" class="input-field">
+                        </div>
+                        <div>
+                            <label class="input-label">Pajak (%)</label>
+                            <input type="number" x-model.number="data.taxPercent" class="input-field">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="input-label">Keterangan Diskon / Tambahan</label>
+                        <input type="text" x-model="data.discountNote" placeholder="Misal: Diskon loyalitas pelanggan" class="input-field">
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <h3 class="text-blue-400 font-semibold border-b border-gray-700 pb-2"><i class="fa-solid fa-pen-nib mr-2"></i>Catatan & Footer</h3>
+                    <div>
+                        <label class="input-label">Syarat & Ketentuan / Catatan (S&K)</label>
+                        <textarea x-model="data.notes" rows="4" class="input-field text-sm"></textarea>
+                    </div>
+                    <div>
+                        <label class="input-label">URL Gambar Tanda Tangan</label>
+                        <input type="text" x-model="data.ttdUrl" class="input-field">
+                    </div>
+                    <div>
+                        <label class="input-label">Nama Terang Tanda Tangan</label>
+                        <input type="text" x-model="data.ttdName" class="input-field">
+                    </div>
+                </div>
+                
+                <div class="h-10"></div> </div>
+
+            <div class="p-4 border-t border-gray-700 bg-gray-800 rounded-b-xl grid grid-cols-2 gap-3">
+                <button @click="exportHTML()" class="w-full py-2 bg-purple-600 hover:bg-purple-500 rounded font-semibold transition flex justify-center items-center gap-2">
+                    <i class="fa-brands fa-html5"></i> Export HTML
+                </button>
+                <button @click="exportPDF()" class="w-full py-2 bg-red-600 hover:bg-red-500 rounded font-semibold transition flex justify-center items-center gap-2">
+                    <i class="fa-solid fa-file-pdf"></i> Export PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="w-full lg:w-2/3 overflow-x-auto bg-gray-800 rounded-xl p-4 md:p-8 flex justify-center border border-gray-700 shadow-inner overflow-y-auto h-[85vh]">
+            
+            <div class="origin-top flex-shrink-0" style="transform: scale(0.95); transform-origin: top center;">
+                
+                <div id="invoice-render" class="a4-paper font-sans">
+                    
+                    <div class="flex justify-between items-start border-b-2 border-blue-600 pb-6 mb-6">
+                        <div class="w-2/3">
+                            <h1 class="text-4xl font-bold tracking-widest text-blue-900 mb-2 font-heading">INVOICE</h1>
+                            <div class="text-gray-700 text-sm leading-relaxed" x-html="data.companyInfo"></div>
+                        </div>
+                        <div class="w-1/3 flex justify-end">
+                            <img :src="data.logoUrl" alt="Logo" :style="`width: ${data.logoWidth}px; max-width: 100%;`" class="object-contain">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between mb-8">
+                        <div class="w-1/2 pr-4">
+                            <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1" x-text="t.billTo"></h3>
+                            <div class="text-gray-900 font-bold text-lg" x-text="data.clientName"></div>
+                            <div class="text-gray-600 text-sm whitespace-pre-line" x-text="data.clientAddress"></div>
+                        </div>
+                        <div class="w-1/2 text-right">
+                            <table class="w-full text-sm">
+                                <tr>
+                                    <td class="text-gray-500 font-semibold py-1" x-text="t.invNo + ':'"></td>
+                                    <td class="text-gray-900 font-bold" x-text="data.invoiceNo"></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-gray-500 font-semibold py-1" x-text="t.date + ':'"></td>
+                                    <td class="text-gray-900" x-text="formatDate(data.date)"></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-gray-500 font-semibold py-1" x-text="t.dueDate + ':'"></td>
+                                    <td class="text-gray-900" x-text="formatDate(data.dueDate)"></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-gray-500 font-semibold py-1 pt-3">Status:</td>
+                                    <td class="pt-3">
+                                        <span class="px-3 py-1 text-xs font-bold rounded" 
+                                              :class="data.status === 'PAID' ? 'bg-green-100 text-green-800' : (data.status === 'UNPAID' ? 'bg-red-100 text-red-800' : 'bg-gray-200 text-gray-800')" 
+                                              x-text="data.status"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <table class="w-full mb-8 text-left border-collapse">
+                        <thead>
+                            <tr class="bg-blue-50 text-blue-900 uppercase text-xs tracking-wider">
+                                <th class="py-3 px-4 font-semibold border-b-2 border-blue-200" x-text="t.desc"></th>
+                                <th class="py-3 px-4 font-semibold border-b-2 border-blue-200 text-center">Qty</th>
+                                <th class="py-3 px-4 font-semibold border-b-2 border-blue-200 text-right" x-text="t.price"></th>
+                                <th class="py-3 px-4 font-semibold border-b-2 border-blue-200 text-right" x-text="t.amount"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template x-for="item in data.items" :key="item.id">
+                                <tr class="border-b border-gray-100">
+                                    <td class="py-4 px-4">
+                                        <div class="font-bold text-gray-900" x-text="item.name"></div>
+                                        <div class="text-sm text-gray-500 whitespace-pre-line mt-1" x-text="item.desc" x-show="item.desc"></div>
+                                    </td>
+                                    <td class="py-4 px-4 text-center text-gray-700" x-text="item.qty"></td>
+                                    <td class="py-4 px-4 text-right text-gray-700" x-text="formatCurrency(item.price)"></td>
+                                    <td class="py-4 px-4 text-right font-semibold text-gray-900" x-text="formatCurrency(item.qty * item.price)"></td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+
+                    <div class="flex justify-end mb-8">
+                        <div class="w-1/2">
+                            <table class="w-full text-sm">
+                                <tr>
+                                    <td class="py-2 text-gray-600" x-text="t.subtotal"></td>
+                                    <td class="py-2 text-right text-gray-900 font-semibold" x-text="formatCurrency(subtotal)"></td>
+                                </tr>
+                                <tr x-show="data.discount > 0">
+                                    <td class="py-2 text-gray-600">
+                                        <span x-text="t.discount"></span>
+                                        <div class="text-xs text-red-500 italic" x-text="data.discountNote" x-show="data.discountNote"></div>
+                                    </td>
+                                    <td class="py-2 text-right text-red-600 font-semibold" x-text="'- ' + formatCurrency(data.discount)"></td>
+                                </tr>
+                                <tr x-show="data.taxPercent > 0">
+                                    <td class="py-2 text-gray-600" x-text="`Pajak / Tax (${data.taxPercent}%)`"></td>
+                                    <td class="py-2 text-right text-gray-900 font-semibold" x-text="formatCurrency(taxAmount)"></td>
+                                </tr>
+                                <tr class="border-t-2 border-blue-600">
+                                    <td class="py-3 text-lg font-bold text-blue-900" x-text="t.total"></td>
+                                    <td class="py-3 text-right text-xl font-bold text-blue-900" x-text="formatCurrency(grandTotal)"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-start mt-12 text-sm">
+                        <div class="w-1/3 pr-4">
+                            <h4 class="font-bold text-gray-700 mb-2 border-b border-gray-200 pb-1" x-text="t.paymentInfo"></h4>
+                            <img src="https://alphacast.id/images/dokumen/norekbca.png" alt="Rekening BCA" class="w-full max-w-[200px] object-contain rounded border border-gray-200 shadow-sm">
+                        </div>
+                        
+                        <div class="w-1/3 px-4">
+                            <h4 class="font-bold text-gray-700 mb-2 border-b border-gray-200 pb-1" x-text="t.notes"></h4>
+                            <div class="text-gray-600 text-xs whitespace-pre-line leading-relaxed" x-text="data.notes"></div>
+                        </div>
+
+                        <div class="w-1/3 pl-4 text-center">
+                            <div class="text-gray-700 font-semibold mb-2">Hormat Kami,</div>
+                            <div class="h-24 flex items-center justify-center">
+                                <img :src="data.ttdUrl" alt="Tanda Tangan" class="h-full object-contain mix-blend-multiply" x-show="data.ttdUrl">
+                            </div>
+                            <div class="text-gray-900 font-bold border-t border-gray-300 inline-block pt-1 px-4 mt-2" x-text="data.ttdName"></div>
+                        </div>
+                    </div>
+
+                    <div class="page-break w-full h-full flex items-center justify-center pt-8">
+                        <img src="https://alphacast.id/images/dokumen/poster.png" alt="Promosi" class="w-full max-h-[250mm] object-contain">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-900 border-t border-gray-700 mt-10 p-8 pb-32 no-print">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 text-gray-400 text-sm pb-8">
+                <div class="space-y-4 lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-2">
+                        <a href="/" class="flex items-center space-x-3 group" title="Kembali ke Halaman Utama">
+                            <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="Company Logo" class="h-16 w-50 rounded-full object-cover" onerror="this.src='https://alphacast.id/images/logo/2024/2024%20logo%20name%20slogan%20white%20-%20alphacast.id.png'">
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-base">
+                        Livestream & Multimedia Specialist: Professional Video Production, Virtual & Hybrid Event Solutions. Based in Manado, North Sulawesi. 
+                    </p>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-white font-semibold mb-2">Contact & Address</h3>
+                    <a href="mailto:halo.alphacast@gmail.com" class="inline-flex items-center text-gray-400 hover:text-white py-1 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 flex-shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                        halo.alphacast@gmail.com
+                    </a>
+                    <a href="https://goo.gl/maps/EJrUVrc1SbLcQ2UW6" target="_blank" class="flex items-start text-gray-400 hover:text-white py-1 transition duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 mt-1 flex-shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        <span class="text-sm">Reko Bawah, Kolongan, Kec. Kalawat, Kabupaten Minahasa Utara, Sulawesi Utara</span>
+                    </a>
+                    <a id="whatsapp-cta-link" href="#" target="_blank" class="whatsapp-cta mt-4 inline-flex items-center px-4 py-2 font-semibold text-white bg-green-600 rounded-lg shadow-lg hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-800 transition transform hover:scale-[1.02]">
+                        <i class="fa-brands fa-whatsapp text-xl mr-2"></i> Whatsapp (+62)851-5955-6468
+                    </a>
+                </div>
+                <div class="space-y-4 lg:col-span-1">
+                    <h3 class="text-white font-semibold mb-2">Follow Us</h3>
+                    <div class="flex space-x-3 sm:space-x-4">
+                        <a href="https://fb.com/alphacast.id" target="_blank" class="group transition" title="Facebook"><div class="social-icon-wrapper facebook-icon"><i class="fa-brands fa-facebook-f text-xl"></i></div></a>
+                        <a href="https://instagram.com/alphacast.id" target="_blank" class="group transition" title="Instagram"><div class="social-icon-wrapper instagram-icon"><i class="fa-brands fa-instagram text-xl"></i></div></a>
+                        <a href="https://www.youtube.com/@alphacastid8988" target="_blank" class="group transition" title="YouTube"><div class="social-icon-wrapper youtube-icon"><i class="fa-brands fa-youtube text-xl"></i></div></a>
+                        <a href="https://www.tiktok.com/@alphacast.id" target="_blank" class="group transition" title="TikTok"><div class="social-icon-wrapper tiktok-icon"><i class="fa-brands fa-tiktok text-xl"></i></div></a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-6 border-t border-gray-700 mt-4 text-center">
+                 <p class="text-gray-500 text-xs sm:text-sm">&copy; 2025 alphacast.id. All rights reserved. Unauthorized copying is strictly prohibited.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Kamus Bahasa
+        const dict = {
+            id: {
+                invNo: "No. Invoice", date: "Tanggal", dueDate: "Jatuh Tempo", billTo: "Ditagihkan Kepada",
+                desc: "Deskripsi", price: "Harga", amount: "Jumlah", subtotal: "Subtotal",
+                discount: "Diskon", total: "Grand Total", notes: "Syarat & Ketentuan",
+                paymentInfo: "Informasi Pembayaran", load: "Muat (.json)", save: "Simpan (.json)"
+            },
+            en: {
+                invNo: "Invoice No.", date: "Date", dueDate: "Due Date", billTo: "Billed To",
+                desc: "Description", price: "Rate", amount: "Amount", subtotal: "Subtotal",
+                discount: "Discount", total: "Grand Total", notes: "Terms & Conditions",
+                paymentInfo: "Payment Information", load: "Load (.json)", save: "Save (.json)"
+            }
+        };
+
+        // Helper untuk format Rupiah
+        const formatIDR = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+
+        // Script WhatsApp CTA (Dari User)
+        document.addEventListener('DOMContentLoaded', () => {
+            const whatsappCtaLink = document.getElementById('whatsapp-cta-link');
+            if (whatsappCtaLink) {
+                const pageUrl = window.location.href; 
+                const message = `Halo admin alphacast.id, saya datang dari halaman ${pageUrl} (Invoice Generator)`;
+                const encodedMessage = encodeURIComponent(message);
+                const phoneNumber = '6285159556468';
+                whatsappCtaLink.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            }
+        });
+
+        // Alpine.js Logic Component
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('invoiceApp', () => ({
+                lang: 'id',
+                t: dict['id'],
+                
+                // State Data Utama Invoice
+                data: {
+                    logoUrl: "https://alphacast.id/images/logo/2024/2024%20logo%20name%20slogan%20white%20-%20alphacast.id.png",
+                    logoWidth: 150,
+                    companyInfo: "<b>alphacast.id</b><br>Manado, North Sulawesi<br>halo.alphacast@gmail.com<br>0851-5955-6468",
+                    invoiceNo: "INV-2606-" + Math.floor(Math.random() * 1000),
+                    status: "UNPAID",
+                    date: new Date().toISOString().split('T')[0],
+                    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // +7 Hari
+                    clientName: "",
+                    clientAddress: "",
+                    items: [
+                        { id: Date.now(), name: "Paket Livestreaming Standard", desc: "2 Kamera Profesional\nOperator Vmix\nIntegrasi Audio", qty: 1, price: 2500000 }
+                    ],
+                    discount: 0,
+                    discountNote: "",
+                    taxPercent: 0,
+                    notes: "1. Pembayaran DP minimal 50% sebelum acara.\n2. Pelunasan maksimal H+1 setelah invoice ini diterima.\n3. Harap sertakan bukti transfer via WhatsApp.",
+                    ttdUrl: "https://alphacast.id/images/dokumen/ttd-alpha-roger.png",
+                    ttdName: "Roger Wagiu"
+                },
+
+                // Computed Properties untuk Kalkulasi
+                get subtotal() {
+                    return this.data.items.reduce((sum, item) => sum + (item.qty * item.price), 0);
+                },
+                get taxAmount() {
+                    let subAfterDiscount = this.subtotal - this.data.discount;
+                    return subAfterDiscount * (this.data.taxPercent / 100);
+                },
+                get grandTotal() {
+                    return this.subtotal - this.data.discount + this.taxAmount;
+                },
+
+                // Methods
+                toggleLang() {
+                    this.lang = this.lang === 'id' ? 'en' : 'id';
+                    this.t = dict[this.lang];
+                },
+                formatCurrency(val) {
+                    return formatIDR.format(val);
+                },
+                formatDate(dateString) {
+                    if(!dateString) return "";
+                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    return new Date(dateString).toLocaleDateString(this.lang === 'id' ? 'id-ID' : 'en-US', options);
+                },
+                addItem() {
+                    this.data.items.push({ id: Date.now(), name: "", desc: "", qty: 1, price: 0 });
+                },
+                removeItem(index) {
+                    this.data.items.splice(index, 1);
+                },
+                
+                // Export JSON (Menyimpan State)
+                exportJSON() {
+                    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.data));
+                    const downloadAnchorNode = document.createElement('a');
+                    downloadAnchorNode.setAttribute("href", dataStr);
+                    downloadAnchorNode.setAttribute("download", `Invoice_${this.data.invoiceNo}.json`);
+                    document.body.appendChild(downloadAnchorNode);
+                    downloadAnchorNode.click();
+                    downloadAnchorNode.remove();
+                    alert("Data berhasil disimpan! Anda bisa mengunggah file ini di lain waktu untuk mengeditnya kembali.");
+                },
+                
+                // Import JSON (Memuat State)
+                importJSON(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        try {
+                            const importedData = JSON.parse(e.target.result);
+                            this.data = { ...this.data, ...importedData }; // Merge data
+                            alert("Data berhasil dimuat!");
+                        } catch (err) {
+                            alert("Format file tidak valid!");
+                        }
+                    };
+                    reader.readAsText(file);
+                },
+
+                // Export PDF menggunakan html2pdf
+                exportPDF() {
+                    const element = document.getElementById('invoice-render');
+                    // Trik agar PDF hasilnya HD dan tidak terpotong
+                    const opt = {
+                        margin:       0,
+                        filename:     `${this.data.invoiceNo}_${this.data.clientName}.pdf`,
+                        image:        { type: 'jpeg', quality: 0.98 },
+                        html2canvas:  { scale: 2, useCORS: true, logging: false },
+                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                    };
+                    
+                    // Tambahkan class sementara jika perlu (opsional)
+                    html2pdf().set(opt).from(element).save().then(() => {
+                        console.log("PDF Created");
+                    });
+                },
+
+                // Export HTML statis (untuk diberikan ke klien jika mereka minta link/file offline)
+                exportHTML() {
+                    const invoiceContent = document.getElementById('invoice-render').outerHTML;
+                    const htmlBoilerplate = `
+                    <!DOCTYPE html>
+                    <html lang="${this.lang}">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Invoice ${this.data.invoiceNo}</title>
+                        <script src="https://cdn.tailwindcss.com"><\/script>
+                        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+                        <style>
+                            body { font-family: 'Plus Jakarta Sans', sans-serif; background: #e2e8f0; padding: 2rem; display: flex; justify-content: center;}
+                            h1, h2, h3, .font-heading { font-family: 'Space Grotesk', sans-serif; }
+                            .a4-paper { background: white; width: 210mm; min-height: 297mm; padding: 20mm; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+                            .page-break { page-break-before: always; break-before: page; }
+                            @media print { body { padding: 0; background: white; } .a4-paper { box-shadow: none; width: auto; margin: 0;} }
+                            @media (max-width: 800px) { body { padding: 0; } .a4-paper { width: 100%; padding: 15px;} }
+                        </style>
+                    </head>
+                    <body>
+                        ${invoiceContent}
+                    </body>
+                    </html>`;
+
+                    const blob = new Blob([htmlBoilerplate], { type: "text/html;charset=utf-8" });
+                    const downloadUrl = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = downloadUrl;
+                    a.download = `${this.data.invoiceNo}_${this.data.clientName}.html`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            }));
+        });
+    </script>
+</body>
+</html>
