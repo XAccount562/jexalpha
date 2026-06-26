@@ -1,588 +1,510 @@
----
-layout: null
----
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice Generator - alphacast.id</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/cdn.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
+    <title>Premium Invoice Generator - alphacast.id</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0f172a; /* Slate 900 - Dark Mode base */
-            color: #f1f5f9;
         }
-        h1, h2, h3, .font-heading {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-        
-        /* Custom Scrollbar untuk Editor */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: #1e293b; }
-        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
-
-        /* A4 Paper Styling untuk Preview & PDF */
-        .a4-paper {
-            background: white;
-            color: black;
+        /* Custom print preview standard A4 styling */
+        .a4-page {
             width: 210mm;
             min-height: 297mm;
-            padding: 20mm;
-            margin: 0 auto;
-            box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.25);
-            position: relative;
+            background: white;
+            color: #0f172a;
+            box-sizing: border-box;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
-
-        .page-break {
-            page-break-before: always;
-            break-before: page;
-        }
-
-        /* Sembunyikan elemen UI saat Print/PDF */
         @media print {
-            body { background: white; }
-            .no-print { display: none !important; }
-            .a4-paper { box-shadow: none; margin: 0; padding: 0; width: auto; min-height: auto; }
-            header, footer { display: none !important; }
+            body {
+                background: white;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .a4-page {
+                box-shadow: none !important;
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
         }
-
-        /* Material Design Input styling */
-        .input-field {
-            @apply w-full bg-gray-800 border border-gray-600 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all;
-        }
-        .input-label {
-            @apply block text-sm font-medium text-gray-300 mb-1;
-        }
-
-        /* Header/Footer Styles from User */
-        .header-glass {
-            background-color: rgba(18, 18, 18, 0.9);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-        .whatsapp-cta { transition: transform 0.2s ease; }
-        .whatsapp-cta:hover { transform: scale(1.02); }
-        .social-icon-wrapper {
-            height: 32px; width: 32px; border-radius: 9999px;
-            background-color: #4B5563; padding: 6px; color: white;
-            transition: transform 0.3s ease; display: flex;
-            align-items: center; justify-content: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .social-icon-wrapper:hover { transform: scale(1.1); }
-        .facebook-icon:hover { background-color: #1877F2; }
-        .instagram-icon:hover { background-image: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        .youtube-icon:hover { background-color: #FF0000; }
-        .tiktok-icon:hover { background-color: #000000; }
+        /* Render style HTML inputs accurately inside dynamic elements */
+        .html-render h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.25rem; }
+        .html-render h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .html-render h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .html-render p { font-size: 0.9rem; line-height: 1.4; }
     </style>
 </head>
-<body x-data="invoiceApp()" class="flex flex-col min-h-screen relative">
+<body class="bg-slate-950 text-slate-100 min-h-screen">
 
-    <header class="header-glass shadow-2xl border-b border-gray-700 sticky top-0 z-50 no-print">
-        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <a href="/" class="flex items-center space-x-3 group" title="Kembali ke Halaman Utama">
-                <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="Company Logo" class="h-16 w-50 rounded-full object-cover" onerror="this.src='https://alphacast.id/images/logo/2024/2024%20logo%20name%20slogan%20white%20-%20alphacast.id.png'">
-            </a>
-            <div class="h-8 w-8"></div>
+<div id="app" class="flex flex-col lg:flex-row min-h-screen">
+    
+    <div class="w-full lg:w-5/12 bg-slate-900 border-r border-slate-800 p-6 overflow-y-auto max-h-screen no-print shadow-2xl shadow-blue-950/20">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+            <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                <i class="fa-solid fa-file-invoice text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">alphacast.id</h1>
+                <p class="text-xs text-slate-400">Premium Invoice Core v2.0</p>
+            </div>
         </div>
-    </header>
 
-    <main class="flex-grow flex flex-col lg:flex-row w-full max-w-[1600px] mx-auto p-4 gap-6 relative z-10 no-print">
-        
-        <div class="w-full lg:w-1/3 bg-gray-900 border border-gray-700 rounded-xl shadow-2xl shadow-blue-900/20 flex flex-col h-[85vh] sticky top-28">
+        <div class="grid grid-cols-3 gap-2 mb-6">
+            <button @click="exportPDF" class="flex flex-col items-center justify-center p-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl transition duration-200 shadow-md cursor-pointer">
+                <i class="fa-solid fa-file-pdf text-lg mb-1"></i>
+                <span class="text-xs font-medium">Cetak PDF</span>
+            </button>
+            <button @click="exportHTML" class="flex flex-col items-center justify-center p-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition duration-200 shadow-md cursor-pointer">
+                <i class="fa-solid fa-code text-lg mb-1"></i>
+                <span class="text-xs font-medium">Ekspor HTML</span>
+            </button>
+            <label class="flex flex-col items-center justify-center p-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl transition duration-200 shadow-md cursor-pointer text-center">
+                <i class="fa-solid fa-file-import text-lg mb-1"></i>
+                <span class="text-xs font-medium">Import JSON</span>
+                <input type="file" @change="importJSON" class="hidden" accept=".json">
+            </label>
+        </div>
+        <button @click="exportJSON" class="w-full mb-6 py-2 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl transition duration-200 text-sm font-medium flex items-center justify-center gap-2">
+            <i class="fa-solid fa-download text-xs"></i> Simpan Draft (Format .JSON)
+        </button>
+
+        <div class="space-y-6">
             
-            <div class="p-4 border-b border-gray-700 bg-gray-800 rounded-t-xl flex flex-wrap gap-2 justify-between items-center">
-                <h2 class="text-xl font-heading font-bold text-blue-400"><i class="fa-solid fa-file-invoice mr-2"></i>Editor</h2>
-                <div class="flex gap-2">
-                    <button @click="toggleLang()" class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded text-sm border border-gray-600 transition" x-text="lang === 'id' ? '🇮🇩 ID' : '🇬🇧 EN'"></button>
-                    <label class="px-3 py-1 bg-emerald-600 hover:bg-emerald-500 rounded text-sm cursor-pointer transition flex items-center gap-2">
-                        <i class="fa-solid fa-folder-open"></i> <span x-text="t.load"></span>
-                        <input type="file" accept=".json" @change="importJSON" class="hidden">
-                    </label>
-                    <button @click="exportJSON()" class="px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded text-sm transition flex items-center gap-2">
-                        <i class="fa-solid fa-save"></i> <span x-text="t.save"></span>
-                    </button>
-                </div>
+            <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-4">
+                <h3 class="text-sm font-semibold text-blue-400 mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-building text-xs"></i> Konten Kop Surat (Mendukung HTML & Header h1,h2,h3)
+                </h3>
+                <textarea v-model="form.kopSurat" rows="5" 
+                    class="w-full bg-slate-800 text-white placeholder-slate-500 border border-slate-700 rounded-lg p-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition duration-150"></textarea>
             </div>
 
-            <div class="p-5 overflow-y-auto flex-grow space-y-6">
-                
-                <div class="space-y-3 bg-gray-800/50 p-4 rounded-lg border border-gray-700">
-                    <h3 class="text-blue-400 font-semibold border-b border-gray-700 pb-2"><i class="fa-solid fa-building mr-2"></i>Branding & Kop Surat</h3>
+            <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-4 space-y-4">
+                <h3 class="text-sm font-semibold text-blue-400 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-xs"></i> Detail Dokumen & Status
+                </h3>
+                <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="input-label">Logo URL</label>
-                        <input type="text" x-model="data.logoUrl" class="input-field">
+                        <label class="block text-xs text-slate-400 mb-1 font-medium">Nomor Invoice</label>
+                        <input type="text" v-model="form.invoiceNo" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-500">
                     </div>
                     <div>
-                        <label class="input-label" x-text="`Ukuran Logo: ${data.logoWidth}px`"></label>
-                        <input type="range" x-model="data.logoWidth" min="50" max="400" class="w-full accent-blue-500">
-                    </div>
-                    <div>
-                        <label class="input-label">Kop Surat (Mendukung tag HTML seperti &lt;b&gt;, &lt;br&gt;)</label>
-                        <textarea x-model="data.companyInfo" rows="4" class="input-field font-mono text-sm"></textarea>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="input-label" x-text="t.invNo"></label>
-                        <input type="text" x-model="data.invoiceNo" class="input-field">
-                    </div>
-                    <div>
-                        <label class="input-label">Status</label>
-                        <select x-model="data.status" class="input-field">
-                            <option value="UNPAID">UNPAID</option>
-                            <option value="PAID">PAID</option>
-                            <option value="DRAFT">DRAFT</option>
+                        <label class="block text-xs text-slate-400 mb-1 font-medium">Status Pembayaran</label>
+                        <select v-model="form.status" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-500">
+                            <option value="LUNAS">Lunas</option>
+                            <option value="BELUM LUNAS">Belum Lunas</option>
+                            <option value="DP (DOWN PAYMENT)">DP (Down Payment)</option>
+                            <option value="DICICIL">Dicicil</option>
                         </select>
                     </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="input-label" x-text="t.date"></label>
-                        <input type="date" x-model="data.date" class="input-field">
+                        <label class="block text-xs text-slate-400 mb-1 font-medium">Tanggal Invoice</label>
+                        <input type="date" v-model="form.invoiceDate" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-500">
                     </div>
                     <div>
-                        <label class="input-label" x-text="t.dueDate"></label>
-                        <input type="date" x-model="data.dueDate" class="input-field">
+                        <label class="block text-xs text-slate-400 mb-1 font-medium">Jatuh Tempo</label>
+                        <input type="date" v-model="form.dueDate" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-500">
                     </div>
                 </div>
-
-                <div class="space-y-3">
-                    <h3 class="text-blue-400 font-semibold border-b border-gray-700 pb-2"><i class="fa-solid fa-user mr-2"></i><span x-text="t.billTo"></span></h3>
-                    <input type="text" x-model="data.clientName" placeholder="Nama Klien / Perusahaan" class="input-field">
-                    <textarea x-model="data.clientAddress" rows="2" placeholder="Alamat Klien" class="input-field"></textarea>
-                </div>
-
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center border-b border-gray-700 pb-2">
-                        <h3 class="text-blue-400 font-semibold"><i class="fa-solid fa-list mr-2"></i>Daftar Item / Paket</h3>
-                        <button @click="addItem()" class="text-xs bg-blue-600 hover:bg-blue-500 px-2 py-1 rounded">+ Tambah Item</button>
-                    </div>
-                    
-                    <template x-for="(item, index) in data.items" :key="item.id">
-                        <div class="bg-gray-800 p-3 rounded-lg border border-gray-600 space-y-3 relative">
-                            <button @click="removeItem(index)" class="absolute top-2 right-2 text-red-400 hover:text-red-300"><i class="fa-solid fa-times"></i></button>
-                            
-                            <input type="text" x-model="item.name" placeholder="Nama Paket / Item" class="input-field font-bold">
-                            <textarea x-model="item.desc" rows="2" placeholder="Keterangan detail (Bisa dikosongkan)" class="input-field text-sm"></textarea>
-                            
-                            <div class="grid grid-cols-2 gap-3">
-                                <div>
-                                    <label class="text-xs text-gray-400">Qty</label>
-                                    <input type="number" x-model.number="item.qty" min="1" class="input-field">
-                                </div>
-                                <div>
-                                    <label class="text-xs text-gray-400">Harga Satuan (Rp)</label>
-                                    <input type="number" x-model.number="item.price" class="input-field">
-                                </div>
-                            </div>
-                        </div>
-                    </template>
-                </div>
-
-                <div class="space-y-3 bg-gray-800/50 p-4 rounded-lg border border-gray-700">
-                    <h3 class="text-blue-400 font-semibold border-b border-gray-700 pb-2"><i class="fa-solid fa-calculator mr-2"></i>Kalkulasi</h3>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="input-label">Diskon (Rp)</label>
-                            <input type="number" x-model.number="data.discount" class="input-field">
-                        </div>
-                        <div>
-                            <label class="input-label">Pajak (%)</label>
-                            <input type="number" x-model.number="data.taxPercent" class="input-field">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="input-label">Keterangan Diskon / Tambahan</label>
-                        <input type="text" x-model="data.discountNote" placeholder="Misal: Diskon loyalitas pelanggan" class="input-field">
-                    </div>
-                </div>
-
-                <div class="space-y-3">
-                    <h3 class="text-blue-400 font-semibold border-b border-gray-700 pb-2"><i class="fa-solid fa-pen-nib mr-2"></i>Catatan & Footer</h3>
-                    <div>
-                        <label class="input-label">Syarat & Ketentuan / Catatan (S&K)</label>
-                        <textarea x-model="data.notes" rows="4" class="input-field text-sm"></textarea>
-                    </div>
-                    <div>
-                        <label class="input-label">URL Gambar Tanda Tangan</label>
-                        <input type="text" x-model="data.ttdUrl" class="input-field">
-                    </div>
-                    <div>
-                        <label class="input-label">Nama Terang Tanda Tangan</label>
-                        <input type="text" x-model="data.ttdName" class="input-field">
-                    </div>
-                </div>
-                
-                <div class="h-10"></div> </div>
-
-            <div class="p-4 border-t border-gray-700 bg-gray-800 rounded-b-xl grid grid-cols-2 gap-3">
-                <button @click="exportHTML()" class="w-full py-2 bg-purple-600 hover:bg-purple-500 rounded font-semibold transition flex justify-center items-center gap-2">
-                    <i class="fa-brands fa-html5"></i> Export HTML
-                </button>
-                <button @click="exportPDF()" class="w-full py-2 bg-red-600 hover:bg-red-500 rounded font-semibold transition flex justify-center items-center gap-2">
-                    <i class="fa-solid fa-file-pdf"></i> Export PDF
-                </button>
             </div>
-        </div>
 
-        <div class="w-full lg:w-2/3 overflow-x-auto bg-gray-800 rounded-xl p-4 md:p-8 flex justify-center border border-gray-700 shadow-inner overflow-y-auto h-[85vh]">
+            <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-4 space-y-3">
+                <h3 class="text-sm font-semibold text-blue-400 flex items-center gap-2">
+                    <i class="fa-solid fa-user-tie text-xs"></i> Informasi Klien / Penerima
+                </h3>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 font-medium">Nama Klien / Instansi</label>
+                    <input type="text" v-model="form.clientName" placeholder="Contoh: Panitia Event Nusantara" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 font-medium">Detail Kontak / Alamat Klien</label>
+                    <textarea v-model="form.clientDetails" rows="2" placeholder="Contoh: Jl. Sudirman No. 45, Manado" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-500"></textarea>
+                </div>
+            </div>
+
+            <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-4 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-sm font-semibold text-blue-400 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-xs"></i> Daftar Paket / Item Layanan
+                    </h3>
+                    <button @click="addItem" class="text-xs bg-blue-600/20 text-blue-400 hover:bg-blue-600 hover:text-white px-2.5 py-1 rounded-md transition duration-150 cursor-pointer">
+                        <i class="fa-solid fa-plus text-xs mr-1"></i> Tambah Item
+                    </button>
+                </div>
+
+                <div v-for="(item, index) in form.items" :key="index" class="p-3 bg-slate-900 border border-slate-800 rounded-xl space-y-3 relative group">
+                    <button @click="removeItem(index)" v-if="form.items.length > 1" class="absolute -top-2 -right-2 w-6 h-6 bg-rose-600 text-white rounded-full flex items-center justify-center text-xs hover:bg-rose-500 shadow shadow-black transition duration-150 cursor-pointer">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                    <div>
+                        <label class="block text-2xs uppercase tracking-wider text-slate-500 mb-1 font-semibold">Nama Paket / Deskripsi</label>
+                        <input type="text" v-model="item.description" placeholder="Layanan Streaming Paket Premium" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2">
+                        <div>
+                            <label class="block text-2xs uppercase tracking-wider text-slate-500 mb-1 font-semibold">Durasi</label>
+                            <input type="text" v-model="item.duration" placeholder="e.g. ±3 Jam" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-2xs uppercase tracking-wider text-slate-500 mb-1 font-semibold">QTY</label>
+                            <input type="number" v-model.number="item.qty" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-2xs uppercase tracking-wider text-slate-500 mb-1 font-semibold">Satuan/Keterangan</label>
+                            <input type="text" v-model="item.unit" placeholder="e.g. Paket, Unit" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-2xs uppercase tracking-wider text-slate-500 mb-1 font-semibold">Harga Satuan (Rp)</label>
+                        <input type="number" v-model.number="item.price" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-4 grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 font-medium">Diskon (Rp)</label>
+                    <input type="number" v-model.number="form.discount" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1 font-medium">Pajak (%) <span class="text-2xs text-slate-500">(Kosongkan jika tdk ada)</span></label>
+                    <input type="number" v-model.number="form.tax" placeholder="e.g. 11" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-500">
+                </div>
+            </div>
+
+            <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-4 space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-blue-400 mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-credit-card text-xs"></i> Informasi Rekening / Pembayaran
+                    </label>
+                    <textarea v-model="form.paymentInfo" rows="3" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-500"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-blue-400 mb-1.5 flex items-center gap-2">
+                        <i class="fa-solid fa-scale-balanced text-xs"></i> Catatan Syarat & Ketentuan (S&K)
+                    </label>
+                    <textarea v-model="form.terms" rows="4" class="w-full bg-slate-800 text-white border border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:border-blue-500"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="w-full lg:w-7/12 flex-1 bg-slate-900 lg:bg-slate-950 flex justify-center p-0 lg:p-8 overflow-x-auto max-h-screen">
+        <div id="invoice-sheet" class="a4-page p-[15mm] flex flex-col justify-between shrink-0 select-none lg:select-text my-auto">
             
-            <div class="origin-top flex-shrink-0" style="transform: scale(0.95); transform-origin: top center;">
-                
-                <div id="invoice-render" class="a4-paper font-sans">
+            <div>
+                <div class="flex justify-between items-start border-b-2 border-slate-800 pb-5 mb-4">
+                    <div class="html-render text-slate-900 flex-1 pr-6" v-html="form.kopSurat"></div>
+                    <div class="text-right flex flex-col items-end shrink-0">
+                        <div :class="statusBadgeClass" class="px-4 py-1.5 rounded-lg text-xs font-bold tracking-wider mb-3 border">
+                            {{ form.status }}
+                        </div>
+                        <div class="text-xs text-slate-500 space-y-0.5">
+                            <p><b>Nomor:</b> <span class="text-slate-800 font-medium ml-1">{{ form.invoiceNo || '-' }}</span></p>
+                            <p><b>Tanggal:</b> <span class="text-slate-800 font-medium ml-1">{{ formatDate(form.invoiceDate) }}</span></p>
+                            <p><b>Jatuh Tempo:</b> <span class="text-slate-800 font-medium ml-1">{{ formatDate(form.dueDate) }}</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6 text-center lg:text-left">
+                    <h2 class="text-2xl font-black tracking-widest text-slate-900">INVOICE</h2>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6 mb-6 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div>
+                        <span class="text-2xs font-extrabold uppercase tracking-widest text-slate-400 block mb-1">Ditujukan Kepada:</span>
+                        <h4 class="text-sm font-bold text-slate-800 mb-0.5">{{ form.clientName || 'Nama Penerima / Instansi Klien' }}</h4>
+                        <p class="text-xs text-slate-600 whitespace-pre-line leading-relaxed">{{ form.clientDetails || 'Detail alamat atau kontak klien.' }}</p>
+                    </div>
+                    <div class="text-right flex flex-col justify-end">
+                        <span class="text-2xs font-extrabold uppercase tracking-widest text-slate-400 block mb-0.5">Metode / ID:</span>
+                        <p class="text-xs text-slate-700 font-semibold">Transfer Bank Terlampir</p>
+                    </div>
+                </div>
+
+                <table class="w-full text-left border-collapse mb-6">
+                    <thead>
+                        <tr class="border-b-2 border-slate-800 text-2xs font-extrabold uppercase tracking-wider text-slate-500">
+                            <th class="py-2.5 w-8 text-center">No</th>
+                            <th class="py-2.5 pl-2">Deskripsi Layanan / Paket</th>
+                            <th class="py-2.5 text-center w-24">Durasi</th>
+                            <th class="py-2.5 text-center w-24">QTY</th>
+                            <th class="py-2.5 text-right w-32">Harga Satuan</th>
+                            <th class="py-2.5 text-right w-36">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-xs text-slate-700">
+                        <tr v-for="(item, idx) in form.items" :key="idx" class="align-top">
+                            <td class="py-3 text-center text-slate-400 font-medium">{{ idx + 1 }}</td>
+                            <td class="py-3 pl-2 font-medium text-slate-900 whitespace-pre-line leading-relaxed">{{ item.description || 'Deskripsi Item Baru' }}</td>
+                            <td class="py-3 text-center text-slate-600 font-medium">{{ item.duration || '-' }}</td>
+                            <td class="py-3 text-center text-slate-800">
+                                <span class="font-bold">{{ item.qty }}</span> <span class="text-slate-500 font-normal ml-0.5">{{ item.unit || 'Paket' }}</span>
+                            </td>
+                            <td class="py-3 text-right font-medium">{{ formatRupiah(item.price) }}</td>
+                            <td class="py-3 text-right font-bold text-slate-900">{{ formatRupiah(item.qty * item.price) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="flex justify-between items-start gap-8 mb-6">
+                    <div class="flex-1 bg-blue-50/50 border border-blue-100/60 rounded-xl p-3 text-xs text-slate-600">
+                        <p v-if="!form.tax" class="text-blue-800 font-semibold flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle-exclamation text-xs"></i> Catatan Pajak: Harga belum termasuk komponen pajak.
+                        </p>
+                        <p v-else class="text-slate-600">
+                            Komponen perhitungan di sebelah kanan sudah diakumulasikan bersama pertambahan nilai Pajak Resmi sebesar {{ form.tax }}%.
+                        </p>
+                    </div>
+
+                    <div class="w-72 text-xs space-y-2 border-t border-slate-200 pt-2 shrink-0">
+                        <div class="flex justify-between text-slate-500 font-medium">
+                            <span>Subtotal:</span>
+                            <span class="text-slate-900 font-semibold">{{ formatRupiah(totals.subtotal) }}</span>
+                        </div>
+                        <div v-if="form.discount > 0" class="flex justify-between text-rose-600 font-medium">
+                            <span>Diskon (-):</span>
+                            <span>{{ formatRupiah(form.discount) }}</span>
+                        </div>
+                        <div class="flex justify-between text-slate-500 font-medium items-center">
+                            <span>Pajak<span v-if="form.tax"> ({{ form.tax }}%)</span>:</span>
+                            <span v-if="form.tax" class="text-slate-900 font-semibold">{{ formatRupiah(totals.taxAmount) }}</span>
+                            <span v-else class="text-2xs text-slate-400 italic font-normal">(Belum Termasuk Pajak)</span>
+                        </div>
+                        <div class="flex justify-between text-sm font-black text-slate-900 border-t border-slate-800 pt-2 bg-slate-50 p-2 rounded-lg">
+                            <span>GRAND TOTAL:</span>
+                            <span class="text-blue-700">{{ formatRupiah(totals.grandTotal) }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-100">
+                <div class="grid grid-cols-12 gap-4 text-xs">
+                    <div class="col-span-8 space-y-3 pr-4">
+                        <div class="html-render text-slate-700 bg-slate-50 p-3 rounded-xl border border-slate-100" v-html="form.paymentInfo"></div>
+                        <div class="html-render text-slate-600 text-2xs leading-relaxed" v-html="form.terms"></div>
+                    </div>
                     
-                    <div class="flex justify-between items-start border-b-2 border-blue-600 pb-6 mb-6">
-                        <div class="w-2/3">
-                            <h1 class="text-4xl font-bold tracking-widest text-blue-900 mb-2 font-heading">INVOICE</h1>
-                            <div class="text-gray-700 text-sm leading-relaxed" x-html="data.companyInfo"></div>
+                    <div class="col-span-4 text-center flex flex-col justify-between min-h-[32mm]">
+                        <div>
+                            <p class="text-2xs font-extrabold tracking-widest text-slate-400 uppercase mb-1">Hormat Kami,</p>
+                            <p class="text-xs font-bold text-slate-800">alphacast.id</p>
                         </div>
-                        <div class="w-1/3 flex justify-end">
-                            <img :src="data.logoUrl" alt="Logo" :style="`width: ${data.logoWidth}px; max-width: 100%;`" class="object-contain">
+                        <div class="h-16 flex items-center justify-center">
+                            <span class="text-3xl text-blue-500/10 font-black tracking-widest uppercase select-none">ALPHACAST</span>
                         </div>
-                    </div>
-
-                    <div class="flex justify-between mb-8">
-                        <div class="w-1/2 pr-4">
-                            <h3 class="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1" x-text="t.billTo"></h3>
-                            <div class="text-gray-900 font-bold text-lg" x-text="data.clientName"></div>
-                            <div class="text-gray-600 text-sm whitespace-pre-line" x-text="data.clientAddress"></div>
-                        </div>
-                        <div class="w-1/2 text-right">
-                            <table class="w-full text-sm">
-                                <tr>
-                                    <td class="text-gray-500 font-semibold py-1" x-text="t.invNo + ':'"></td>
-                                    <td class="text-gray-900 font-bold" x-text="data.invoiceNo"></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-gray-500 font-semibold py-1" x-text="t.date + ':'"></td>
-                                    <td class="text-gray-900" x-text="formatDate(data.date)"></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-gray-500 font-semibold py-1" x-text="t.dueDate + ':'"></td>
-                                    <td class="text-gray-900" x-text="formatDate(data.dueDate)"></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-gray-500 font-semibold py-1 pt-3">Status:</td>
-                                    <td class="pt-3">
-                                        <span class="px-3 py-1 text-xs font-bold rounded" 
-                                              :class="data.status === 'PAID' ? 'bg-green-100 text-green-800' : (data.status === 'UNPAID' ? 'bg-red-100 text-red-800' : 'bg-gray-200 text-gray-800')" 
-                                              x-text="data.status"></span>
-                                    </td>
-                                </tr>
-                            </table>
+                        <div>
+                            <div class="w-full border-b border-slate-400 mx-auto mb-0.5"></div>
+                            <p class="text-2xs font-bold text-slate-700">Authorized Signature</p>
                         </div>
                     </div>
-
-                    <table class="w-full mb-8 text-left border-collapse">
-                        <thead>
-                            <tr class="bg-blue-50 text-blue-900 uppercase text-xs tracking-wider">
-                                <th class="py-3 px-4 font-semibold border-b-2 border-blue-200" x-text="t.desc"></th>
-                                <th class="py-3 px-4 font-semibold border-b-2 border-blue-200 text-center">Qty</th>
-                                <th class="py-3 px-4 font-semibold border-b-2 border-blue-200 text-right" x-text="t.price"></th>
-                                <th class="py-3 px-4 font-semibold border-b-2 border-blue-200 text-right" x-text="t.amount"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <template x-for="item in data.items" :key="item.id">
-                                <tr class="border-b border-gray-100">
-                                    <td class="py-4 px-4">
-                                        <div class="font-bold text-gray-900" x-text="item.name"></div>
-                                        <div class="text-sm text-gray-500 whitespace-pre-line mt-1" x-text="item.desc" x-show="item.desc"></div>
-                                    </td>
-                                    <td class="py-4 px-4 text-center text-gray-700" x-text="item.qty"></td>
-                                    <td class="py-4 px-4 text-right text-gray-700" x-text="formatCurrency(item.price)"></td>
-                                    <td class="py-4 px-4 text-right font-semibold text-gray-900" x-text="formatCurrency(item.qty * item.price)"></td>
-                                </tr>
-                            </template>
-                        </tbody>
-                    </table>
-
-                    <div class="flex justify-end mb-8">
-                        <div class="w-1/2">
-                            <table class="w-full text-sm">
-                                <tr>
-                                    <td class="py-2 text-gray-600" x-text="t.subtotal"></td>
-                                    <td class="py-2 text-right text-gray-900 font-semibold" x-text="formatCurrency(subtotal)"></td>
-                                </tr>
-                                <tr x-show="data.discount > 0">
-                                    <td class="py-2 text-gray-600">
-                                        <span x-text="t.discount"></span>
-                                        <div class="text-xs text-red-500 italic" x-text="data.discountNote" x-show="data.discountNote"></div>
-                                    </td>
-                                    <td class="py-2 text-right text-red-600 font-semibold" x-text="'- ' + formatCurrency(data.discount)"></td>
-                                </tr>
-                                <tr x-show="data.taxPercent > 0">
-                                    <td class="py-2 text-gray-600" x-text="`Pajak / Tax (${data.taxPercent}%)`"></td>
-                                    <td class="py-2 text-right text-gray-900 font-semibold" x-text="formatCurrency(taxAmount)"></td>
-                                </tr>
-                                <tr class="border-t-2 border-blue-600">
-                                    <td class="py-3 text-lg font-bold text-blue-900" x-text="t.total"></td>
-                                    <td class="py-3 text-right text-xl font-bold text-blue-900" x-text="formatCurrency(grandTotal)"></td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-between items-start mt-12 text-sm">
-                        <div class="w-1/3 pr-4">
-                            <h4 class="font-bold text-gray-700 mb-2 border-b border-gray-200 pb-1" x-text="t.paymentInfo"></h4>
-                            <img src="https://alphacast.id/images/dokumen/norekbca.png" alt="Rekening BCA" class="w-full max-w-[200px] object-contain rounded border border-gray-200 shadow-sm">
-                        </div>
-                        
-                        <div class="w-1/3 px-4">
-                            <h4 class="font-bold text-gray-700 mb-2 border-b border-gray-200 pb-1" x-text="t.notes"></h4>
-                            <div class="text-gray-600 text-xs whitespace-pre-line leading-relaxed" x-text="data.notes"></div>
-                        </div>
-
-                        <div class="w-1/3 pl-4 text-center">
-                            <div class="text-gray-700 font-semibold mb-2">Hormat Kami,</div>
-                            <div class="h-24 flex items-center justify-center">
-                                <img :src="data.ttdUrl" alt="Tanda Tangan" class="h-full object-contain mix-blend-multiply" x-show="data.ttdUrl">
-                            </div>
-                            <div class="text-gray-900 font-bold border-t border-gray-300 inline-block pt-1 px-4 mt-2" x-text="data.ttdName"></div>
-                        </div>
-                    </div>
-
-                    <div class="page-break w-full h-full flex items-center justify-center pt-8">
-                        <img src="https://alphacast.id/images/dokumen/poster.png" alt="Promosi" class="w-full max-h-[250mm] object-contain">
-                    </div>
-
+                </div>
+                
+                <div class="mt-6 flex h-1 w-full rounded-full overflow-hidden">
+                    <div class="bg-blue-600 flex-1"></div>
+                    <div class="bg-indigo-600 w-1/4"></div>
+                    <div class="bg-slate-800 w-1/12"></div>
                 </div>
             </div>
+
         </div>
-    </main>
+    </div>
 
-    <footer class="bg-gray-900 border-t border-gray-700 mt-10 p-8 pb-32 no-print">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 text-gray-400 text-sm pb-8">
-                <div class="space-y-4 lg:col-span-2">
-                    <div class="flex items-center space-x-3 mb-2">
-                        <a href="/" class="flex items-center space-x-3 group" title="Kembali ke Halaman Utama">
-                            <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="Company Logo" class="h-16 w-50 rounded-full object-cover" onerror="this.src='https://alphacast.id/images/logo/2024/2024%20logo%20name%20slogan%20white%20-%20alphacast.id.png'">
-                        </a>
-                    </div>
-                    <p class="text-gray-400 text-base">
-                        Livestream & Multimedia Specialist: Professional Video Production, Virtual & Hybrid Event Solutions. Based in Manado, North Sulawesi. 
-                    </p>
-                </div>
-                <div class="space-y-2">
-                    <h3 class="text-white font-semibold mb-2">Contact & Address</h3>
-                    <a href="mailto:halo.alphacast@gmail.com" class="inline-flex items-center text-gray-400 hover:text-white py-1 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 flex-shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                        halo.alphacast@gmail.com
-                    </a>
-                    <a href="https://goo.gl/maps/EJrUVrc1SbLcQ2UW6" target="_blank" class="flex items-start text-gray-400 hover:text-white py-1 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 mt-1 flex-shrink-0 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                        <span class="text-sm">Reko Bawah, Kolongan, Kec. Kalawat, Kabupaten Minahasa Utara, Sulawesi Utara</span>
-                    </a>
-                    <a id="whatsapp-cta-link" href="#" target="_blank" class="whatsapp-cta mt-4 inline-flex items-center px-4 py-2 font-semibold text-white bg-green-600 rounded-lg shadow-lg hover:bg-green-500 focus:outline-none focus:ring-4 focus:ring-green-800 transition transform hover:scale-[1.02]">
-                        <i class="fa-brands fa-whatsapp text-xl mr-2"></i> Whatsapp (+62)851-5955-6468
-                    </a>
-                </div>
-                <div class="space-y-4 lg:col-span-1">
-                    <h3 class="text-white font-semibold mb-2">Follow Us</h3>
-                    <div class="flex space-x-3 sm:space-x-4">
-                        <a href="https://fb.com/alphacast.id" target="_blank" class="group transition" title="Facebook"><div class="social-icon-wrapper facebook-icon"><i class="fa-brands fa-facebook-f text-xl"></i></div></a>
-                        <a href="https://instagram.com/alphacast.id" target="_blank" class="group transition" title="Instagram"><div class="social-icon-wrapper instagram-icon"><i class="fa-brands fa-instagram text-xl"></i></div></a>
-                        <a href="https://www.youtube.com/@alphacastid8988" target="_blank" class="group transition" title="YouTube"><div class="social-icon-wrapper youtube-icon"><i class="fa-brands fa-youtube text-xl"></i></div></a>
-                        <a href="https://www.tiktok.com/@alphacast.id" target="_blank" class="group transition" title="TikTok"><div class="social-icon-wrapper tiktok-icon"><i class="fa-brands fa-tiktok text-xl"></i></div></a>
-                    </div>
-                </div>
-            </div>
-            <div class="pt-6 border-t border-gray-700 mt-4 text-center">
-                 <p class="text-gray-500 text-xs sm:text-sm">&copy; 2025 alphacast.id. All rights reserved. Unauthorized copying is strictly prohibited.</p>
-            </div>
-        </div>
-    </footer>
+</div>
 
-    <script>
-        // Data Kamus Bahasa
-        const dict = {
-            id: {
-                invNo: "No. Invoice", date: "Tanggal", dueDate: "Jatuh Tempo", billTo: "Ditagihkan Kepada",
-                desc: "Deskripsi", price: "Harga", amount: "Jumlah", subtotal: "Subtotal",
-                discount: "Diskon", total: "Grand Total", notes: "Syarat & Ketentuan",
-                paymentInfo: "Informasi Pembayaran", load: "Muat (.json)", save: "Simpan (.json)"
-            },
-            en: {
-                invNo: "Invoice No.", date: "Date", dueDate: "Due Date", billTo: "Billed To",
-                desc: "Description", price: "Rate", amount: "Amount", subtotal: "Subtotal",
-                discount: "Discount", total: "Grand Total", notes: "Terms & Conditions",
-                paymentInfo: "Payment Information", load: "Load (.json)", save: "Save (.json)"
-            }
-        };
+<script>
+    const { createApp, ref, computed } = Vue;
 
-        // Helper untuk format Rupiah
-        const formatIDR = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 });
+    createApp({
+        setup() {
+            // Default Initialized Form Data Object with requested structural assets
+            const form = ref({
+                kopSurat: `<h1><b>alphacast.id</b></h1>
+<h3>Live Streaming Service Provider</h3>
+<p>Online Meeting Host, Virtual and Hybrid Event Tech Support Based In the City of Manado, North Sulawesi.<br>
+Jl. 14 Pebruari, Kota Manado, Sulawesi Utara<br>
+<b>Whatsapp:</b> (+62)851-5955-6468 | <b>Website:</b> alphacast.id</p>`,
+                invoiceNo: 'INV/' + new Date().getFullYear() + '/0001',
+                invoiceDate: new Date().toISOString().substr(0, 10),
+                dueDate: new Date(Date.now() + 7*24*60*60*1000).toISOString().substr(0, 10),
+                status: 'BELUM LUNAS',
+                clientName: '',
+                clientDetails: '',
+                items: [
+                    { description: 'Premium Hybrid Event Broadcast Package\n(vMix Setup & Multi-cam System Support)', duration: '±3 Jam', qty: 1, unit: 'Paket', price: 2500000 }
+                ],
+                discount: 0,
+                tax: '', // String to dynamically check if text value is loaded or empty
+                paymentInfo: `<h3><b>Informasi Rekening Pembayaran:</b></h3>
+<p>Silakan melakukan pembayaran penuh atau deposit melalui rekening resmi:<br>
+<b>Bank BCA</b> — No. Rekening: <b>0261-XXXX-XX</b><br>
+Atas Nama: <b>Alphacast Indonesia</b></p>`,
+                terms: `<h3><b>Syarat & Ketentuan (S&K):</b></h3>
+<p>1. Pembayaran uang muka (DP) minimal sebesar <b>50%</b> wajib diselesaikan H-3 sebelum pelaksanaan acara.<br>
+2. Pelunasan sisa sisa tagihan dilakukan paling lambat <b>H+1</b> setelah event selesai dilaksanakan.<br>
+3. Perubahan jadwal durasi di lokasi wajib dikonfirmasikan paling lambat 2 jam sebelum on-air.</p>`
+            });
 
-        // Script WhatsApp CTA (Dari User)
-        document.addEventListener('DOMContentLoaded', () => {
-            const whatsappCtaLink = document.getElementById('whatsapp-cta-link');
-            if (whatsappCtaLink) {
-                const pageUrl = window.location.href; 
-                const message = `Halo admin alphacast.id, saya datang dari halaman ${pageUrl} (Invoice Generator)`;
-                const encodedMessage = encodeURIComponent(message);
-                const phoneNumber = '6285159556468';
-                whatsappCtaLink.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-            }
-        });
+            // Action: Append new product service row breakdown element
+            const addItem = () => {
+                form.value.items.push({ description: '', duration: '', qty: 1, unit: 'Paket', price: 0 });
+            };
 
-        // Alpine.js Logic Component
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('invoiceApp', () => ({
-                lang: 'id',
-                t: dict['id'],
+            // Action: Remove explicit listing position index element from list array
+            const removeItem = (index) => {
+                form.value.items.splice(index, 1);
+            };
+
+            // Helper Utility Formatter for Indonesian Currency Display representations
+            const formatRupiah = (value) => {
+                if (value === undefined || value === null || isNaN(value)) return 'Rp 0';
+                return 'Rp ' + value.toLocaleString('id-ID');
+            };
+
+            // Helper Utility Format Date layout to local standard indonesian date formats 
+            const formatDate = (dateString) => {
+                if (!dateString) return '-';
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString('id-ID', options);
+            };
+
+            // Computed Structural State Values calculation operations real-time engine
+            const totals = computed(() => {
+                const subtotal = form.value.items.reduce((sum, item) => sum + (item.qty * item.price || 0), 0);
+                const afterDiscount = Math.max(0, subtotal - (form.value.discount || 0));
                 
-                // State Data Utama Invoice
-                data: {
-                    logoUrl: "https://alphacast.id/images/logo/2024/2024%20logo%20name%20slogan%20white%20-%20alphacast.id.png",
-                    logoWidth: 150,
-                    companyInfo: "<b>alphacast.id</b><br>Manado, North Sulawesi<br>halo.alphacast@gmail.com<br>0851-5955-6468",
-                    invoiceNo: "INV-2606-" + Math.floor(Math.random() * 1000),
-                    status: "UNPAID",
-                    date: new Date().toISOString().split('T')[0],
-                    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // +7 Hari
-                    clientName: "",
-                    clientAddress: "",
-                    items: [
-                        { id: Date.now(), name: "Paket Livestreaming Standard", desc: "2 Kamera Profesional\nOperator Vmix\nIntegrasi Audio", qty: 1, price: 2500000 }
-                    ],
-                    discount: 0,
-                    discountNote: "",
-                    taxPercent: 0,
-                    notes: "1. Pembayaran DP minimal 50% sebelum acara.\n2. Pelunasan maksimal H+1 setelah invoice ini diterima.\n3. Harap sertakan bukti transfer via WhatsApp.",
-                    ttdUrl: "https://alphacast.id/images/dokumen/ttd-alpha-roger.png",
-                    ttdName: "Roger Wagiu"
-                },
-
-                // Computed Properties untuk Kalkulasi
-                get subtotal() {
-                    return this.data.items.reduce((sum, item) => sum + (item.qty * item.price), 0);
-                },
-                get taxAmount() {
-                    let subAfterDiscount = this.subtotal - this.data.discount;
-                    return subAfterDiscount * (this.data.taxPercent / 100);
-                },
-                get grandTotal() {
-                    return this.subtotal - this.data.discount + this.taxAmount;
-                },
-
-                // Methods
-                toggleLang() {
-                    this.lang = this.lang === 'id' ? 'en' : 'id';
-                    this.t = dict[this.lang];
-                },
-                formatCurrency(val) {
-                    return formatIDR.format(val);
-                },
-                formatDate(dateString) {
-                    if(!dateString) return "";
-                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-                    return new Date(dateString).toLocaleDateString(this.lang === 'id' ? 'id-ID' : 'en-US', options);
-                },
-                addItem() {
-                    this.data.items.push({ id: Date.now(), name: "", desc: "", qty: 1, price: 0 });
-                },
-                removeItem(index) {
-                    this.data.items.splice(index, 1);
-                },
-                
-                // Export JSON (Menyimpan State)
-                exportJSON() {
-                    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.data));
-                    const downloadAnchorNode = document.createElement('a');
-                    downloadAnchorNode.setAttribute("href", dataStr);
-                    downloadAnchorNode.setAttribute("download", `Invoice_${this.data.invoiceNo}.json`);
-                    document.body.appendChild(downloadAnchorNode);
-                    downloadAnchorNode.click();
-                    downloadAnchorNode.remove();
-                    alert("Data berhasil disimpan! Anda bisa mengunggah file ini di lain waktu untuk mengeditnya kembali.");
-                },
-                
-                // Import JSON (Memuat State)
-                importJSON(event) {
-                    const file = event.target.files[0];
-                    if (!file) return;
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        try {
-                            const importedData = JSON.parse(e.target.result);
-                            this.data = { ...this.data, ...importedData }; // Merge data
-                            alert("Data berhasil dimuat!");
-                        } catch (err) {
-                            alert("Format file tidak valid!");
-                        }
-                    };
-                    reader.readAsText(file);
-                },
-
-                // Export PDF menggunakan html2pdf
-                exportPDF() {
-                    const element = document.getElementById('invoice-render');
-                    // Trik agar PDF hasilnya HD dan tidak terpotong
-                    const opt = {
-                        margin:       0,
-                        filename:     `${this.data.invoiceNo}_${this.data.clientName}.pdf`,
-                        image:        { type: 'jpeg', quality: 0.98 },
-                        html2canvas:  { scale: 2, useCORS: true, logging: false },
-                        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                    };
-                    
-                    // Tambahkan class sementara jika perlu (opsional)
-                    html2pdf().set(opt).from(element).save().then(() => {
-                        console.log("PDF Created");
-                    });
-                },
-
-                // Export HTML statis (untuk diberikan ke klien jika mereka minta link/file offline)
-                exportHTML() {
-                    const invoiceContent = document.getElementById('invoice-render').outerHTML;
-                    const htmlBoilerplate = `
-                    <!DOCTYPE html>
-                    <html lang="${this.lang}">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Invoice ${this.data.invoiceNo}</title>
-                        <script src="https://cdn.tailwindcss.com"><\/script>
-                        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-                        <style>
-                            body { font-family: 'Plus Jakarta Sans', sans-serif; background: #e2e8f0; padding: 2rem; display: flex; justify-content: center;}
-                            h1, h2, h3, .font-heading { font-family: 'Space Grotesk', sans-serif; }
-                            .a4-paper { background: white; width: 210mm; min-height: 297mm; padding: 20mm; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-                            .page-break { page-break-before: always; break-before: page; }
-                            @media print { body { padding: 0; background: white; } .a4-paper { box-shadow: none; width: auto; margin: 0;} }
-                            @media (max-width: 800px) { body { padding: 0; } .a4-paper { width: 100%; padding: 15px;} }
-                        </style>
-                    </head>
-                    <body>
-                        ${invoiceContent}
-                    </body>
-                    </html>`;
-
-                    const blob = new Blob([htmlBoilerplate], { type: "text/html;charset=utf-8" });
-                    const downloadUrl = URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.href = downloadUrl;
-                    a.download = `${this.data.invoiceNo}_${this.data.clientName}.html`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
+                let taxAmount = 0;
+                if (form.value.tax && !isNaN(form.value.tax)) {
+                    taxAmount = Math.round((parseFloat(form.value.tax) / 100) * afterDiscount);
                 }
-            }));
-        });
-    </script>
+                
+                return {
+                    subtotal,
+                    taxAmount,
+                    grandTotal: afterDiscount + taxAmount
+                };
+            });
+
+            // Dynamic Styling Computation binding configuration targeting document badges 
+            const statusBadgeClass = computed(() => {
+                switch (form.value.status) {
+                    case 'LUNAS':
+                        return 'bg-emerald-50 text-emerald-700 border-emerald-200';
+                    case 'DP (DOWN PAYMENT)':
+                    case 'DICICIL':
+                        return 'bg-amber-50 text-amber-700 border-amber-200';
+                    default:
+                        return 'bg-rose-50 text-rose-700 border-rose-200';
+                }
+            });
+
+            // Trigger System Actions: PDF Render pipeline engine configuration
+            const exportPDF = () => {
+                const element = document.getElementById('invoice-sheet');
+                const options = {
+                    margin: 0,
+                    filename: `${form.value.invoiceNo || 'invoice'}_alphacast.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 3, useCORS: true, letterRendering: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                html2pdf().set(options).from(element).save();
+            };
+
+            // Trigger System Actions: Standalone Single File Webpage Generator module
+            const exportHTML = () => {
+                const previewDOM = document.getElementById('invoice-sheet').innerHTML;
+                const fullHTML = `<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice ${form.value.invoiceNo}</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; display: flex; justify-content: center; padding: 40px 0; }
+        .a4-page { width: 210mm; min-height: 297mm; background: white; padding: 15mm; box-sizing: border-box; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border-radius: 8px; display: flex; flex-col; justify-content: space-between; }
+        .html-render h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.25rem; color: #0f172a; }
+        .html-render h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.25rem; color: #0f172a; }
+        .html-render h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; color: #0f172a; }
+        .html-render p { font-size: 0.9rem; line-height: 1.4; color: #334155; }
+    </style>
+</head>
+<body>
+    <div class="a4-page flex flex-col justify-between">${previewDOM}</div>
+</body>
+</html>`;
+                
+                const blob = new Blob([fullHTML], { type: 'text/html' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `invoice_${form.value.invoiceNo || 'document'}.html`;
+                link.click();
+            };
+
+            // Trigger System Actions: Save Local Document State Configuration mapping to JSON file format
+            const exportJSON = () => {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(form.value, null, 2));
+                const downloadAnchor = document.createElement('a');
+                downloadAnchor.setAttribute("href", dataStr);
+                downloadAnchor.setAttribute("download", `DRAFT_INV_${form.value.invoiceNo || 'backup'}.json`);
+                document.body.appendChild(downloadAnchor);
+                downloadAnchor.click();
+                downloadAnchor.remove();
+            };
+
+            // Trigger System Actions: Import / Recover system states data from loaded device assets
+            const importJSON = (event) => {
+                const file = event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const parsedData = JSON.parse(e.target.result);
+                        form.value = { ...form.value, ...parsedData };
+                    } catch (err) {
+                        alert('Format berkas .JSON tidak valid atau rusak!');
+                    }
+                };
+                reader.readAsText(file);
+            };
+
+            return {
+                form,
+                addItem,
+                removeItem,
+                formatRupiah,
+                formatDate,
+                totals,
+                statusBadgeClass,
+                exportPDF,
+                exportHTML,
+                exportJSON,
+                importJSON
+            };
+        }
+    }).mount('#app');
+</script>
+
 </body>
 </html>
