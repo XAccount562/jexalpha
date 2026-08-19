@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Countdown</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .countdown-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      max-width: 650px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .event-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .event-date-info {
+      font-size: 1rem;
+      color: #38bdf8;
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
+
+    .timer-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .time-box {
+      background: #1e293b;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 16px;
+      padding: 16px 12px;
+      min-width: 100px;
+      flex: 1;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .time-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #f8fafc;
+      text-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+      line-height: 1;
+    }
+
+    .time-label {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 8px;
+      font-weight: 600;
+    }
+
+    .separator {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 500px) {
+      .timer-container {
+        gap: 8px;
+      }
+      .time-box {
+        min-width: 70px;
+        padding: 12px 6px;
+      }
+      .time-value {
+        font-size: 1.8rem;
+      }
+      .separator {
+        display: none;
+      }
+    }
+
+    .finished-msg {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #38bdf8;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="countdown-card">
+    <div class="event-title">Masa Mundur Acara</div>
+    <div class="event-date-info">30 Agustus 2026 — 14:00 WITA</div>
+
+    <div id="countdown" class="timer-container">
+      <div class="time-box">
+        <div id="days" class="time-value">00</div>
+        <div class="time-label">Hari</div>
+      </div>
+      <div class="separator">:</div>
+      <div class="time-box">
+        <div id="hours" class="time-value">00</div>
+        <div class="time-label">Jam</div>
+      </div>
+      <div class="separator">:</div>
+      <div class="time-box">
+        <div id="minutes" class="time-value">00</div>
+        <div class="time-label">Menit</div>
+      </div>
+      <div class="separator">:</div>
+      <div class="time-box">
+        <div id="seconds" class="time-value">00</div>
+        <div class="time-label">Detik</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Penentuan target waktu: 30 Agustus 2026, Pukul 14:00:00 WITA (UTC+8)
+    const targetDate = new Date("2026-08-30T14:00:00+08:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      const daysElem = document.getElementById("days");
+      const hoursElem = document.getElementById("hours");
+      const minutesElem = document.getElementById("minutes");
+      const secondsElem = document.getElementById("seconds");
+      const containerElem = document.getElementById("countdown");
+
+      if (difference <= 0) {
+        containerElem.innerHTML = `<div class="finished-msg">EVENT TELAH DIMULAI!</div>`;
+        return;
+      }
+
+      // Kalkulasi matematika waktu
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      // Format 2 digit angka (01, 02, dst)
+      daysElem.innerText = String(days).padStart(2, "0");
+      hoursElem.innerText = String(hours).padStart(2, "0");
+      minutesElem.innerText = String(minutes).padStart(2, "0");
+      secondsElem.innerText = String(seconds).padStart(2, "0");
+    }
+
+    // Jalankan pertama kali & set interval per 1 detik (1000ms)
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
