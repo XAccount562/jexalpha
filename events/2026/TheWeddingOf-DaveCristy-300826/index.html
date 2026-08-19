@@ -252,9 +252,10 @@ layout: null
             </video>
             
             <div class="hero-content">
-                <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="alphacast.id" class="hero-logo">
+                <!-- <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="alphacast.id" class="hero-logo"> -->
+                 <img src="/images/logo/2024/2024 logo name slogan white - alphacast.id.png" alt="alphacast.id" class="hero-logo">
                 <p>Penyedia layanan media live streaming & event tech support berbasis di Kota Manado</p>
-                
+                <br>
                 <h1>The Wedding Of Dave & Cristy</h1>
                 <h2>30 - 08 - 26</h2>
 
@@ -286,25 +287,29 @@ layout: null
             
             <a href="#" target="_blank" class="link-btn youtube">
                 <i class="fa-brands fa-youtube"></i>
-                Siaran Langsung YouTube
+                Siaran Langsung YouTube (belum tersedia)
             </a>
 
             <a href="#" target="_blank" class="link-btn facebook">
                 <i class="fa-brands fa-facebook-f"></i>
-                Siaran Langsung Facebook
+                Siaran Langsung Facebook (belum tersedia)
             </a>
 
             <a href="#" target="_blank" class="link-btn instagram">
                 <i class="fa-brands fa-instagram"></i>
-                Live Instagram
+                Siaran Langsung Instagram (belum tersedia)
             </a>
-
             <br>
-            <h3>Ingin menggunakan jasa kami untuk event Anda?</h3>
+            <h3>Ingin menggunakan jasa kami untuk event Anda?<br>Tanya-tanya dulu juga boleh</h3>
 
-            <a href="https://wa.me/6285159556468?text=Halo%20admin%2C%20saya%20datang%20dari%20halaman%20events%20alphacast.id!" target="_blank" class="link-btn whatsapp">
+            <!-- <a href="https://wa.me/6285159556468?text=Halo%20admin%2C%20saya%20datang%20dari%20halaman%20events%20alphacast.id!" target="_blank" class="link-btn whatsapp">
                 <i class="fa-brands fa-whatsapp"></i>
                 Konsultasi via WhatsApp
+            </a> -->
+
+            <a id="whatsapp-cta-link" href="#" target="_blank" class="link-btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+                Konsultasi langsung via WhatsApp
             </a>
         </div>
         
@@ -339,6 +344,26 @@ layout: null
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // Update WhatsApp CTA Link with dynamic page address (Pembaruan Href Dinamis)
+        // Script ini saya pisahkan dari script utama agar otomatis berjalan di semua halaman yang pakai footer ini
+        document.addEventListener('DOMContentLoaded', () => {
+            const whatsappCtaLink = document.getElementById('whatsapp-cta-link');
+            if (whatsappCtaLink) {
+                // Mendapatkan URL saat ini
+                const pageUrl = window.location.href; 
+                
+                // Membuat pesan personalisasi
+                const message = `Halo admin alphacast.id, saya datang dari halaman ${pageUrl}`;
+                const encodedMessage = encodeURIComponent(message);
+                
+                // Nomor WhatsApp (diambil dari teks di HTML)
+                const phoneNumber = '6285159556468';
+                
+                // Set Href baru
+                whatsappCtaLink.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            }
+        });
     </script>
 </body>
 </html>
