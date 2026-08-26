@@ -1,17 +1,18 @@
 <style>
-    /* Header Glass Blur Effect */
+    /* Apple-style Glass Blur Effect */
     .header-glass {
-        background-color: rgba(18, 18, 18, 0.9);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+        background-color: rgba(18, 18, 18, 0.65);
+        backdrop-filter: saturate(180%) blur(20px);
+        -webkit-backdrop-filter: saturate(180%) blur(20px);
     }
 </style>
 
-<header class="header-glass shadow-2xl border-b border-gray-700 sticky top-0 z-20">
-    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+<!-- Mengubah posisi menjadi fixed agar mengambang di atas seperti tombol checkout -->
+<header class="header-glass fixed top-0 left-0 w-full z-[100] border-b border-gray-800 transition-all duration-300">
+    <div class="max-w-7xl mx-auto py-3 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
         <!-- Company Logo (Left Side) -->
         <a href="/" class="flex items-center space-x-3 group" title="Kembali ke Halaman Utama">
-            <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="alphacast.id Logo" class="h-16 w-50 rounded-full object-cover">
+            <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="alphacast.id Logo" class="h-16 w-50 rounded-full object-cover transition-transform duration-300 group-hover:scale-105">
         </a>
 
         <!-- Empty space on right for balance -->

@@ -82,8 +82,8 @@ layout: null
         /* Hero Banner */
         .hero { 
             position: relative; 
-            /* Tambahan padding atas agar tidak tertutup header yang fixed */
-            padding: 100px 20px 40px; 
+            /* Padding atas ditambah ke 120px agar konten dan logo terhindar dari header fixed */
+            padding: 120px 20px 40px; 
             text-align: center; 
             overflow: hidden; 
             border-bottom: 1px solid #333; 
@@ -257,11 +257,10 @@ layout: null
         });
     </script>
 </head>
-<body class="overflow-hidden"> <!-- Overflow di-hide saat loading -->
+<body class="overflow-hidden"> 
 
     <!-- LOADING SCREEN -->
     <div id="loading-screen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#121212] transition-opacity duration-700">
-        <!-- Logo ditaruh diatas putaran loading sesuai standar modern UI -->
         <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="alphacast.id" class="w-56 mb-8 object-contain">
         
         <div class="loader-spinner mb-5"></div>
@@ -269,16 +268,11 @@ layout: null
         <p class="text-[#b0b0b0] text-sm font-medium tracking-wide">Menyiapkan halaman acara, mohon menunggu...</p>
     </div>
 
-    <!-- WRAPPER HEADER FIXED -->
-    <!-- Disini letak magisnya kak, _includes tetap digunakan tapi dibungkus header fixed -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-[#121212]/80 backdrop-blur-md border-b border-gray-800 transition-all duration-300">
-        {% include header.html %}
-    </header>
+    {% include header.html %}
 
     <main class="flex-grow flex flex-col">
         
         <!-- Hero Banner & Countdown -->
-        <!-- Class animate-on-scroll ditambahkan untuk efek fade-in -->
         <div class="hero">
             <video class="hero-video" autoplay loop muted playsinline poster="images/poster-fallback.jpg">
                 <source src="/videos/(H264) (LANDSCAPE) loop video for website - www.alphacast.id.mp4" media="(orientation: landscape)" type="video/mp4">
@@ -351,15 +345,14 @@ layout: null
             const loader = document.getElementById('loading-screen');
             const body = document.body;
             
-            // Memberikan sedikit jeda sebelum fade out agar tidak terlalu mendadak
             setTimeout(() => {
                 loader.style.opacity = '0';
-                body.classList.remove('overflow-hidden'); // Membuka kunci scroll
+                body.classList.remove('overflow-hidden');
                 
                 setTimeout(() => {
                     loader.style.display = 'none';
-                    initScrollAnimations(); // Mulai jalankan animasi saat loading hilang
-                }, 700); // Waktu transisi CSS
+                    initScrollAnimations();
+                }, 700);
             }, 800);
         });
 
@@ -370,11 +363,11 @@ layout: null
                     if (entry.isIntersecting) {
                         entry.target.classList.add('opacity-100', 'translate-y-0');
                         entry.target.classList.remove('opacity-0', 'translate-y-8', 'translate-y-6');
-                        observer.unobserve(entry.target); // Animasi dimainkan sekali saja
+                        observer.unobserve(entry.target); 
                     }
                 });
             }, { 
-                threshold: 0.1, // Memicu animasi ketika 10% elemen sudah terlihat
+                threshold: 0.1, 
                 rootMargin: "0px 0px -50px 0px"
             });
 
