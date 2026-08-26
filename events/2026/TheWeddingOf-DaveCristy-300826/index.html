@@ -7,19 +7,23 @@ layout: null
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Wedding Of Dave & Cristy - alphacast.id</title>
+    <title>alphacast.id event's landing page</title>
     
     <link rel="shortcut icon" href="/images/logo/(smallforwebsite)  color1 - alphacast.id logo.png" />
     <link rel="icon" type="image/png" href="/images/logo/2026/website icon thumbnail for sosmed link sharing - alphacast.id 2026.png">
     
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- CSS Custom Properties -->
     <style>
         :root {
             --primary-blue: #2196F3;
@@ -50,7 +54,7 @@ layout: null
             flex-direction: column;
         }
 
-        /* Anti-interaksi (dari sewajo!) */
+        /* Anti-interaksi */
         img, video, canvas, svg {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -61,10 +65,25 @@ layout: null
             pointer-events: none;
         }
 
-        /* Hero Banner (Video Support) */
+        /* Loader Animation */
+        .loader-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #333;
+            border-top-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 
+            to { transform: rotate(360deg); } 
+        }
+
+        /* Hero Banner */
         .hero { 
             position: relative; 
-            padding: 60px 20px 40px; 
+            /* Padding atas ditambah ke 120px agar konten dan logo terhindar dari header fixed */
+            padding: 120px 20px 40px; 
             text-align: center; 
             overflow: hidden; 
             border-bottom: 1px solid #333; 
@@ -78,7 +97,7 @@ layout: null
             height: 100%; 
             object-fit: cover; 
             z-index: 0; 
-            opacity: 0.3; /* Diredupkan agar teks terbaca */
+            opacity: 0.3; 
         }
         
         .hero-content {
@@ -97,7 +116,6 @@ layout: null
             object-fit: contain; 
         }
 
-        /* Styling spesifik agar tidak ter-reset oleh Tailwind */
         .hero h1 { 
             font-size: 2rem; 
             font-weight: 700;
@@ -121,7 +139,7 @@ layout: null
             margin: 0 auto; 
         }
 
-        /* --- Desain Countdown --- */
+        /* Countdown */
         .timer-container {
             display: flex;
             justify-content: center;
@@ -168,7 +186,7 @@ layout: null
             border: 1px solid rgba(33, 150, 243, 0.3);
         }
 
-        /* --- Linktree Buttons Container --- */
+        /* Linktree Buttons Container */
         .links-wrapper {
             padding: 40px 20px;
             max-width: 600px;
@@ -183,7 +201,8 @@ layout: null
         .links-wrapper h3 {
             font-size: 1rem;
             color: var(--text-secondary);
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            margin-top: 15px;
             font-weight: 500;
         }
 
@@ -205,20 +224,18 @@ layout: null
             overflow: hidden;
         }
 
-        .link-btn i {
-            font-size: 1.4rem;
-        }
+        .link-btn i { font-size: 1.4rem; }
 
-        /* Efek Hover Spesifik Platform */
         .link-btn:hover {
             transform: translateY(-3px);
             border-color: var(--primary-blue);
             box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
         }
 
-        .link-btn.youtube:hover { border-color: #FF0000; box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2); color: #FF0000; }
+        /* Hover Styles - Social & Streaming Platforms */
         .link-btn.facebook:hover { border-color: #1877F2; box-shadow: 0 5px 15px rgba(24, 119, 242, 0.2); color: #1877F2; }
         .link-btn.instagram:hover { border-color: #E1306C; box-shadow: 0 5px 15px rgba(225, 48, 108, 0.2); color: #E1306C; }
+        .link-btn.gdrive:hover { border-color: #4285F4; box-shadow: 0 5px 15px rgba(66, 133, 244, 0.2); color: #4285F4; }
         .link-btn.whatsapp:hover { border-color: #25D366; background-color: #25D366; color: #fff; box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); }
 
         @media (max-width: 500px) {
@@ -227,6 +244,7 @@ layout: null
         }
     </style>
 
+    <!-- Anti-Interaksi Script -->
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('keydown', function(e) {
@@ -239,25 +257,34 @@ layout: null
         });
     </script>
 </head>
-<body>
+<body class="overflow-hidden"> 
+
+    <!-- LOADING SCREEN -->
+    <div id="loading-screen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#121212] transition-opacity duration-700">
+        <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="alphacast.id" class="w-56 mb-8 object-contain">
+        
+        <div class="loader-spinner mb-5"></div>
+        
+        <p class="text-[#b0b0b0] text-sm font-medium tracking-wide">Menyiapkan halaman acara, mohon menunggu...</p>
+    </div>
 
     {% include header.html %}
 
     <main class="flex-grow flex flex-col">
         
+        <!-- Hero Banner & Countdown -->
         <div class="hero">
             <video class="hero-video" autoplay loop muted playsinline poster="images/poster-fallback.jpg">
                 <source src="/videos/(H264) (LANDSCAPE) loop video for website - www.alphacast.id.mp4" media="(orientation: landscape)" type="video/mp4">
                 <source src="/videos/(H264) (LANDSCAPE) loop video for website - www.alphacast.id.mp4" media="(orientation: portrait)" type="video/mp4">
             </video>
             
-            <div class="hero-content">
-                <!-- <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="alphacast.id" class="hero-logo"> -->
-                 <img src="/images/logo/2024/2024 logo name slogan white - alphacast.id.png" alt="alphacast.id" class="hero-logo">
+            <div class="hero-content animate-on-scroll opacity-0 translate-y-8 transition-all duration-1000 ease-out">
+                <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="alphacast.id" class="hero-logo">
                 <p>Penyedia layanan media live streaming & event tech support berbasis di Kota Manado</p>
-                <br>
-                <h1>The Wedding Of Dave & Cristy</h1>
-                <h2>30 - 08 - 26</h2>
+                
+                <h1>GAVRA MUSIC MINISTRY</h1>
+                <h2>11 Juli 2026 - 11 08 26</h2>
 
                 <div id="countdown" class="timer-container">
                     <div class="time-box">
@@ -280,51 +307,101 @@ layout: null
             </div>
         </div>
 
+        <!-- Links Container -->
         <div class="links-wrapper">
-            <h3>Pilih platform untuk menonton siaran langsung:</h3>
-
-            <h3>Acara akan segera dimulaikan, pantau terus halaman ini yah!</h3>
             
-            <a href="#" target="_blank" class="link-btn youtube">
-                <i class="fa-brands fa-youtube"></i>
-                Siaran Langsung YouTube (belum tersedia)
-            </a>
+            <div class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-100 ease-out">
+                <h3>Pilih platform untuk menonton siaran langsung:</h3>
+                
+                <a href="https://web.facebook.com/cristy.natalia.1/live" target="_blank" class="link-btn facebook mt-3">
+                    <i class="fa-brands fa-facebook-f"></i>
+                    Siaran Langsung Facebook
+                </a>
+                <p class="text-xs mt-2 text-gray-400">Mulai 19 Februari 2025, Meta/Facebook resmi memberlakukan kebijakan baru penyimpanan Facebook Live yang menghapus video siaran langsung secara otomatis setelah 30 hari.</p>
+                <u>
+                    <a class="text-xs text-[#2196F3]" href="https://about.fb.com/news/2025/02/updating-our-facebook-live-video-storage-policy/" target="_blank">Tekan disini untuk membaca berita resmi dari facebook.</a>
+                </u>
+            </div>
 
-            <a href="#" target="_blank" class="link-btn facebook">
-                <i class="fa-brands fa-facebook-f"></i>
-                Siaran Langsung Facebook (belum tersedia)
-            </a>
+            <div class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-200 ease-out mt-4">
+                <a href="https://www.instagram.com/ceritacristy/" target="_blank" class="link-btn instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                    Siaran Langsung Instagram
+                </a>
+                <p class="text-xs mt-2 text-gray-400">Siaran Langsung Instagram hanya tersedia disaat acara sedang berlangsung.</p>
+            </div>
+            
+            <!-- SEKSI REKAMAN ACARA / CLOUD STORAGE -->
+            <!-- <div class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-300 ease-out mt-6">
+                <h3>Akses Rekaman / Dokumentasi Acara:</h3>
 
-            <a href="#" target="_blank" class="link-btn instagram">
-                <i class="fa-brands fa-instagram"></i>
-                Siaran Langsung Instagram (belum tersedia)
-            </a>
-            <br>
-            <h3>Ingin menggunakan jasa kami untuk event Anda?<br>Tanya-tanya dulu juga boleh</h3>
+                <a href="https://drive.google.com/file/d/1jyXJRgQNAhGarB0rzpIOF6M5-YIO2sCg/view?usp=sharing" target="_blank" class="link-btn gdrive mt-3">
+                    <i class="fa-brands fa-google-drive"></i>
+                    Unduh Rekaman via Google Drive
+                </a>
+                <p class="text-xs mt-2 text-gray-400">Link google drive diatas akan tersedia selama 1 bulan sejak link ini diberikan ke client, mohon agar dapat segera mendownload rekaman tersebut, terima kasih.</p>
+            </div> -->
 
-            <!-- <a href="https://wa.me/6285159556468?text=Halo%20admin%2C%20saya%20datang%20dari%20halaman%20events%20alphacast.id!" target="_blank" class="link-btn whatsapp">
-                <i class="fa-brands fa-whatsapp"></i>
-                Konsultasi via WhatsApp
-            </a> -->
+            <div class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-500 ease-out mt-6">
+                <h3>Ingin menggunakan jasa kami untuk event Anda?</h3>
 
-            <a id="whatsapp-cta-link" href="#" target="_blank" class="link-btn whatsapp">
-                <i class="fa-brands fa-whatsapp"></i>
-                Konsultasi langsung via WhatsApp
-            </a>
+                <a href="https://wa.me/6285159556468?text=Halo%20admin%2C%20saya%20datang%20dari%20halaman%20events%20alphacast.id!" target="_blank" class="link-btn whatsapp mt-3">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    Konsultasi via WhatsApp
+                </a>
+            </div>
+
         </div>
         
     </main>
 
     {% include footer.html %}
 
+    <!-- Script Utama (Loader, Animate-In, Countdown) -->
     <script>
-        // Target: 30 Agustus 2026, 14:00 WITA (UTC+8)
+        // 1. Logika Loading Screen & Animasi Masuk (Animate In)
+        window.addEventListener('load', function() {
+            const loader = document.getElementById('loading-screen');
+            const body = document.body;
+            
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                body.classList.remove('overflow-hidden');
+                
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    initScrollAnimations();
+                }, 700);
+            }, 800);
+        });
+
+        // 2. Intersection Observer untuk efek Animate-in pada saat Scroll
+        function initScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('opacity-100', 'translate-y-0');
+                        entry.target.classList.remove('opacity-0', 'translate-y-8', 'translate-y-6');
+                        observer.unobserve(entry.target); 
+                    }
+                });
+            }, { 
+                threshold: 0.1, 
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+        }
+
+        // 3. Countdown Event (Null-Safe Protection)
         const targetDate = new Date("2026-08-30T14:00:00+08:00").getTime();
 
         function updateCountdown() {
+            const containerElem = document.getElementById("countdown");
+            if (!containerElem) return;
+
             const now = new Date().getTime();
             const difference = targetDate - now;
-            const containerElem = document.getElementById("countdown");
 
             if (difference <= 0) {
                 containerElem.innerHTML = `<div class="finished-msg">ACARA SEDANG BERLANGSUNG</div>`;
@@ -336,34 +413,19 @@ layout: null
             const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerText = String(days).padStart(2, "0");
-            document.getElementById("hours").innerText = String(hours).padStart(2, "0");
-            document.getElementById("minutes").innerText = String(minutes).padStart(2, "0");
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, "0");
+            const daysElem = document.getElementById("days");
+            const hoursElem = document.getElementById("hours");
+            const minutesElem = document.getElementById("minutes");
+            const secondsElem = document.getElementById("seconds");
+
+            if (daysElem) daysElem.innerText = String(days).padStart(2, "0");
+            if (hoursElem) hoursElem.innerText = String(hours).padStart(2, "0");
+            if (minutesElem) minutesElem.innerText = String(minutes).padStart(2, "0");
+            if (secondsElem) secondsElem.innerText = String(seconds).padStart(2, "0");
         }
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
-
-        // Update WhatsApp CTA Link with dynamic page address (Pembaruan Href Dinamis)
-        // Script ini saya pisahkan dari script utama agar otomatis berjalan di semua halaman yang pakai footer ini
-        document.addEventListener('DOMContentLoaded', () => {
-            const whatsappCtaLink = document.getElementById('whatsapp-cta-link');
-            if (whatsappCtaLink) {
-                // Mendapatkan URL saat ini
-                const pageUrl = window.location.href; 
-                
-                // Membuat pesan personalisasi
-                const message = `Halo admin alphacast.id, saya datang dari halaman ${pageUrl}`;
-                const encodedMessage = encodeURIComponent(message);
-                
-                // Nomor WhatsApp (diambil dari teks di HTML)
-                const phoneNumber = '6285159556468';
-                
-                // Set Href baru
-                whatsappCtaLink.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-            }
-        });
     </script>
 </body>
 </html>
