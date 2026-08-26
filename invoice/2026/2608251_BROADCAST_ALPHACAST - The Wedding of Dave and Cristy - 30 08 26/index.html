@@ -1,7 +1,6 @@
 ---
 layout: null
 ---
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -32,9 +31,6 @@ layout: null
         /* Apply smooth transition for card color change */
         .status-card {
             transition: background-color 0.5s ease-in-out, transform 0.5s ease-out;
-            transform: translateY(20px);
-            opacity: 0;
-            animation: fadeInSlideUp 0.8s forwards ease-out;
         }
 
         /* Load Animation Keyframes */
@@ -48,6 +44,15 @@ layout: null
                 transform: translateY(0);
             }
         }
+
+        /* Staggered Animation Classes */
+        .animate-slide-up {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInSlideUp 0.8s forwards ease-out;
+        }
+        .delay-100 { animation-delay: 150ms; }
+        .delay-200 { animation-delay: 300ms; }
 
         /* Dark Mode Background */
         body {
@@ -69,13 +74,6 @@ layout: null
             width: 100%;
             height: 80vh; /* Responsive height */
             min-height: 500px;
-        }
-
-        /* Header Glass Blur Effect */
-        .header-glass {
-            background-color: rgba(18, 18, 18, 0.9); /* Slightly transparent dark background */
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
         }
         
         /* Custom styling for the WhatsApp CTA button to look different from social links */
@@ -122,25 +120,26 @@ layout: null
 
     </style>
 </head>
-<body class="dark">
+<body class="dark overflow-x-hidden">
 
     {% include header.html %}
 
     <!-- Main Content -->
-    <main class="main-content max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 w-full space-y-10">
+    <!-- pt-[120px] ditambahkan untuk menghindari overlap dengan header fixed -->
+    <main class="main-content max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 w-full space-y-10 pt-[120px]">
         
         <!-- Moved Invoice Tracker Title here -->
-        <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-6 text-center">Pelacak Invoice</h1>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-blue-400 mb-6 text-center animate-slide-up">Pelacak Invoice</h1>
 
         <!-- 1. Payment Status Card (Animated on Load) -->
-        <section id="payment-card" class="status-card bg-gray-800 shadow-2xl rounded-xl p-6 md:p-8 lg:p-10 border border-gray-700 transition duration-500">
+        <section id="payment-card" class="status-card bg-gray-800 shadow-2xl rounded-xl p-6 md:p-8 lg:p-10 border border-gray-700 animate-slide-up">
             <h2 class="text-3xl font-extrabold mb-4 text-white" id="project-name">Project alphacast.id ...</h2>
             
             <div class="space-y-4">
                 <!-- Status Badge -->
                 <div class="flex items-center space-x-3">
                     <span class="text-lg font-semibold text-gray-300">Status Pembayaran:</span>
-                    <span id="payment-status-badge" class="px-4 py-1 text-sm font-bold rounded-full shadow-md">
+                    <span id="payment-status-badge" class="px-4 py-1 text-sm font-bold rounded-full shadow-md transition-colors duration-300">
                         Memuat...
                     </span>
                 </div>
@@ -156,7 +155,7 @@ layout: null
         </section>
 
         <!-- 2. PDF Downloader & Viewer -->
-        <section class="space-y-6">
+        <section class="space-y-6 animate-slide-up delay-100">
             <h2 class="text-2xl font-semibold text-gray-200 border-b border-gray-700 pb-2">Dokumen Invoice</h2>
             
             <!-- Tombol Aksi PDF -->
@@ -164,7 +163,7 @@ layout: null
                 
                 <!-- Download Button -->
                 <a id="download-link" href="#" download="Invoice_Project.pdf"
-                   class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-800 transition transform hover:scale-[1.01]">
+                   class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 text-lg font-medium text-white bg-blue-600 rounded-lg shadow-lg hover:bg-blue-500 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-800 transition-all duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
@@ -173,7 +172,7 @@ layout: null
 
                 <!-- Open in New Tab Button -->
                 <a id="open-pdf-link" href="#" target="_blank"
-                   class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 text-lg font-medium text-blue-600 border border-blue-600 rounded-lg shadow-lg hover:bg-blue-900/50 focus:outline-none focus:ring-4 focus:ring-blue-800 transition transform hover:scale-[1.01]">
+                   class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3 text-lg font-medium text-blue-400 bg-gray-800 border border-gray-600 rounded-lg shadow-lg hover:bg-gray-700 hover:text-blue-300 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-gray-700 transition-all duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                     </svg>
@@ -190,11 +189,15 @@ layout: null
             </div>
         </section>
 
-            <!-- 3. NEW: Proofs of Payment Section -->
-        <section class="space-y-6" id="proof-of-payment-section">
-            <h2 class="text-2xl font-semibold text-gray-200 border-b border-gray-700 pb-2">Bukti Pembayaran</h2>           
-            <img src="./WhatsApp Image 2026-08-11 at 15.13.29.jpeg" alt="" style="width: 20em;">
-            <img src="./WhatsApp Image 2026-08-26 at 09.03.50.jpeg" alt="" style="width: 20em;">
+        <!-- 3. NEW: Proofs of Payment Section -->
+        <section class="space-y-6 animate-slide-up delay-200" id="proof-of-payment-section">
+            <h2 class="text-2xl font-semibold text-gray-200 border-b border-gray-700 pb-2">Bukti Pembayaran</h2>          
+            
+            <!-- Container Flexbox untuk gambar sejajar -->
+            <div class="flex flex-col sm:flex-row gap-4 items-center sm:items-start">
+                <img src="./WhatsApp Image 2026-08-11 at 15.13.29.jpeg" alt="Bukti Pembayaran 1" class="w-full sm:w-80 object-contain rounded-xl shadow-lg border border-gray-700 transition-transform duration-300 hover:scale-[1.02]">
+                <img src="./WhatsApp Image 2026-08-26 at 09.03.50.jpeg" alt="Bukti Pembayaran 2" class="w-full sm:w-80 object-contain rounded-xl shadow-lg border border-gray-700 transition-transform duration-300 hover:scale-[1.02]">
+            </div>
         </section>
 
     </main>
@@ -305,7 +308,7 @@ layout: null
             cardElement.classList.add(...status.bgColor.split(' '));
 
             // 4. Update Badge Styling
-            badgeElement.className = "px-4 py-1 text-sm font-bold rounded-full shadow-md"; // Reset base classes
+            badgeElement.className = "px-4 py-1 text-sm font-bold rounded-full shadow-md transition-colors duration-300"; // Reset base classes
             badgeElement.classList.add(...status.badgeColor.split(' '));
         }
 
@@ -313,7 +316,8 @@ layout: null
         document.addEventListener('DOMContentLoaded', () => {
             updateInvoiceData();
             
-            // Pemicu animasi slide-up pada card status
+            // Animasi transisi dihandle oleh CSS class 'animate-slide-up', 
+            // tapi kita pastikan fallback logic ini tidak tabrakan (dapat diabaikan, tapi tetap di-keep untuk safety)
             const cardElement = document.getElementById('payment-card');
             setTimeout(() => {
                 cardElement.style.opacity = 1;
