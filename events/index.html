@@ -23,7 +23,7 @@ layout: null
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- CSS Custom Properties -->
+    <!-- CSS Custom Properties & Translate Fix -->
     <style>
         :root {
             --primary-blue: #2196F3;
@@ -55,7 +55,7 @@ layout: null
         }
 
         /* Anti-interaksi */
-        img, video, canvas, svg {
+        img:not(#image-flyer):not(#lightbox-img), video, canvas, svg {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
@@ -128,7 +128,7 @@ layout: null
             font-size: 1.2rem; 
             color: var(--primary-blue); 
             font-weight: 600;
-            margin-bottom: 25px;
+            margin-bottom: 15px; /* Disesuaikan untuk slot language selector */
         }
 
         .hero p { 
@@ -137,6 +137,25 @@ layout: null
             max-width: 500px; 
             margin: 0 auto; 
         }
+
+        /* Google Translate Stylings */
+        #google_translate_element { margin-bottom: 25px; }
+        .goog-te-gadget { color: transparent !important; font-size: 0px !important; }
+        .goog-te-combo {
+            background-color: var(--surface);
+            color: var(--on-surface);
+            border: 1px solid #333;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .goog-te-combo:focus { border-color: var(--primary-blue); }
+        .goog-logo-link { display:none !important; }
+        .goog-te-gadget span { display: none !important; }
+        body { top: 0 !important; } /* Fix for google translate top bar */
+        .skiptranslate iframe { display: none !important; }
 
         /* Countdown */
         .timer-container {
@@ -186,6 +205,10 @@ layout: null
             border: 1px solid rgba(33, 150, 243, 0.3);
         }
 
+        /* Flyer Hover Effect */
+        #image-flyer { cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        #image-flyer:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+
         /* Linktree Buttons Container */
         .links-wrapper {
             padding: 40px 20px;
@@ -222,6 +245,7 @@ layout: null
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            width: 100%; /* Agar tombol nampak rata */
         }
 
         .link-btn i { font-size: 1.4rem; }
@@ -232,7 +256,7 @@ layout: null
             box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
         }
 
-        /* Hover Styles - Social & Streaming Platforms */
+        /* Hover Styles */
         .link-btn.facebook:hover { border-color: #1877F2; box-shadow: 0 5px 15px rgba(24, 119, 242, 0.2); color: #1877F2; }
         .link-btn.youtube:hover { border-color: #FF0000; box-shadow: 0 5px 15px rgba(255, 0, 0, 0.2); color: #FF0000; }
         .link-btn.instagram:hover { border-color: #E1306C; box-shadow: 0 5px 15px rgba(225, 48, 108, 0.2); color: #E1306C; }
@@ -246,7 +270,7 @@ layout: null
         }
     </style>
 
-    <!-- Anti-Interaksi Script -->
+    <!-- Anti-Interaksi Script (Disesuaikan agar klik gambar poster diizinkan) -->
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('keydown', function(e) {
@@ -255,7 +279,7 @@ layout: null
             if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) { e.preventDefault(); }
         });
         document.addEventListener('dragstart', function(e) {
-            if (e.target.nodeName === 'IMG' || e.target.nodeName === 'VIDEO') { e.preventDefault(); }
+            if (e.target.nodeName === 'IMG' && e.target.id !== 'image-flyer' && e.target.id !== 'lightbox-img' || e.target.nodeName === 'VIDEO') { e.preventDefault(); }
         });
     </script>
 </head>
@@ -266,6 +290,12 @@ layout: null
         <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="alphacast.id" class="w-56 mb-8 object-contain">
         <div class="loader-spinner mb-5"></div>
         <p class="text-[#b0b0b0] text-sm font-medium tracking-wide">Menyiapkan halaman acara, mohon menunggu...</p>
+    </div>
+
+    <!-- LIGHTBOX OVERLAY (Untuk Poster) -->
+    <div id="lightbox-overlay" class="fixed inset-0 z-[10000] bg-black/90 backdrop-blur-md flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white text-4xl font-light hover:text-gray-400 transition cursor-pointer" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-img" src="" class="max-w-[95%] max-h-[90vh] object-contain rounded-lg shadow-2xl scale-95 transition-transform duration-300" onclick="event.stopPropagation()">
     </div>
 
     {% include header.html %}
@@ -283,9 +313,11 @@ layout: null
                 <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="alphacast.id" class="hero-logo">
                 <p>Penyedia layanan media live streaming & event tech support berbasis di Kota Manado</p>
 
-                <!-- Menunggu data dari Javascript -->
                 <h1 id="ui-project-name">Memuat Judul...</h1>
                 <h2 id="ui-project-date">...</h2>
+
+                <!-- Google Translate Selector -->
+                <div id="google_translate_element"></div>
 
                 <div id="countdown" class="timer-container">
                     <!-- Elemen waktu diinjeksi oleh Javascript -->
@@ -295,7 +327,8 @@ layout: null
 
         <!-- Tempat Flyer / Poster Acara -->
         <div id="section-flyer" class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-100 ease-out mt-8" style="display: none; max-width: 450px; margin: 0 auto; padding: 0 20px;">
-            <img id="image-flyer" src="" alt="Poster Acara" class="w-full h-auto rounded-xl shadow-lg border border-[#333]">
+            <p class="text-xs text-center text-gray-500 mb-2 italic">Ketuk gambar untuk memperbesar</p>
+            <img id="image-flyer" src="" alt="Poster Acara" class="w-full h-auto rounded-xl shadow-lg border border-[#333]" onclick="openLightbox(this.src)">
         </div>
 
         <!-- Links Container -->
@@ -307,35 +340,24 @@ layout: null
             </div>
 
             <div id="section-facebook" class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-100 ease-out" style="display: none;">
-                <a id="link-facebook" href="#" target="_blank" class="link-btn facebook mt-3">
-                    <i class="fa-brands fa-facebook-f"></i> Siaran Langsung Facebook
-                </a>
+                <div id="btn-container-facebook" class="flex flex-col gap-3 mt-3"></div>
                 <p class="text-xs mt-2 text-gray-400">Mulai 19 Februari 2025, Meta/Facebook resmi memberlakukan kebijakan baru penyimpanan Facebook Live yang menghapus video siaran langsung secara otomatis setelah 30 hari.</p>
-                <u>
-                    <a class="text-xs text-[#2196F3]" href="https://about.fb.com/news/2025/02/updating-our-facebook-live-video-storage-policy/" target="_blank">Tekan disini untuk membaca berita resmi dari facebook.</a>
-                </u>
+                <u><a class="text-xs text-[#2196F3]" href="https://about.fb.com/news/2025/02/updating-our-facebook-live-video-storage-policy/" target="_blank">Tekan disini untuk membaca berita resmi dari facebook.</a></u>
             </div>
 
             <div id="section-youtube" class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-100 ease-out mt-4" style="display: none;">
-                <a id="link-youtube" href="#" target="_blank" class="link-btn youtube">
-                    <i class="fa-brands fa-youtube"></i> Siaran Langsung YouTube
-                </a>
+                <div id="btn-container-youtube" class="flex flex-col gap-3 mt-3"></div>
             </div>
 
             <div id="section-instagram" class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-200 ease-out mt-4" style="display: none;">
-                <a id="link-instagram" href="#" target="_blank" class="link-btn instagram">
-                    <i class="fa-brands fa-instagram"></i> Siaran Langsung Instagram
-                </a>
+                <div id="btn-container-instagram" class="flex flex-col gap-3 mt-3"></div>
                 <p class="text-xs mt-2 text-gray-400">Siaran Langsung Instagram hanya tersedia disaat acara sedang berlangsung.</p>
             </div>
             
             <div id="section-tiktok" class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-200 ease-out mt-4" style="display: none;">
-                <a id="link-tiktok" href="#" target="_blank" class="link-btn tiktok">
-                    <i class="fa-brands fa-tiktok"></i> Siaran Langsung TikTok
-                </a>
+                <div id="btn-container-tiktok" class="flex flex-col gap-3 mt-3"></div>
                 <p class="text-xs mt-2 text-gray-400">Siaran Langsung TikTok hanya tersedia disaat acara sedang berlangsung.</p>
             </div>
-
 
             <!-- SECTION: REKAMAN / DOKUMENTASI -->
             <div id="section-recording-title" class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-300 ease-out mt-6" style="display: none;">
@@ -343,16 +365,12 @@ layout: null
             </div>
 
             <div id="section-gdrive" class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-300 ease-out mt-3" style="display: none;">
-                <a id="link-gdrive" href="#" target="_blank" class="link-btn gdrive">
-                    <i class="fa-brands fa-google-drive"></i> Unduh Rekaman via Google Drive
-                </a>
+                <div id="btn-container-gdrive" class="flex flex-col gap-3 mt-3"></div>
                 <p class="text-xs mt-2 text-gray-400">Link google drive diatas akan tersedia selama 1 bulan sejak link ini diberikan ke client, mohon agar dapat segera mendownload rekaman tersebut, terima kasih.</p>
             </div>
 
             <div id="section-youtube-record" class="animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-300 ease-out mt-4" style="display: none;">
-                <a id="link-youtube-record" href="#" target="_blank" class="link-btn youtube">
-                    <i class="fa-brands fa-youtube"></i> Tonton Rekaman via YouTube
-                </a>
+                <div id="btn-container-youtube-record" class="flex flex-col gap-3 mt-3"></div>
             </div>
             
             <!-- WhatsApp CTA (Selalu Tampil) -->
@@ -369,51 +387,93 @@ layout: null
 
     {% include footer.html %}
 
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'id', 
+                includedLanguages: 'en,ja,zh-CN,zh-TW,ko,nl', // Sesuaikan bahasa yang diinginkan
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <!-- Script Utama -->
     <script>
         // =========================================================================
-        // PENGAMBILAN DATA OTOMATIS DARI GOOGLE SHEETS
+        // LIGHTBOX LOGIC
+        // =========================================================================
+        function openLightbox(imgSrc) {
+            const overlay = document.getElementById('lightbox-overlay');
+            const img = document.getElementById('lightbox-img');
+            img.src = imgSrc;
+            overlay.classList.remove('opacity-0', 'pointer-events-none');
+            img.classList.remove('scale-95');
+            img.classList.add('scale-100');
+        }
+
+        function closeLightbox() {
+            const overlay = document.getElementById('lightbox-overlay');
+            const img = document.getElementById('lightbox-img');
+            overlay.classList.add('opacity-0', 'pointer-events-none');
+            img.classList.remove('scale-100');
+            img.classList.add('scale-95');
+            setTimeout(() => { img.src = ''; }, 300);
+        }
+
+        // =========================================================================
+        // PENGAMBILAN DATA OTOMATIS
         // =========================================================================
         
-        // PASTE URL APLIKASI WEB ANDA DI BAWAH INI (Di dalam tanda kutip):
+        // PASTE URL APLIKASI WEB ANDA DI BAWAH INI:
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzgCpmfEhRdLh8UFVkfjw0ti6xAZ5Im38-hmHeulsXlU4GzzmoGMPszIMzgfJFMwvQ93A/exec";
 
-        // Ambil parameter ID dari URL browser (?id=namaevent atau ?events=namaevent)
         const urlParams = new URLSearchParams(window.location.search);
         const currentEventId = urlParams.get('id') || urlParams.get('events');
 
         if (!currentEventId) {
-            document.getElementById('ui-project-name').textContent = "Event ID tidak ditemukan";
-            document.getElementById('loading-screen').style.display = 'none';
-            document.body.classList.remove('overflow-hidden');
+            trigger404();
         } else {
-            // Tarik data dari Google Sheets
             fetch(`${GAS_API_URL}?id=${currentEventId}`)
                 .then(response => response.json())
                 .then(res => {
                     if (res.status === "success") {
-                        const eventConfig = res.data;
-                        initEventPage(eventConfig);
+                        initEventPage(res.data);
                     } else {
-                        document.getElementById('ui-project-name').textContent = "Event tidak ditemukan atau belum dirilis";
-                        document.getElementById('loading-screen').style.display = 'none';
-                        document.body.classList.remove('overflow-hidden');
+                        trigger404(); // ID tidak ada di sheet
                     }
                 })
                 .catch(err => {
                     console.error("Gagal mengambil data:", err);
-                    document.getElementById('ui-project-name').textContent = "Gagal memuat data dari server";
-                    document.getElementById('loading-screen').style.display = 'none';
-                    document.body.classList.remove('overflow-hidden');
+                    trigger404(); // Terjadi error koneksi server
+                });
+        }
+
+        // FUNGSI INJEKSI 404 (URL TIDAK BERUBAH)
+        function trigger404() {
+            fetch('/404.html')
+                .then(response => {
+                    if (!response.ok) throw new Error("404 file not found");
+                    return response.text();
+                })
+                .then(html => {
+                    document.open();
+                    document.write(html);
+                    document.close();
+                })
+                .catch(() => {
+                    // Fallback jika fetch gagal
+                    window.location.href = '/404.html';
                 });
         }
 
         // =========================================================================
-        // FUNGSI UTAMA RENDER HALAMAN
+        // RENDER HALAMAN
         // =========================================================================
         function initEventPage(eventConfig) {
             
-            // Helper untuk mengubah DD-MM-YY menjadi YYYY-MM-DD
             function parseShortDateToIso(dateStr) {
                 if (!dateStr || !dateStr.trim()) return "";
                 const parts = dateStr.split('-');
@@ -425,15 +485,12 @@ layout: null
                 return `${year}-${month}-${day}`;
             }
 
-            // 1. SETUP DATA UTAMA (Menggunakan Nama Kolom Sesuai Excel Anda)
-            // Prioritaskan "Judul Formal Acara", jika kosong gunakan "Nama Project"
             document.getElementById('ui-project-name').textContent = eventConfig["Judul Formal Acara"] || eventConfig["Nama Project"] || "Acara Tanpa Judul";
 
             const isoStartDate = parseShortDateToIso(eventConfig["Tanggal Mulai Project"]);
             const isoEndDate = parseShortDateToIso(eventConfig["Tanggal Selesai Project"]);
             const startTimeStr = eventConfig["Jam Mulai Acara Hari Pertama"] || "00:00";
 
-            // Format Tanggal (Indonesia)
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const dateStartObj = new Date(`${isoStartDate}T00:00:00`);
             const formattedStart = dateStartObj.toLocaleDateString('id-ID', dateOptions);
@@ -446,7 +503,7 @@ layout: null
             }
             document.getElementById('ui-project-date').textContent = dateDisplay;
 
-            // 2. SETUP FLYER/POSTER
+            // SETUP FLYER/POSTER
             const flyerSection = document.getElementById('section-flyer');
             const flyerImage = document.getElementById('image-flyer');
             const flyerUrl = eventConfig["Gambar Flyer atau promosi acara"];
@@ -456,32 +513,51 @@ layout: null
                 flyerSection.style.display = 'block';
             }
 
-            // 3. SETUP VISIBILITAS LINK STREAMING & REKAMAN
+            // FUNGSI RENDER MULTI-TOMBOL (PEMISAH \n)
             let hasStreamingLink = false;
             let hasRecordingLink = false;
-            
-            function setLinkDisplay(sectionId, linkId, url, isRecording = false) {
+
+            function renderLinks(sectionId, containerId, urlsString, baseText, iconClass, btnClass, isRecording = false) {
                 const section = document.getElementById(sectionId);
-                const linkElem = document.getElementById(linkId);
+                const container = document.getElementById(containerId);
                 
-                if (section && linkElem && url && url.trim() !== "") {
-                    linkElem.href = url;
-                    section.style.display = 'block';
-                    if (isRecording) hasRecordingLink = true;
-                    else hasStreamingLink = true;
-                } else if (section) {
+                if (!section || !container) return;
+
+                if (!urlsString || urlsString.trim() === "") {
                     section.style.display = 'none';
+                    return;
                 }
+
+                const urls = urlsString.split('\n').map(u => u.trim()).filter(u => u !== "");
+                if (urls.length === 0) {
+                    section.style.display = 'none';
+                    return;
+                }
+
+                container.innerHTML = ''; 
+                urls.forEach((url, index) => {
+                    const btnText = urls.length > 1 ? `${baseText} ${index + 1}` : baseText;
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.target = '_blank';
+                    a.className = `link-btn ${btnClass}`;
+                    a.innerHTML = `<i class="${iconClass}"></i> ${btnText}`;
+                    container.appendChild(a);
+                });
+
+                section.style.display = 'block';
+                if (isRecording) hasRecordingLink = true;
+                else hasStreamingLink = true;
             }
 
-            // Mapping berdasarkan nama kolom di Google Sheets Anda
-            setLinkDisplay('section-facebook', 'link-facebook', eventConfig["Link Live Facebook"]);
-            setLinkDisplay('section-youtube', 'link-youtube', eventConfig["Link Live Youtube"]);
-            setLinkDisplay('section-instagram', 'link-instagram', eventConfig["Link Live Instagram"]);
-            setLinkDisplay('section-tiktok', 'link-tiktok', eventConfig["Link Live TikTok"]);
+            // Menerapkan render multi-tombol
+            renderLinks('section-facebook', 'btn-container-facebook', eventConfig["Link Live Facebook"], 'Siaran Langsung Facebook', 'fa-brands fa-facebook-f', 'facebook');
+            renderLinks('section-youtube', 'btn-container-youtube', eventConfig["Link Live Youtube"], 'Siaran Langsung YouTube', 'fa-brands fa-youtube', 'youtube');
+            renderLinks('section-instagram', 'btn-container-instagram', eventConfig["Link Live Instagram"], 'Siaran Langsung Instagram', 'fa-brands fa-instagram', 'instagram');
+            renderLinks('section-tiktok', 'btn-container-tiktok', eventConfig["Link Live TikTok"], 'Siaran Langsung TikTok', 'fa-brands fa-tiktok', 'tiktok');
             
-            setLinkDisplay('section-gdrive', 'link-gdrive', eventConfig["Link Google Drive"], true);
-            setLinkDisplay('section-youtube-record', 'link-youtube-record', eventConfig["Link Recording Youtube"], true);
+            renderLinks('section-gdrive', 'btn-container-gdrive', eventConfig["Link Google Drive"], 'Unduh Rekaman via Google Drive', 'fa-brands fa-google-drive', 'gdrive', true);
+            renderLinks('section-youtube-record', 'btn-container-youtube-record', eventConfig["Link Recording Youtube"], 'Tonton Rekaman via YouTube', 'fa-brands fa-youtube', 'youtube', true);
 
             const streamTitle = document.getElementById('section-streaming-title');
             const recordTitle = document.getElementById('section-recording-title');
@@ -489,14 +565,14 @@ layout: null
             if (streamTitle && hasStreamingLink) streamTitle.style.display = 'block';
             if (recordTitle && hasRecordingLink) recordTitle.style.display = 'block';
 
-            // 4. SETUP WHATSAPP CTA
+            // WA CTA
             const waLinkElem = document.getElementById('link-whatsapp');
             if (waLinkElem) {
                 const encodedUrl = encodeURIComponent(window.location.href);
                 waLinkElem.href = `https://wa.me/6285159556468?text=Halo%20admin%20alphacast.id%2C%20saya%20datang%20dari%20halaman%20${encodedUrl}`;
             }
 
-            // 5. LOGIKA COUNTDOWN EVENT (WITA +08:00)
+            // COUNTDOWN
             const targetDateTime = new Date(`${isoStartDate}T${startTimeStr}:00+08:00`).getTime();
             const expirationDateTime = targetDateTime + (24 * 60 * 60 * 1000);
 
@@ -537,7 +613,7 @@ layout: null
                 setInterval(updateCountdown, 1000);
             }
 
-            // 6. MATIKAN LOADER SCREEN SETELAH DATA SELESAI DIRENDER
+            // MATIKAN LOADER SCREEN
             const loader = document.getElementById('loading-screen');
             const body = document.body;
             if (loader) {
