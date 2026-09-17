@@ -6,8 +6,17 @@
         -webkit-backdrop-filter: saturate(180%) blur(20px);
     }
     
-    /* Menyembunyikan Widget Bawaan Google Translate yang Kaku */
-    #google_translate_element { display: none !important; }
+    /* Trik Menyembunyikan Widget Google Translate TANPA mematikan fungsinya */
+    #google_translate_element { 
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        opacity: 0;
+        top: -10000px;
+        pointer-events: none;
+    }
+    
     .goog-te-banner-frame.skiptranslate { display: none !important; }
     body { top: 0px !important; } /* Mencegah bug layar turun ke bawah */
 </style>
@@ -100,25 +109,34 @@
         }
     });
 
-    // Fungsi sakti untuk mengendalikan Google Translate
+    // 1. Fungsi Utama untuk mengubah UI Bendera (Hanya dipanggil SEKALI)
     function changeLang(langCode, flag, text) {
-        // 1. Ubah ikon bendera dan teks di tombol header
         const flagElem = document.getElementById('current-lang-flag');
         const textElem = document.getElementById('current-lang-text');
+        
         if (flagElem) flagElem.innerText = flag;
         if (textElem) textElem.innerText = text;
         
-        // 2. Tutup dropdown setelah dipilih
-        toggleLangMenu();
+        // Langsung tutup dropdown (tidak dimasukkan ke dalam looping)
+        const dropdown = document.getElementById('lang-dropdown');
+        if(dropdown && !dropdown.classList.contains('hidden')) {
+            dropdown.classList.add('hidden');
+            dropdown.classList.remove('flex');
+        }
 
-        // 3. Memicu pergantian bahasa di kotak Google Translate yang disembunyikan
+        // Panggil fungsi eksekutor terjemahan
+        triggerTranslate(langCode);
+    }
+
+    // 2. Fungsi Eksekutor (Looping aman di latar belakang)
+    function triggerTranslate(langCode) {
         const selectField = document.querySelector('.goog-te-combo');
         if (selectField) {
             selectField.value = langCode; 
             selectField.dispatchEvent(new Event('change'));
         } else {
-            // Jika script Google belum selesai termuat karena internet lambat, coba lagi 0.5 detik
-            setTimeout(() => changeLang(langCode, flag, text), 500);
+            // Jika Google belum selesai merender, coba lagi diam-diam tanpa mem-blink UI
+            setTimeout(() => triggerTranslate(langCode), 500);
         }
     }
 </script>
