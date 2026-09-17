@@ -23,7 +23,7 @@ layout: null
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- CSS Custom Properties & Translate Fix -->
+    <!-- CSS Custom Properties -->
     <style>
         :root {
             --primary-blue: #2196F3;
@@ -128,7 +128,7 @@ layout: null
             font-size: 1.2rem; 
             color: var(--primary-blue); 
             font-weight: 600;
-            margin-bottom: 15px; /* Disesuaikan untuk slot language selector */
+            margin-bottom: 25px;
         }
 
         .hero p { 
@@ -137,25 +137,6 @@ layout: null
             max-width: 500px; 
             margin: 0 auto; 
         }
-
-        /* Google Translate Stylings */
-        #google_translate_element { margin-bottom: 25px; }
-        .goog-te-gadget { color: transparent !important; font-size: 0px !important; }
-        .goog-te-combo {
-            background-color: var(--surface);
-            color: var(--on-surface);
-            border: 1px solid #333;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            outline: none;
-        }
-        .goog-te-combo:focus { border-color: var(--primary-blue); }
-        .goog-logo-link { display:none !important; }
-        .goog-te-gadget span { display: none !important; }
-        body { top: 0 !important; } /* Fix for google translate top bar */
-        .skiptranslate iframe { display: none !important; }
 
         /* Countdown */
         .timer-container {
@@ -270,7 +251,7 @@ layout: null
         }
     </style>
 
-    <!-- Anti-Interaksi Script (Disesuaikan agar klik gambar poster diizinkan) -->
+    <!-- Anti-Interaksi Script -->
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('keydown', function(e) {
@@ -315,9 +296,6 @@ layout: null
 
                 <h1 id="ui-project-name">Memuat Judul...</h1>
                 <h2 id="ui-project-date">...</h2>
-
-                <!-- Google Translate Selector -->
-                <div id="google_translate_element"></div>
 
                 <div id="countdown" class="timer-container">
                     <!-- Elemen waktu diinjeksi oleh Javascript -->
@@ -387,19 +365,6 @@ layout: null
 
     {% include footer.html %}
 
-    <!-- Google Translate Script -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'id', 
-                includedLanguages: 'en,ja,zh-CN,zh-TW,ko,nl', // Sesuaikan bahasa yang diinginkan
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
     <!-- Script Utama -->
     <script>
         // =========================================================================
@@ -428,7 +393,7 @@ layout: null
         // =========================================================================
         
         // PASTE URL APLIKASI WEB ANDA DI BAWAH INI:
-        const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzgCpmfEhRdLh8UFVkfjw0ti6xAZ5Im38-hmHeulsXlU4GzzmoGMPszIMzgfJFMwvQ93A/exec";
+        const GAS_API_URL = "";
 
         const urlParams = new URLSearchParams(window.location.search);
         const currentEventId = urlParams.get('id') || urlParams.get('events');
