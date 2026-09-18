@@ -6,9 +6,9 @@
         -webkit-backdrop-filter: saturate(180%) blur(20px);
     }
     
-    /* PADA MODE DEBUG INI, SEMUA TRIK PENYEMBUNYIAN KITA HAPUS */
-    /* Biarkan Google Translate tampil normal */
-
+    /* MATIKAN PAKSA widget bawaan Google hingga akar-akarnya */
+    #google_translate_element { display: none !important; }
+    .goog-te-banner-frame.skiptranslate { display: none !important; }
     body { top: 0px !important; } /* Mencegah bug layar turun ke bawah */
 </style>
 
@@ -18,7 +18,8 @@
         new google.translate.TranslateElement({
             pageLanguage: 'id', 
             includedLanguages: 'en,ja,zh-CN,ko,nl', 
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false
         }, 'google_translate_element');
     }
 </script>
@@ -33,55 +34,63 @@
             <img src="/images/logo/2024/2024 logo n name white - alphacast.id.png" alt="alphacast.id Logo" class="h-16 w-50 rounded-full object-cover transition-transform duration-300 group-hover:scale-105">
         </a>
 
-        <!-- WADAH KANAN: Berisi Widget Asli & Tombol Custom Kita -->
-        <div class="flex items-center gap-4">
+        <!-- Custom UI Language Selector (Right Side) -->
+        <div class="relative inline-block text-left" id="lang-menu-container">
+            <!-- Tombol Utama Dropdown -->
+            <button onclick="toggleLangMenu()" class="flex items-center gap-2 bg-[#1e1e1e]/80 border border-gray-700 hover:border-[#2196F3] text-white px-3 py-2 rounded-lg text-sm transition-all shadow-lg backdrop-blur-sm cursor-pointer">
+                <span id="current-lang-flag" class="text-base">🇮🇩</span>
+                <span class="hidden sm:inline font-medium tracking-wide" id="current-lang-text">ID</span>
+                <i class="fa-solid fa-chevron-down text-xs ml-1 text-gray-400"></i>
+            </button>
             
-            <!-- Widget Asli Google (Diberi latar putih agar terlihat jelas di mode gelap) -->
-            <div id="google_translate_element" class="bg-white p-1 rounded shadow text-black"></div>
-
-            <!-- Custom UI Language Selector -->
-            <div class="relative inline-block text-left" id="lang-menu-container">
-                <!-- Tombol Utama Dropdown -->
-                <button onclick="toggleLangMenu()" class="flex items-center gap-2 bg-[#1e1e1e]/80 border border-gray-700 hover:border-[#2196F3] text-white px-3 py-2 rounded-lg text-sm transition-all shadow-lg backdrop-blur-sm cursor-pointer">
-                    <span id="current-lang-flag" class="text-base">🇮🇩</span>
-                    <span class="hidden sm:inline font-medium tracking-wide" id="current-lang-text">ID</span>
-                    <i class="fa-solid fa-chevron-down text-xs ml-1 text-gray-400"></i>
+            <!-- Isi Menu Dropdown -->
+            <div id="lang-dropdown" class="absolute right-0 mt-2 w-44 rounded-xl shadow-2xl bg-[#1e1e1e] border border-gray-700 hidden flex-col overflow-hidden transition-all z-[101]">
+                
+                <button onclick="changeLangCookie('id')" class="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-[#2196F3] transition-colors w-full text-left font-medium">
+                    <span class="text-xl">🇮🇩</span> Indonesia
                 </button>
                 
-                <!-- Isi Menu Dropdown -->
-                <div id="lang-dropdown" class="absolute right-0 mt-2 w-44 rounded-xl shadow-2xl bg-[#1e1e1e] border border-gray-700 hidden flex-col overflow-hidden transition-all z-[101]">
-                    
-                    <button onclick="changeLang('id', '🇮🇩', 'ID')" class="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-[#2196F3] transition-colors w-full text-left font-medium">
-                        <span class="text-xl">🇮🇩</span> Indonesia
-                    </button>
-                    
-                    <button onclick="changeLang('en', '🇬🇧', 'EN')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
-                        <span class="text-xl">🇬🇧</span> English
-                    </button>
-                    
-                    <button onclick="changeLang('ja', '🇯🇵', 'JA')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
-                        <span class="text-xl">🇯🇵</span> 日本語 (Japan)
-                    </button>
-                    
-                    <button onclick="changeLang('ko', '🇰🇷', 'KO')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
-                        <span class="text-xl">🇰🇷</span> 한국어 (Korea)
-                    </button>
-                    
-                    <button onclick="changeLang('zh-CN', '🇨🇳', 'ZH')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
-                        <span class="text-xl">🇨🇳</span> 中文 (China)
-                    </button>
-                    
-                    <button onclick="changeLang('nl', '🇳🇱', 'NL')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
-                        <span class="text-xl">🇳🇱</span> Nederlands
-                    </button>
-                </div>
+                <!-- NAMA BAHASA BISA DITULIS MANUAL SESUAI KEINGINAN ANDA -->
+                <button onclick="changeLangCookie('en')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
+                    <span class="text-xl">🇬🇧</span> English
+                </button>
+                
+                <button onclick="changeLangCookie('ja')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
+                    <span class="text-xl">🇯🇵</span> 日本語 (Japan)
+                </button>
+                
+                <button onclick="changeLangCookie('ko')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
+                    <span class="text-xl">🇰🇷</span> 한국어 (Korea)
+                </button>
+                
+                <button onclick="changeLangCookie('zh-CN')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
+                    <span class="text-xl">🇨🇳</span> 中文 (China)
+                </button>
+                
+                <button onclick="changeLangCookie('nl')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
+                    <span class="text-xl">🇳🇱</span> Nederlands
+                </button>
             </div>
         </div>
+
+        <!-- Wadah Rahasia Google Translate (Tetap ada tapi disembunyikan pakai CSS) -->
+        <div id="google_translate_element"></div>
+
     </div>
 </header>
 
-<!-- Script Logika Custom Dropdown -->
+<!-- Script Logika Cookie dan Dropdown -->
 <script>
+    // Kamus data untuk mengatur tampilan UI bendera
+    const langData = {
+        'id': { flag: '🇮🇩', text: 'ID' },
+        'en': { flag: '🇬🇧', text: 'EN' },
+        'ja': { flag: '🇯🇵', text: 'JA' },
+        'ko': { flag: '🇰🇷', text: 'KO' },
+        'zh-CN': { flag: '🇨🇳', text: 'ZH' },
+        'nl': { flag: '🇳🇱', text: 'NL' }
+    };
+
     function toggleLangMenu() {
         const dropdown = document.getElementById('lang-dropdown');
         dropdown.classList.toggle('hidden');
@@ -100,33 +109,42 @@
         }
     });
 
-    function changeLang(langCode, flag, text) {
+    // 1. Fungsi Mengeksekusi Translasi via Cookie
+    function changeLangCookie(langCode) {
+        // Tanamkan Cookie memori untuk Google Translate
+        document.cookie = `googtrans=/id/${langCode}; path=/`;
+        document.cookie = `googtrans=/id/${langCode}; path=/; domain=${location.hostname}`;
+        
+        // Reload kilat agar mesin Google langsung menerapkan bahasa
+        location.reload();
+    }
+
+    // 2. Fungsi Sinkronisasi: Membaca memori Cookie saat halaman baru dibuka
+    function initLangUI() {
+        let currentLang = 'id';
+        let match = document.cookie.match(/(?:^|;)\s*googtrans=([^;]*)/);
+        
+        // Jika Cookie ditemukan, ambil kode bahasanya
+        if (match) {
+            let parts = match[1].split('/');
+            if (parts.length === 3) {
+                currentLang = parts[2]; 
+            }
+        }
+
+        // Jika bahasa tidak dikenali, kembalikan ke Indonesia
+        if (!langData[currentLang]) {
+            currentLang = 'id';
+        }
+
+        // Ganti Ikon Bendera dan Teks di Header secara otomatis
         const flagElem = document.getElementById('current-lang-flag');
         const textElem = document.getElementById('current-lang-text');
         
-        if (flagElem) flagElem.innerText = flag;
-        if (textElem) textElem.innerText = text;
-        
-        const dropdown = document.getElementById('lang-dropdown');
-        if(dropdown && !dropdown.classList.contains('hidden')) {
-            dropdown.classList.add('hidden');
-            dropdown.classList.remove('flex');
-        }
-
-        triggerTranslate(langCode);
+        if (flagElem) flagElem.innerText = langData[currentLang].flag;
+        if (textElem) textElem.innerText = langData[currentLang].text;
     }
 
-    function triggerTranslate(langCode) {
-        // Mencari elemen select bawaan Google
-        const selectField = document.querySelector('.goog-te-combo');
-        
-        if (selectField) {
-            console.log("✅ DEBUG: Elemen Google Ditemukan! Mengubah bahasa ke -> " + langCode);
-            selectField.value = langCode; 
-            selectField.dispatchEvent(new Event('change', { bubbles: true }));
-        } else {
-            console.warn("⚠️ DEBUG: Elemen Google BELUM ADA, mencoba lagi dalam 500ms...");
-            setTimeout(() => triggerTranslate(langCode), 500);
-        }
-    }
+    // Jalankan sinkronisasi saat struktur HTML sudah siap
+    document.addEventListener('DOMContentLoaded', initLangUI);
 </script>
