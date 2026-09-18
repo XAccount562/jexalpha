@@ -18,12 +18,13 @@
     }
 </style>
 
-<!-- Script Inti Google Translate -->
+<!-- Script Inti Google Translate (Dengan Tambahan Bahasa Baru) -->
 <script type="text/javascript">
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
             pageLanguage: 'id', 
-            includedLanguages: 'en,ja,zh-CN,ko,nl', 
+            /* Daftar bahasa diperbarui: +zh-TW (Taiwan), +hi (India), +fr (Perancis), +de (Jerman), +tl (Filipina) */
+            includedLanguages: 'en,ja,zh-CN,zh-TW,ko,nl,hi,fr,de,tl', 
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
             autoDisplay: false
         }, 'google_translate_element');
@@ -50,7 +51,8 @@
             </button>
             
             <!-- Isi Menu Dropdown -->
-            <div id="lang-dropdown" class="absolute right-0 mt-2 w-44 rounded-xl shadow-2xl bg-[#1e1e1e] border border-gray-700 hidden flex-col overflow-hidden transition-all z-[101]">
+            <!-- max-h-[70vh] dan overflow-y-auto ditambahkan agar menu bisa discroll jika layarnya kecil -->
+            <div id="lang-dropdown" class="absolute right-0 mt-2 w-48 rounded-xl shadow-2xl bg-[#1e1e1e] border border-gray-700 hidden flex-col overflow-y-auto max-h-[70vh] transition-all z-[101]">
                 
                 <button onclick="changeLangCookie('id')" class="flex items-center gap-3 px-4 py-3 text-sm text-white hover:bg-[#2196F3] transition-colors w-full text-left font-medium">
                     <span class="text-xl">🇮🇩</span> Indonesia
@@ -67,24 +69,46 @@
                 <button onclick="changeLangCookie('ko')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
                     <span class="text-xl">🇰🇷</span> 한국어 (Korea)
                 </button>
+
+                <!-- Taiwan (Traditional) -->
+                <button onclick="changeLangCookie('zh-TW')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
+                    <span class="text-xl">🇹🇼</span> 繁體中文 (Taiwan)
+                </button>
                 
+                <!-- China (Simplified) -->
                 <button onclick="changeLangCookie('zh-CN')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
-                    <span class="text-xl">🇨🇳</span> 中文 (China)
+                    <span class="text-xl">🇨🇳</span> 简体中文 (China)
                 </button>
                 
                 <button onclick="changeLangCookie('nl')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
                     <span class="text-xl">🇳🇱</span> Nederlands
                 </button>
 
+                <button onclick="changeLangCookie('hi')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
+                    <span class="text-xl">🇮🇳</span> हिन्दी (India)
+                </button>
+
+                <button onclick="changeLangCookie('fr')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
+                    <span class="text-xl">🇫🇷</span> Français
+                </button>
+
+                <button onclick="changeLangCookie('de')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
+                    <span class="text-xl">🇩🇪</span> Deutsch
+                </button>
+
+                <button onclick="changeLangCookie('tl')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
+                    <span class="text-xl">🇵🇭</span> Tagalog
+                </button>
+
                 <!-- Watermark Atribusi Google -->
-                <div class="px-4 py-2 bg-black/40 border-t border-gray-800 flex justify-center items-center gap-1 cursor-default">
+                <div class="px-4 py-2 bg-black/40 border-t border-gray-800 flex justify-center items-center gap-1 cursor-default sticky bottom-0">
                     <span class="text-[10px] text-gray-500 font-medium tracking-wide">Translated by</span>
                     <span class="text-[11px] font-bold text-gray-300 tracking-wide">Google</span>
                 </div>
             </div>
         </div>
 
-        <!-- Wadah Rahasia Google Translate (Tetap ada tapi disembunyikan pakai CSS) -->
+        <!-- Wadah Rahasia Google Translate -->
         <div id="google_translate_element"></div>
 
     </div>
@@ -92,13 +116,19 @@
 
 <!-- Script Logika Cookie dan Dropdown -->
 <script>
+    // Kamus data untuk mengatur tampilan UI bendera diperbarui
     const langData = {
         'id': { flag: '🇮🇩', text: 'ID' },
         'en': { flag: '🇬🇧', text: 'EN' },
         'ja': { flag: '🇯🇵', text: 'JA' },
         'ko': { flag: '🇰🇷', text: 'KO' },
-        'zh-CN': { flag: '🇨🇳', text: 'ZH' },
-        'nl': { flag: '🇳🇱', text: 'NL' }
+        'zh-TW': { flag: '🇹🇼', text: 'TW' },
+        'zh-CN': { flag: '🇨🇳', text: 'CN' },
+        'nl': { flag: '🇳🇱', text: 'NL' },
+        'hi': { flag: '🇮🇳', text: 'HI' },
+        'fr': { flag: '🇫🇷', text: 'FR' },
+        'de': { flag: '🇩🇪', text: 'DE' },
+        'tl': { flag: '🇵🇭', text: 'PH' }
     };
 
     function toggleLangMenu() {
