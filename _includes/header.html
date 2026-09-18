@@ -6,10 +6,16 @@
         -webkit-backdrop-filter: saturate(180%) blur(20px);
     }
     
-    /* MATIKAN PAKSA widget bawaan Google hingga akar-akarnya */
-    #google_translate_element { display: none !important; }
-    .goog-te-banner-frame.skiptranslate { display: none !important; }
-    body { top: 0px !important; } /* Mencegah bug layar turun ke bawah */
+    /* MATIKAN TOTAL BANNER ATAS GOOGLE TRANSLATE */
+    #google_translate_element,
+    .goog-te-banner-frame,
+    .skiptranslate > iframe { 
+        display: none !important; 
+    }
+    body { 
+        top: 0px !important; 
+        position: static !important; 
+    }
 </style>
 
 <!-- Script Inti Google Translate -->
@@ -50,7 +56,6 @@
                     <span class="text-xl">🇮🇩</span> Indonesia
                 </button>
                 
-                <!-- NAMA BAHASA BISA DITULIS MANUAL SESUAI KEINGINAN ANDA -->
                 <button onclick="changeLangCookie('en')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
                     <span class="text-xl">🇬🇧</span> English
                 </button>
@@ -70,6 +75,12 @@
                 <button onclick="changeLangCookie('nl')" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-300 hover:bg-[#2196F3] hover:text-white transition-colors w-full text-left border-t border-gray-800">
                     <span class="text-xl">🇳🇱</span> Nederlands
                 </button>
+
+                <!-- Watermark Atribusi Google -->
+                <div class="px-4 py-2 bg-black/40 border-t border-gray-800 flex justify-center items-center gap-1 cursor-default">
+                    <span class="text-[10px] text-gray-500 font-medium tracking-wide">Translated by</span>
+                    <span class="text-[11px] font-bold text-gray-300 tracking-wide">Google</span>
+                </div>
             </div>
         </div>
 
@@ -81,7 +92,6 @@
 
 <!-- Script Logika Cookie dan Dropdown -->
 <script>
-    // Kamus data untuk mengatur tampilan UI bendera
     const langData = {
         'id': { flag: '🇮🇩', text: 'ID' },
         'en': { flag: '🇬🇧', text: 'EN' },
@@ -97,7 +107,6 @@
         dropdown.classList.toggle('flex');
     }
 
-    // Menutup menu otomatis jika user mengklik area lain
     document.addEventListener('click', function(event) {
         const container = document.getElementById('lang-menu-container');
         if (container && !container.contains(event.target)) {
@@ -109,22 +118,16 @@
         }
     });
 
-    // 1. Fungsi Mengeksekusi Translasi via Cookie
     function changeLangCookie(langCode) {
-        // Tanamkan Cookie memori untuk Google Translate
         document.cookie = `googtrans=/id/${langCode}; path=/`;
         document.cookie = `googtrans=/id/${langCode}; path=/; domain=${location.hostname}`;
-        
-        // Reload kilat agar mesin Google langsung menerapkan bahasa
         location.reload();
     }
 
-    // 2. Fungsi Sinkronisasi: Membaca memori Cookie saat halaman baru dibuka
     function initLangUI() {
         let currentLang = 'id';
         let match = document.cookie.match(/(?:^|;)\s*googtrans=([^;]*)/);
         
-        // Jika Cookie ditemukan, ambil kode bahasanya
         if (match) {
             let parts = match[1].split('/');
             if (parts.length === 3) {
@@ -132,12 +135,10 @@
             }
         }
 
-        // Jika bahasa tidak dikenali, kembalikan ke Indonesia
         if (!langData[currentLang]) {
             currentLang = 'id';
         }
 
-        // Ganti Ikon Bendera dan Teks di Header secara otomatis
         const flagElem = document.getElementById('current-lang-flag');
         const textElem = document.getElementById('current-lang-text');
         
@@ -145,6 +146,5 @@
         if (textElem) textElem.innerText = langData[currentLang].text;
     }
 
-    // Jalankan sinkronisasi saat struktur HTML sudah siap
     document.addEventListener('DOMContentLoaded', initLangUI);
 </script>
