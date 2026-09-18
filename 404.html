@@ -24,6 +24,11 @@ layout: null
             --text-main: #F3F4F6;
             --text-muted: #9CA3AF;
             --border-color: rgba(255, 255, 255, 0.08);
+            
+            /* Warna Khusus WhatsApp */
+            --wa-color: #16a34a;
+            --wa-hover: #15803d;
+            --wa-glow: rgba(22, 163, 74, 0.25);
         }
 
         * {
@@ -32,7 +37,6 @@ layout: null
             padding: 0;
         }
 
-        /* PERBAIKAN UTAMA: Struktur Flex Column Menjaga Posisi Header & Footer */
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-main);
@@ -43,17 +47,16 @@ layout: null
             overflow-x: hidden;
         }
 
-        /* Kontainer Utama yang Mengisolasi Kotak Error 404 */
+        /* PERBAIKAN: Padding Top diperbesar menjadi 130px agar tidak tertabrak Header Fixed */
         .main-error-wrapper {
             flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px 24px;
+            padding: 130px 24px 60px; 
             position: relative;
         }
 
-        /* Background Glow Effect khas Premium Dark Mode */
         .main-error-wrapper::before {
             content: '';
             position: absolute;
@@ -69,7 +72,6 @@ layout: null
             pointer-events: none;
         }
 
-        /* Animasi Masuk Disesuaikan Menjadi Sempurna 1 Detik */
         @keyframes fadeInUp {
             0% {
                 opacity: 0;
@@ -109,7 +111,6 @@ layout: null
             letter-spacing: -2px;
         }
 
-        /* Grid Penyajian Pesan Multi-bahasa */
         .lang-grid {
             text-align: left;
             background: rgba(0, 0, 0, 0.2);
@@ -120,17 +121,12 @@ layout: null
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 180px;
+            max-height: 200px;
             overflow-y: auto;
         }
 
-        /* Kustomisasi Scrollbar Minimalis */
-        .lang-grid::-webkit-scrollbar {
-            width: 6px;
-        }
-        .lang-grid::-webkit-scrollbar-track {
-            background: transparent;
-        }
+        .lang-grid::-webkit-scrollbar { width: 6px; }
+        .lang-grid::-webkit-scrollbar-track { background: transparent; }
         .lang-grid::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
@@ -153,6 +149,12 @@ layout: null
             margin-bottom: 2px;
         }
 
+        .btn-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
         .btn-group {
             display: flex;
             flex-direction: column;
@@ -161,9 +163,7 @@ layout: null
         }
 
         @media (min-width: 480px) {
-            .btn-group {
-                flex-direction: row;
-            }
+            .btn-group { flex-direction: row; }
         }
 
         .btn {
@@ -177,10 +177,9 @@ layout: null
             text-decoration: none;
             transition: all 0.2s ease;
             cursor: pointer;
-            min-width: 245px; /* Lebar konstan agar penataan layout tidak bergeser saat ganti bahasa */
+            flex: 1; /* Agar membagi lebar proporsional */
         }
 
-        /* Animasi Transisi Teks Tombol (Fade Loop) */
         .btn span {
             display: inline-block;
             transition: opacity 0.3s ease, transform 0.3s ease;
@@ -191,6 +190,21 @@ layout: null
         .btn.text-fade-out span {
             opacity: 0;
             transform: translateY(-4px);
+        }
+
+        /* Styling Tombol CTA WhatsApp Utama */
+        .btn-whatsapp {
+            background-color: var(--wa-color);
+            color: #FFFFFF;
+            box-shadow: 0 4px 14px var(--wa-glow);
+            border: none;
+            width: 100%;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: var(--wa-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
         }
 
         .btn-primary {
@@ -223,10 +237,10 @@ layout: null
     {% include header.html %}
 
     <main class="main-error-wrapper">
-        
         <div class="error-container">
             <div class="error-code">404</div>
 
+            <!-- Daftar Bahasa yang Diperbarui -->
             <div class="lang-grid">
                 <div class="lang-item">
                     <strong>ID • Indonesia</strong>
@@ -241,62 +255,110 @@ layout: null
                     ページが見つかりません。URLを確認するか、ホームに戻ってください。
                 </div>
                 <div class="lang-item">
-                    <strong>ZH • 中文</strong>
-                    未找到该页面。请检查您的网址或返回首页。
-                </div>
-                <div class="lang-item">
                     <strong>KO • 한국어</strong>
                     페이지를 찾을 수 없습니다. URL을 확인하거나 홈으로 돌아가세요.
+                </div>
+                <div class="lang-item">
+                    <strong>TW • 繁體中文</strong>
+                    找不到頁面。請檢查您的網址或返回首頁。
+                </div>
+                <div class="lang-item">
+                    <strong>ZH • 简体中文</strong>
+                    未找到该页面。请检查您的网址或返回首页。
                 </div>
                 <div class="lang-item">
                     <strong>NL • Nederlands</strong>
                     Pagina niet gevonden. Controleer de URL of ga terug naar de homepagina.
                 </div>
+                <div class="lang-item">
+                    <strong>HI • हिन्दी</strong>
+                    पृष्ठ नहीं मिला। कृपया अपना URL जांचें या होम पर वापस जाएं।
+                </div>
+                <div class="lang-item">
+                    <strong>FR • Français</strong>
+                    Page non trouvée. Veuillez vérifier votre URL ou retourner à l'accueil.
+                </div>
+                <div class="lang-item">
+                    <strong>DE • Deutsch</strong>
+                    Seite nicht gefunden. Bitte überprüfen Sie Ihre URL oder kehren Sie zur Startseite zurück.
+                </div>
+                <div class="lang-item">
+                    <strong>TL • Tagalog</strong>
+                    Hindi nahanap ang pahina. Pakisuri ang iyong URL o bumalik sa home.
+                </div>
             </div>
 
-            <div class="btn-group">
-                <a href="/" class="btn btn-primary" id="btn-home-loop">
-                    <span>Kembali Ke Halaman Utama</span>
+            <!-- Susunan Tombol CTA Terbaru -->
+            <div class="btn-wrapper">
+                <!-- Tombol WhatsApp Paling Atas (Primary Focus) -->
+                <a href="#" id="wa-report-btn" target="_blank" class="btn btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp text-xl mr-2"></i>
+                    <span>Lapor Halaman Tidak Ditemukan</span>
                 </a>
-                <button onclick="window.history.back()" class="btn btn-secondary" id="btn-back-loop">
-                    <span>Kembali Ke Halaman Sebelumnya</span>
-                </button>
+                
+                <!-- Dua Tombol Navigasi Standard di Bawahnya -->
+                <div class="btn-group">
+                    <a href="/" class="btn btn-primary" id="btn-home-loop">
+                        <span>Kembali Ke Halaman Utama</span>
+                    </a>
+                    <button onclick="window.history.back()" class="btn btn-secondary" id="btn-back-loop">
+                        <span>Kembali Ke Halaman Sebelumnya</span>
+                    </button>
+                </div>
             </div>
         </div>
-
     </main>
 
     {% include footer.html %}
 
     <script>
-        // Array translasi tombol navigasi mengikuti urutan bahasa di list atas
+        // Eksekusi Logika WhatsApp URL Grabber
+        document.addEventListener("DOMContentLoaded", function() {
+            const waBtn = document.getElementById('wa-report-btn');
+            // Menangkap dan mengenkripsi URL halaman error saat ini secara otomatis
+            const encodedUrl = encodeURIComponent(window.location.href);
+            // Menyusun format pesan WhatsApp yang memuat URL
+            const waMessage = `Halo admin alphacast.id, saya ingin melapor bahwa halaman ini tidak ditemukan (${encodedUrl})`;
+            
+            waBtn.href = `https://wa.me/6285159556468?text=${waMessage}`;
+        });
+
+        // Array translasi 3 tombol yang telah dicocokkan dengan urutan bahasa Grid
         const loopTranslations = [
-            { home: "Kembali Ke Halaman Utama", back: "Kembali Ke Halaman Sebelumnya" },
-            { home: "Return To Main Page", back: "Back To Previous Page" },
-            { home: "メインページに戻る", back: "前のページに戻る" },
-            { home: "返回到网站首页", back: "返回到上一页" },
-            { home: "메인 페이지로 돌아가기", back: "이전 페이지로 돌아가기" },
-            { home: "Terug Ke Hoofdpagina", back: "Terug Naar Vorige Pagina" }
+            /* 0. ID */ { home: "Kembali Ke Halaman Utama", back: "Kembali Ke Halaman Sebelumnya", wa: "Lapor Halaman Tidak Ditemukan" },
+            /* 1. EN */ { home: "Return To Main Page", back: "Back To Previous Page", wa: "Report Page Not Found" },
+            /* 2. JA */ { home: "メインページに戻る", back: "前のページに戻る", wa: "ページが見つからないと報告" },
+            /* 3. KO */ { home: "메인 페이지로 돌아가기", back: "이전 페이지로 돌아가기", wa: "페이지 없음 신고하기" },
+            /* 4. TW */ { home: "返回首頁", back: "返回上一頁", wa: "報告頁面未找到" },
+            /* 5. ZH */ { home: "返回网站首页", back: "返回上一页", wa: "报告页面未找到" },
+            /* 6. NL */ { home: "Terug Naar Hoofdpagina", back: "Terug Naar Vorige Pagina", wa: "Meld Pagina Niet Gevonden" },
+            /* 7. HI */ { home: "मुख्य पृष्ठ पर लौटें", back: "पिछले पृष्ठ पर लौटें", wa: "त्रुटि पृष्ठ की रिपोर्ट करें" },
+            /* 8. FR */ { home: "Retour À L'accueil", back: "Retour À La Page Précédente", wa: "Signaler Page Introuvable" },
+            /* 9. DE */ { home: "Zurück Zur Startseite", back: "Zurück Zur Letzten Seite", wa: "Fehlerhafte Seite Melden" },
+            /* 10. TL */{ home: "Bumalik Sa Home", back: "Bumalik Sa Nakaraang Pahina", wa: "Iulat Ang Sirang Link" }
         ];
 
         let currentLangIndex = 0;
+        const targetBtnWa = document.getElementById('wa-report-btn');
         const targetBtnHome = document.getElementById('btn-home-loop');
         const targetBtnBack = document.getElementById('btn-back-loop');
 
-        // Pergantian teks looping dijadwalkan berkala setiap 4 detik
         setInterval(() => {
-            // Step 1: Tambahkan class CSS fade-out (Teks memudar & bergeser naik tipis)
+            // Step 1: Tambahkan class CSS fade-out ke ketiga tombol
+            targetBtnWa.classList.add('text-fade-out');
             targetBtnHome.classList.add('text-fade-out');
             targetBtnBack.classList.add('text-fade-out');
 
-            // Step 2: Tunggu transisi redup selesai (300ms), ubah isi teks teks di dalam span
             setTimeout(() => {
                 currentLangIndex = (currentLangIndex + 1) % loopTranslations.length;
                 
+                // Step 2: Ubah isi teks teks di dalam span masing-masing tombol
+                targetBtnWa.querySelector('span').textContent = loopTranslations[currentLangIndex].wa;
                 targetBtnHome.querySelector('span').textContent = loopTranslations[currentLangIndex].home;
                 targetBtnBack.querySelector('span').textContent = loopTranslations[currentLangIndex].back;
 
-                // Step 3: Hapus class untuk memunculkan teks baru kembali (Fade In)
+                // Step 3: Fade In kembali
+                targetBtnWa.classList.remove('text-fade-out');
                 targetBtnHome.classList.remove('text-fade-out');
                 targetBtnBack.classList.remove('text-fade-out');
             }, 300);
