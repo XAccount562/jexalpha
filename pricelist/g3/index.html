@@ -75,10 +75,10 @@ layout: null
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* HERO BANNER */
+        /* HERO BANNER - Padding top diubah jadi 120px agar tidak tertabrak header fixed */
         .hero { 
             position: relative; 
-            padding: 60px 20px 40px; 
+            padding: 120px 20px 40px; 
             text-align: center; 
             overflow: hidden; 
             border-bottom: 1px solid #222; 
@@ -615,10 +615,14 @@ layout: null
         function sendToWhatsApp(packageName) {
             const phoneNumber = '6285159556468';
             
-            // Pesan singkat, natural, dan to the point dari sisi client
-            const textMessage = `Halo admin alphacast.id 👋\nSaya ingin bertanya lebih lanjut mengenai *${packageName}*.`;
+            // Pesan dipisah: bagian teks yang di-encode dan emoji tidak usah di-encode secara keras
+            const textPart1 = "Halo admin alphacast.id ";
+            const emoji = "👋";
+            const textPart2 = `\nSaya ingin bertanya lebih lanjut mengenai *${packageName}*.`;
 
-            const encodedMessage = encodeURIComponent(textMessage);
+            // Proses encode hanya pada teks biasa
+            const encodedMessage = encodeURIComponent(textPart1) + emoji + encodeURIComponent(textPart2);
+            
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
             
             window.open(whatsappUrl, '_blank');
