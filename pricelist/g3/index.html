@@ -23,12 +23,12 @@ layout: null
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- CSS Custom Properties & Proteksi -->
+    <!-- CSS Custom Properties & Styling Utama -->
     <style>
         :root {
             --primary-blue: #2196F3;
-            --dark-bg: #0a0a0a; /* Gelap pekat seperti canvas invoice */
-            --surface: #151515; /* Sedikit lebih terang untuk pemisah */
+            --dark-bg: #0a0a0a;
+            --surface: #151515;
             --on-surface: #e0e0e0;
             --text-secondary: #a3a3a3;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -53,7 +53,6 @@ layout: null
             flex-direction: column;
         }
 
-        /* Anti-interaksi (Mencegah copy paste image/video) */
         img, video, canvas, svg {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -66,7 +65,6 @@ layout: null
         
         .video-protected { pointer-events: auto !important; }
 
-        /* Loader Animation */
         .loader-spinner {
             width: 48px;
             height: 48px;
@@ -77,10 +75,10 @@ layout: null
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Hero Banner dengan Video Background */
+        /* HERO BANNER (Tanpa extra padding-top sesuai request testing murni include header) */
         .hero { 
             position: relative; 
-            padding: 140px 20px 60px; /* Padding top besar untuk header fixed apple glass */
+            padding: 60px 20px 40px; 
             text-align: center; 
             overflow: hidden; 
             border-bottom: 1px solid #222; 
@@ -129,14 +127,21 @@ layout: null
             margin-bottom: 15px;
         }
 
+        .hero p.tagline {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            max-width: 600px;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
         /* --- KUSTOMISASI CARD PAKET --- */
-        /* Kini Card bisa di-klik keseluruhan */
         .price-card {
             display: block;
             border-radius: 12px;
             overflow: hidden;
             transition: var(--transition);
-            cursor: pointer; /* Indikator bahwa ini bisa ditekan */
+            cursor: pointer;
             border: 1px solid rgba(255,255,255,0.05);
             text-decoration: none;
             position: relative;
@@ -148,12 +153,10 @@ layout: null
             border-color: rgba(255,255,255,0.15);
         }
 
-        /* Efek klik saat disentuh di HP */
         .price-card:active {
             transform: scale(0.98);
         }
 
-        /* Layout Grid Khusus di dalam Card Utama (Agar Harga Kiri, Rincian Kanan) */
         .card-inner-layout {
             display: flex;
             flex-direction: column;
@@ -165,7 +168,6 @@ layout: null
             }
         }
 
-        /* Styling Zona Harga (Sebelah Kiri / Atas) */
         .price-zone {
             padding: 30px;
             display: flex;
@@ -182,39 +184,55 @@ layout: null
             }
         }
 
-        /* Styling Zona Rincian (Sebelah Kanan / Bawah) */
         .detail-zone {
             padding: 30px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
+        }
+
+        /* Ikon WhatsApp di setiap Card - Berubah background hijau penuh saat di-hover */
+        .whatsapp-indicator {
+            position: absolute;
+            bottom: 20px;
+            right: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            background: rgba(0,0,0,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        .price-card:hover .whatsapp-indicator {
+            background-color: #25D366;
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            border-color: #1fad53;
         }
 
         /* --- WARNA PAKET SESUAI REFERENSI DESAIN --- */
-        /* Paket 1: Merah Solid */
         .theme-red .price-zone { background-color: #cc0000; }
         .theme-red .detail-zone { background-color: #a80000; }
         
-        /* Paket 2: Gold/Kuning Solid */
         .theme-gold .price-zone { background-color: #d4af37; }
         .theme-gold .detail-zone { background-color: #b89626; }
         
-        /* Paket 3: Biru Solid */
         .theme-blue .price-zone { background-color: #1a4b99; }
         .theme-blue .detail-zone { background-color: #123675; }
 
-        /* Combo 1: Gradien Biru ke Merah (Kiri ke Kanan) */
         .theme-combo-1 { background: linear-gradient(90deg, #1a4b99 0%, #b80000 100%); }
-        .theme-combo-1 .price-zone { background: transparent; }
-        .theme-combo-1 .detail-zone { background: transparent; }
+        .theme-combo-1 .price-zone, .theme-combo-1 .detail-zone { background: transparent; }
 
-        /* Combo Ultimate: Gradien Biru ke Gold (Kiri ke Kanan) */
         .theme-combo-2 { background: linear-gradient(90deg, #1a4b99 0%, #a88114 100%); }
-        .theme-combo-2 .price-zone { background: transparent; }
-        .theme-combo-2 .detail-zone { background: transparent; }
+        .theme-combo-2 .price-zone, .theme-combo-2 .detail-zone { background: transparent; }
 
-        /* Elemen Teks Harga */
         .price-strike {
             font-size: 1rem;
             color: rgba(255,255,255,0.6);
@@ -230,11 +248,11 @@ layout: null
             margin-bottom: 12px;
         }
 
-        /* Bullet Points Rincian Paket */
         .package-list {
             list-style: none;
             padding: 0;
             margin: 0;
+            margin-bottom: 30px; 
         }
         
         .package-list li {
@@ -246,7 +264,6 @@ layout: null
             line-height: 1.5;
         }
         
-        /* Kotak kecil list ala desain alphacast */
         .package-list li::before {
             content: '■';
             position: absolute;
@@ -256,7 +273,7 @@ layout: null
             color: white;
         }
 
-        /* Banner Informasi */
+        /* Banner Informasi Biru (Hemat) */
         .info-banner-blue {
             background: rgba(33, 150, 243, 0.1); 
             border: 1px solid rgba(33, 150, 243, 0.3);
@@ -264,9 +281,31 @@ layout: null
             padding: 20px;
             border-radius: 12px;
         }
+
+        /* Banner Pesan Otomatis (Jadwal Operasional Ringkas) */
+        .info-banner-notice {
+            background: #1e1e1e;
+            border-top: 4px solid #f59e0b; 
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+
+        /* Banner Peringatan Hak Cipta yang Jelas & Menonjol */
+        .copyright-banner {
+            background-color: #7f1d1d; 
+            border: 2px solid #b91c1c; 
+            padding: 20px;
+            border-radius: 12px;
+            color: #ffffff;
+            box-shadow: 0 8px 30px rgba(220, 38, 38, 0.3);
+            text-align: center;
+        }
     </style>
 
-    <!-- Anti-Interaksi Script -->
     <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener('keydown', function(e) {
@@ -283,30 +322,30 @@ layout: null
 
     <!-- LOADING SCREEN -->
     <div id="loading-screen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0a0a0a] transition-opacity duration-700">
-        <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="alphacast.id" class="w-56 mb-8 object-contain">
+        <img src="https://alphacast.id/images/logo/2024/2024%20logo%20name%20slogan%20white%20-%20alphacast.id.png" alt="alphacast.id" class="w-56 mb-8 object-contain">
         <div class="loader-spinner mb-5"></div>
         <p class="text-[#b0b0b0] text-sm font-medium tracking-wide">Memuat daftar harga, mohon menunggu...</p>
     </div>
 
-    <!-- WRAPPER HEADER FIXED APPLE GLASS (Sesuai Referensi Terakhir) -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a]/40 backdrop-blur-xl border-b border-white/10 transition-all duration-300 shadow-lg">
-        {% include header.html %}
-    </header>
+    <!-- PENGGUNAAN MURNI INCLUDE HEADER SEBAGAI UJI COBA -->
+    {% include header.html %}
 
     <main class="flex-grow flex flex-col">
         
         <!-- Hero Banner dengan Video Background -->
-        <div class="hero">
+        <!-- Animate universal ke Hero Banner -->
+        <div class="hero animate-on-scroll opacity-0 translate-y-8 transition-all duration-1000 ease-out">
             <video class="hero-video" autoplay loop muted playsinline poster="images/poster-fallback.jpg">
                 <source src="/videos/(H264) (LANDSCAPE) loop video for website - www.alphacast.id.mp4" media="(orientation: landscape)" type="video/mp4">
                 <source src="/videos/(H264) (LANDSCAPE) loop video for website - www.alphacast.id.mp4" media="(orientation: portrait)" type="video/mp4">
             </video>
             
-            <div class="hero-content animate-on-scroll opacity-0 translate-y-8 transition-all duration-1000 ease-out">
-                <img src="/images/logo/WHITE - logo name slogan - alphacast.id logo.png" alt="alphacast.id" class="hero-logo">
+            <div class="hero-content">
+                <img src="https://alphacast.id/images/logo/2024/2024%20logo%20name%20slogan%20white%20-%20alphacast.id.png" alt="alphacast.id" class="hero-logo">
                 
                 <h1>Promo G3 2026</h1>
                 <p>Daftar Harga Khusus Calon Client</p>
+                <p class="tagline">Penyedia Layanan Multimedia & Live Streaming Profesional Berbasis di Kota Manado. Temukan solusi harga tepat untuk kebutuhan event Anda.</p>
             </div>
         </div>
 
@@ -314,7 +353,7 @@ layout: null
         <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 py-12 space-y-6">
             
             <!-- 1. Livestream Package (Merah) -->
-            <a href="#" onclick="sendToWhatsApp('Livestream Package'); return false;" class="price-card theme-red animate-on-scroll opacity-0 translate-y-6">
+            <a href="#" onclick="sendToWhatsApp('Livestream Package'); return false;" class="price-card theme-red animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                 <div class="card-inner-layout">
                     <div class="price-zone">
                         <div class="price-strike">Rp 4,500,000</div>
@@ -324,15 +363,18 @@ layout: null
                     </div>
                     <div class="detail-zone">
                         <ul class="package-list">
-                            <li><strong>Siarkan ke +10 platform media streaming berbeda</strong> dari client atau alphacast.id <br><span class="text-[0.8rem] opacity-75 font-normal">(facebook / youtube / instagram / tiktok / telegram / shopee live / tokopedia play / twitch / kick / linkedin live / server rtmp lainnya)</span></li>
+                            <li><strong>Siarkan ke +10 platform media streaming berbeda</strong> dari client atau alphacast.id <br><span class="text-[0.8rem] opacity-75 font-normal">(facebook / youtube / instagram / tiktok / telegram / shopee live / tokopedia play / twitch / kick / linkedin live / server RTMP lainnya)</span></li>
                             <li><strong>Duorientation streaming</strong> siaran langsung untuk 2 orientasi berbeda (landscape & portrait)</li>
                         </ul>
+                        <div class="whatsapp-indicator">
+                            Tanya di WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
+                        </div>
                     </div>
                 </div>
             </a>
 
             <!-- 2. 2x Livestream Combo Package (Gold) -->
-            <a href="#" onclick="sendToWhatsApp('2x Livestream Combo Package'); return false;" class="price-card theme-gold animate-on-scroll opacity-0 translate-y-6">
+            <a href="#" onclick="sendToWhatsApp('2x Livestream Combo Package'); return false;" class="price-card theme-gold animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                 <div class="card-inner-layout">
                     <div class="price-zone">
                         <div class="price-strike">Rp 6,200,000</div>
@@ -347,12 +389,15 @@ layout: null
                             <li>Sampai Acara Resepsi/Pesta Pernikahan Setelah Ibadah Pemberkatan Nikah / Akad Nikah / Sakramen Perkawinan / Upacara Wiwaha Samaskara / Upacara Abhiseka/Vivaha / Li Yuan</li>
                             <li>Sampai Ladang Pekuburan Dari Rumah Duka</li>
                         </ul>
+                        <div class="whatsapp-indicator">
+                            Tanya di WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
+                        </div>
                     </div>
                 </div>
             </a>
 
             <!-- 3. Zoom Meeting Package (Biru) -->
-            <a href="#" onclick="sendToWhatsApp('Zoom Meeting Package'); return false;" class="price-card theme-blue animate-on-scroll opacity-0 translate-y-6">
+            <a href="#" onclick="sendToWhatsApp('Zoom Meeting Package'); return false;" class="price-card theme-blue animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                 <div class="card-inner-layout">
                     <div class="price-zone">
                         <div class="price-strike">Rp 5,500,000</div>
@@ -362,18 +407,21 @@ layout: null
                     </div>
                     <div class="detail-zone">
                         <ul class="package-list">
-                            <li><strong>100-300 partisipan</strong> zoom meeting room (tergantung kebutuhan)</li>
-                            <li><strong>Modem 4g / mobile tethering + kuota internet</strong> untuk backup <br><span class="text-[0.8rem] opacity-75 font-normal">(sangat disarankan menggunakan wifi/fiber di lokasi)</span></li>
-                            <li>1x zoom meeting operator onsite (di lokasi acara)</li>
-                            <li>1x zoom meeting operator remote (diluar lokasi acara)</li>
-                            <li>2x zoom meeting laptop/computer</li>
+                            <li><strong>100-300 partisipan</strong> Zoom Meeting Room (tergantung kebutuhan)</li>
+                            <li><strong>Modem 4G / mobile tethering + kuota internet</strong> untuk backup <br><span class="text-[0.8rem] opacity-75 font-normal">(sangat disarankan menggunakan wifi/fiber di lokasi)</span></li>
+                            <li>1x Zoom Meeting Operator onsite (di lokasi acara)</li>
+                            <li>1x Zoom Meeting Operator remote (di luar lokasi acara)</li>
+                            <li>2x Zoom Meeting laptop/computer</li>
                         </ul>
+                        <div class="whatsapp-indicator">
+                            Tanya di WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
+                        </div>
                     </div>
                 </div>
             </a>
 
             <!-- 4. Zoom + Livestream Combo (Gradien Biru -> Merah) -->
-            <a href="#" onclick="sendToWhatsApp('Zoom Meeting + Livestream Combo'); return false;" class="price-card theme-combo-1 animate-on-scroll opacity-0 translate-y-6">
+            <a href="#" onclick="sendToWhatsApp('Zoom Meeting + Livestream Combo'); return false;" class="price-card theme-combo-1 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                 <div class="card-inner-layout">
                     <div class="price-zone">
                         <div class="price-strike">Rp 6,000,000</div>
@@ -387,12 +435,15 @@ layout: null
                             <li>Termasuk fitur <strong>Livestream Package</strong> secara penuh</li>
                             <li>Termasuk fitur <strong>Zoom Meeting Package</strong> secara penuh</li>
                         </ul>
+                        <div class="whatsapp-indicator">
+                            Tanya di WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
+                        </div>
                     </div>
                 </div>
             </a>
 
             <!-- 5. 1x Zoom + 2x Livestream Combo (Gradien Biru -> Gold) -->
-            <a href="#" onclick="sendToWhatsApp('1x Zoom Meeting + 2x Livestream Combo'); return false;" class="price-card theme-combo-2 animate-on-scroll opacity-0 translate-y-6 mt-8">
+            <a href="#" onclick="sendToWhatsApp('1x Zoom Meeting + 2x Livestream Combo'); return false;" class="price-card theme-combo-2 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 mt-8">
                 <div class="card-inner-layout">
                     <div class="price-zone">
                         <div class="price-strike">Rp 7,800,000</div>
@@ -402,30 +453,23 @@ layout: null
                     </div>
                     <div class="detail-zone">
                         <ul class="package-list mt-2">
-                            <li><strong>Zoom meeting</strong> hanya di salah 1 tempat/lokasi utama/acara puncak</li>
+                            <li><strong>Zoom Meeting</strong> hanya di salah 1 tempat/lokasi utama/acara puncak</li>
                             <li><strong>Livestreaming</strong> untuk 2 lokasi acara berurutan</li>
                         </ul>
+                        <div class="whatsapp-indicator">
+                            Tanya di WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
+                        </div>
                     </div>
                 </div>
             </a>
             
-            <div class="text-center mt-2 animate-on-scroll opacity-0">
+            <div class="text-center mt-2 animate-on-scroll opacity-0 transition-all duration-700">
                 <span class="text-xs text-gray-500 italic">*Ketuk atau klik pada kotak paket di atas untuk mulai memesan via WhatsApp.</span>
             </div>
 
-            <!-- BANNER INFORMASI: Lebih Banyak Hemat -->
-            <div class="info-banner-blue mt-12 animate-on-scroll opacity-0 translate-y-6">
-                <div class="flex items-center gap-4">
-                    <i class="fa-solid fa-tags text-3xl text-[var(--primary-blue)]"></i>
-                    <div>
-                        <h4 class="font-bold text-white text-lg leading-tight mb-1">Lebih banyak macam item yang diambil, bisa lebih hemat!</h4>
-                        <p class="text-sm text-gray-300">Dapatkan penawaran harga khusus dan diskon bundel jika Anda memesan beberapa paket sekaligus untuk satu rangkaian acara.</p>
-                    </div>
-                </div>
-            </div>
 
             <!-- SEKSI INFO KELENGKAPAN (Standard Inclusions) -->
-            <div class="mt-8 animate-on-scroll opacity-0 translate-y-6">
+            <div class="mt-8 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                 <div class="bg-[#d4d4d4] text-black rounded-t-xl py-4 px-6 text-center font-bold text-lg border-b-4 border-gray-400">
                     Semua paket di atas sudah termasuk item di bawah ini:
                 </div>
@@ -434,23 +478,23 @@ layout: null
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
                         <!-- Kolom Kiri -->
                         <div>
-                            <ul class="package-list">
-                                <li><strong>1 tempat</strong> (max 3 jam)</li>
+                            <ul class="package-list !mb-0">
+                                <li><strong>1 tempat (max 3 jam)</strong> <br><span class="text-xs text-red-500 font-bold block mt-1">Jika durasi melebih jauh dari 3 jam, maka akan dikenakan charge 20% dari harga paket / jam di setiap jam yang terlewati</span></li>
                                 <li><strong>3 kamera</strong> <br><span class="text-xs text-gray-400 font-normal">(1x kamera close-up, 1x kamera berjalan, 1x kamera berjalan ke-2/kamera bumper/kamera backup)</span></li>
                                 <li><strong>Kameramen + operator</strong></li>
-                                <li><strong>Peralatan-peralatan dan kabel-kabel pendukung</strong> untuk siaran langsung dan multimedia untuk menyambungkan ke soundsystem dan juga ke layar besar/tv <br><span class="text-xs text-gray-400 font-normal">(jika tersedia/disewa dari alphacast.id)</span></li>
-                                <li><strong>Desain-desain pendukung</strong> siaran langsung seperti lowerthird, thumbnail siaran, bumper statis/bergerak (motion graphic)</li>
+                                <li><strong>Peralatan-peralatan dan kabel-kabel pendukung</strong> untuk siaran langsung dan multimedia untuk menyambungkan ke sound system dan juga ke layar besar/TV <br><span class="text-xs text-gray-400 font-normal">(jika tersedia/disewa dari alphacast.id)</span></li>
+                                <li><strong>Desain-desain pendukung</strong> siaran langsung seperti lower third, thumbnail siaran, bumper statis/bergerak (motion graphic)</li>
                                 <li><strong>Modem 4G + mobile tethering + kuota internet</strong> untuk backup</li>
                             </ul>
                         </div>
                         
                         <!-- Kolom Kanan -->
                         <div>
-                            <ul class="package-list">
+                            <ul class="package-list !mb-0">
                                 <li><strong>Laptop/komputer backup</strong> untuk siaran langsung / multimedia / untuk pemutaran video / untuk menampilkan presentasi</li>
                                 <li><strong>Rekaman video sepanjang acara</strong> <br><span class="text-xs text-gray-400 font-normal">(apa yang ditayangkan di livestreaming yang akan direkam, sebagai arsip maupun backup jika jaringan di tempat acara tidak stabil)</span></li>
-                                <li><strong>Penata visual layar</strong> (visual jockey) <br><span class="text-xs text-gray-400 font-normal">mengatur layout layar, penampilan visual di beberapa macam layar LED, proyektor, tv secara bersamaan dan tampilan berbeda-beda, membuat animasi visual standar (jika diperlukan)</span></li>
-                                <li><strong>Biaya transport tim & alat</strong> <br><span class="text-xs text-gray-400 font-normal">Manado, Minahasa Utara, Tondano, Tomohon, Bitung (diluar kota/kabupaten diatas akan dikenakan biaya tambahan sesuai tempat acara)</span></li>
+                                <li><strong>Penata visual layar</strong> (visual jockey) <br><span class="text-xs text-gray-400 font-normal">mengatur layout layar, penampilan visual di beberapa macam layar LED, proyektor, TV secara bersamaan dan tampilan berbeda-beda, membuat animasi visual standar (jika diperlukan)</span></li>
+                                <li><strong>Biaya transport tim & alat</strong> <br><span class="text-xs text-green-400 font-bold block mb-1">Melayani ke seluruh Indonesia sampai ke ujung dunia</span><span class="text-xs text-gray-400 font-normal">Manado, Minahasa Utara, Tondano, Tomohon, Bitung (di luar kota/kabupaten di atas akan dikenakan biaya tambahan sesuai tempat acara)</span></li>
                             </ul>
                         </div>
                     </div>
@@ -458,39 +502,82 @@ layout: null
             </div>
 
             <!-- SEKSI TAMBAHAN & BIAYA SESUAI PERMINTAAN -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 animate-on-scroll opacity-0 translate-y-6">
-                <!-- Tambahan Extra -->
-                <div class="bg-[#111] border border-[#333] rounded-xl p-6 md:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <!-- Tambahan Ekstra -->
+                <div class="bg-[#111] border border-[#333] rounded-xl p-6 md:p-8 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                     <h3 class="text-xl font-bold text-white mb-5 border-b border-[#333] pb-3">Tambahan Ekstra</h3>
-                    <ul class="package-list">
-                        <li><strong>Rp. 700rb — Set TV Monitor 40 inch</strong> <br><span class="text-xs text-gray-400">Kabel HDMI + Kabel Listrik + Stand berdiri/matador</span></li>
-                        <li><strong>Rp. 1,6jt — Set TV Monitor 65 inch</strong> <br><span class="text-xs text-gray-400">Kabel HDMI + Kabel Listrik + Stand berdiri</span></li>
+                    <ul class="package-list !mb-0">
+                        <li><strong>Rp. 700rb — Set TV Monitor 40 Inch</strong> <br><span class="text-xs text-gray-400">Kabel HDMI + Kabel Listrik + Stand berdiri/matador</span></li>
+                        <li><strong>Rp. 1,6jt — Set TV Monitor 65 Inch</strong> <br><span class="text-xs text-gray-400">Kabel HDMI + Kabel Listrik + Stand berdiri</span></li>
                         <li><strong>Rp. 1,5jt — Kamera Live Drone</strong> <br><span class="text-xs text-gray-400">Drone (DJI Mini / DJI Spark / DJI Phantom / DJI Avata / Sejenis) + Pilot</span></li>
                         <li><strong>Rp. 1,5jt — Tambahan Sudut Kamera</strong> <br><span class="text-xs text-gray-400">1x set kamera wired/wireless, 1 cameramen</span></li>
+                        <li><strong>Rp. 1jt — Set Standard untuk Replay / Tayangan Ulang</strong> <br><span class="text-xs text-gray-400">(untuk pertandingan) 1x set laptop/komputer, 1x operator</span></li>
                     </ul>
                 </div>
 
                 <!-- Custom Request -->
-                <div class="bg-[#111] border border-[#333] rounded-xl p-6 md:p-8">
+                <div class="bg-[#111] border border-[#333] rounded-xl p-6 md:p-8 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 delay-100">
                     <h3 class="text-xl font-bold text-white mb-5 border-b border-[#333] pb-3">Biaya Sesuai Permintaan</h3>
-                    <ul class="package-list">
+                    <ul class="package-list !mb-0">
                         <li><strong>LED Screen</strong> Indoor/Outdoor</li>
-                        <li><strong>Genset</strong> 20-100kva</li>
-                        <li><strong>Sound system</strong> 1.000-15.000watt</li>
+                        <li><strong>Genset</strong> 20-100 kva</li>
+                        <li><strong>Sound System</strong> 1.000-15.000 watt</li>
                         <li><strong>Lighting & Effects</strong></li>
                         <li><strong>Dokumentasi Foto & Video</strong></li>
                         <li><strong>Videobooth 360</strong></li>
                         <li><strong>Animasi Visual</strong> Custom</li>
-                        <li><strong>Zoom meeting room</strong> 500-1000 partisipan</li>
+                        <li><strong>Zoom Meeting Room</strong> 500-1000 partisipan</li>
                     </ul>
                 </div>
             </div>
 
-            <!-- Info Penting Bawah -->
-            <div class="mt-12 text-center text-gray-400 text-sm animate-on-scroll opacity-0 translate-y-6 mb-8">
-                <p>Harga promo di atas dapat berubah sewaktu-waktu.<br><strong>Booking segera</strong> untuk mendapatkan penawaran terbaru dan terbaik!</p>
+            <!-- BANNER INFORMASI: Lebih Banyak Hemat -->
+            <div class="info-banner-blue mt-8 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
+                <div class="flex items-center gap-4">
+                    <i class="fa-solid fa-tags text-3xl text-[var(--primary-blue)]"></i>
+                    <div>
+                        <h4 class="font-bold text-white text-lg leading-tight mb-1">Lebih banyak macam item yang diambil, bisa lebih hemat!</h4>
+                        <p class="text-sm text-gray-300">Dapatkan penawaran harga khusus dan diskon bundel jika Anda memesan beberapa paket sekaligus termasuk *Tambahan Ekstra* maupun *Biaya Sesuai Permintaan* untuk satu rangkaian acara.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TEKS PERINGATAN HARGA PROMO -->
+            <div class="mt-8 mb-4 bg-yellow-600/10 border border-yellow-500/30 rounded-lg p-5 text-center animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
+                <p class="text-yellow-400 font-medium leading-relaxed">
+                    <span class="block font-bold text-lg mb-1">Penting:</span> 
+                    Harga promo di atas dapat berubah sewaktu-waktu.<br>
+                    <strong>Booking segera</strong> untuk mendapatkan penawaran terbaru dan terbaik untuk acara Anda!
+                </p>
+            </div>
+
+            <!-- CARD PESAN OTOMATIS (Murni Jadwal Operasional) -->
+            <div class="info-banner-notice mt-12 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
+                <div class="font-bold text-lg text-white mb-4 border-b border-gray-700 pb-3">Jadwal Operasional Kami:</div>
+                <ul class="text-base space-y-3 text-gray-300">
+                    <li class="flex items-center">
+                        <i class="fa-regular fa-clock text-blue-400 mr-3 w-5 text-center"></i> 
+                        Senin - Minggu: 09:00 - 21:00
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-church text-red-500 mr-3 w-5 text-center mt-1"></i> 
+                        <span>
+                            <strong class="text-red-500">Jumat 18:00 - Sabtu 18:00: TUTUP</strong><br>
+                            <span class="text-sm text-gray-400">(Tim kami libur untuk melaksanakan Ibadah Hari Sabat 🙏)</span>
+                        </span>
+                    </li>
+                </ul>
             </div>
             
+            <!-- PERINGATAN HAK CIPTA VENDOR -->
+            <div class="copyright-banner mt-12 mb-8 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
+                <h4 class="font-extrabold text-xl mb-2 tracking-wide uppercase"><i class="fa-solid fa-triangle-exclamation mr-2 text-yellow-400"></i> Peringatan Hak Cipta</h4>
+                <p class="text-sm text-white/90 leading-relaxed font-medium">
+                    Seluruh format, isi rincian, dan desain daftar harga ini adalah properti riset eksklusif <strong>alphacast.id</strong>. <br class="hidden md:block">
+                    Dilarang keras menjiplak, meniru, atau menyalin konten ini untuk kebutuhan komersial vendor lain tanpa izin tertulis dari pihak kami.
+                </p>
+            </div>
+
         </div>
     </main>
 
@@ -515,7 +602,7 @@ layout: null
             }, 800);
         });
 
-        // 2. Intersection Observer untuk efek Animate-in pada saat Scroll
+        // 2. Intersection Observer untuk efek Animate-in pada saat Scroll Universal
         function initScrollAnimations() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -533,12 +620,12 @@ layout: null
             document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
         }
 
-        // 3. Logika Klik Seluruh Area Card ke WhatsApp (Tanpa Tombol Berulang)
+        // 3. Logika Klik Seluruh Area Card ke WhatsApp 
         function sendToWhatsApp(packageName) {
             const phoneNumber = '6285159556468';
             
-            // Format Pesan Otomatis
-            const textMessage = `Halo admin alphacast.id, saya ingin bertanya lebih lanjut mengenai harga dan ketersediaan untuk paket: *${packageName}*.`;
+            // Format Pesan Otomatis (Memakai format Opsi 2 Anda)
+            const textMessage = `Halo Kak, selamat pagi 👋\nSemoga aktivitasnya lancar hari ini. Mohon maaf mengganggu waktunya sebentar 🙏\n\nBerhubung acara sudah semakin dekat, saya izin follow up penawaran dari kami, *alphacast.id* (vendor live streaming dan multimedia).\nKira-kira apakah sudah ada update terbaru, atau ada bagian penawaran yang ingin disesuaikan (termasuk untuk *${packageName}*)?\n\nJika ada hal yang ingin didiskusikan, silakan kabari kami kapan saja, Kak.\nDitunggu kabar baiknya, terima kasih banyak! 🙏`;
 
             const encodedMessage = encodeURIComponent(textMessage);
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
