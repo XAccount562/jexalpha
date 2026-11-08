@@ -75,7 +75,7 @@ layout: null
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* HERO BANNER (Tanpa extra padding-top sesuai request testing murni include header) */
+        /* HERO BANNER */
         .hero { 
             position: relative; 
             padding: 60px 20px 40px; 
@@ -141,9 +141,7 @@ layout: null
             border-radius: 12px;
             overflow: hidden;
             transition: var(--transition);
-            cursor: pointer;
             border: 1px solid rgba(255,255,255,0.05);
-            text-decoration: none;
             position: relative;
         }
         
@@ -151,10 +149,6 @@ layout: null
             transform: translateY(-5px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             border-color: rgba(255,255,255,0.15);
-        }
-
-        .price-card:active {
-            transform: scale(0.98);
         }
 
         .card-inner-layout {
@@ -193,7 +187,7 @@ layout: null
             position: relative;
         }
 
-        /* Ikon WhatsApp di setiap Card - Berubah background hijau penuh saat di-hover */
+        /* Ikon WhatsApp di setiap Card - Hanya ini yang bisa diklik sekarang */
         .whatsapp-indicator {
             position: absolute;
             bottom: 20px;
@@ -209,6 +203,11 @@ layout: null
             border-radius: 20px;
             transition: var(--transition);
             border: 1px solid transparent;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .whatsapp-indicator:active {
+            transform: scale(0.95);
         }
         .price-card:hover .whatsapp-indicator {
             background-color: #25D366;
@@ -327,13 +326,11 @@ layout: null
         <p class="text-[#b0b0b0] text-sm font-medium tracking-wide">Memuat daftar harga, mohon menunggu...</p>
     </div>
 
-    <!-- PENGGUNAAN MURNI INCLUDE HEADER SEBAGAI UJI COBA -->
     {% include header.html %}
 
     <main class="flex-grow flex flex-col">
         
         <!-- Hero Banner dengan Video Background -->
-        <!-- Animate universal ke Hero Banner -->
         <div class="hero animate-on-scroll opacity-0 translate-y-8 transition-all duration-1000 ease-out">
             <video class="hero-video" autoplay loop muted playsinline poster="images/poster-fallback.jpg">
                 <source src="/videos/(H264) (LANDSCAPE) loop video for website - www.alphacast.id.mp4" media="(orientation: landscape)" type="video/mp4">
@@ -353,7 +350,7 @@ layout: null
         <div class="w-full max-w-5xl mx-auto px-4 sm:px-6 py-12 space-y-6">
             
             <!-- 1. Livestream Package (Merah) -->
-            <a href="#" onclick="sendToWhatsApp('Livestream Package'); return false;" class="price-card theme-red animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
+            <div class="price-card theme-red animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                 <div class="card-inner-layout">
                     <div class="price-zone">
                         <div class="price-strike">Rp 4,500,000</div>
@@ -366,15 +363,15 @@ layout: null
                             <li><strong>Siarkan ke +10 platform media streaming berbeda</strong> dari client atau alphacast.id <br><span class="text-[0.8rem] opacity-75 font-normal">(facebook / youtube / instagram / tiktok / telegram / shopee live / tokopedia play / twitch / kick / linkedin live / server RTMP lainnya)</span></li>
                             <li><strong>Duorientation streaming</strong> siaran langsung untuk 2 orientasi berbeda (landscape & portrait)</li>
                         </ul>
-                        <div class="whatsapp-indicator">
+                        <button onclick="sendToWhatsApp('Livestream Package')" class="whatsapp-indicator">
                             Tanya di WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
-                        </div>
+                        </button>
                     </div>
                 </div>
-            </a>
+            </div>
 
             <!-- 2. 2x Livestream Combo Package (Gold) -->
-            <a href="#" onclick="sendToWhatsApp('2x Livestream Combo Package'); return false;" class="price-card theme-gold animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
+            <div class="price-card theme-gold animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                 <div class="card-inner-layout">
                     <div class="price-zone">
                         <div class="price-strike">Rp 6,200,000</div>
@@ -389,15 +386,15 @@ layout: null
                             <li>Sampai Acara Resepsi/Pesta Pernikahan Setelah Ibadah Pemberkatan Nikah / Akad Nikah / Sakramen Perkawinan / Upacara Wiwaha Samaskara / Upacara Abhiseka/Vivaha / Li Yuan</li>
                             <li>Sampai Ladang Pekuburan Dari Rumah Duka</li>
                         </ul>
-                        <div class="whatsapp-indicator">
+                        <button onclick="sendToWhatsApp('2x Livestream Combo Package')" class="whatsapp-indicator">
                             Tanya di WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
-                        </div>
+                        </button>
                     </div>
                 </div>
-            </a>
+            </div>
 
             <!-- 3. Zoom Meeting Package (Biru) -->
-            <a href="#" onclick="sendToWhatsApp('Zoom Meeting Package'); return false;" class="price-card theme-blue animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
+            <div class="price-card theme-blue animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                 <div class="card-inner-layout">
                     <div class="price-zone">
                         <div class="price-strike">Rp 5,500,000</div>
@@ -413,15 +410,15 @@ layout: null
                             <li>1x Zoom Meeting Operator remote (di luar lokasi acara)</li>
                             <li>2x Zoom Meeting laptop/computer</li>
                         </ul>
-                        <div class="whatsapp-indicator">
+                        <button onclick="sendToWhatsApp('Zoom Meeting Package')" class="whatsapp-indicator">
                             Tanya di WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
-                        </div>
+                        </button>
                     </div>
                 </div>
-            </a>
+            </div>
 
             <!-- 4. Zoom + Livestream Combo (Gradien Biru -> Merah) -->
-            <a href="#" onclick="sendToWhatsApp('Zoom Meeting + Livestream Combo'); return false;" class="price-card theme-combo-1 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
+            <div class="price-card theme-combo-1 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                 <div class="card-inner-layout">
                     <div class="price-zone">
                         <div class="price-strike">Rp 6,000,000</div>
@@ -435,15 +432,15 @@ layout: null
                             <li>Termasuk fitur <strong>Livestream Package</strong> secara penuh</li>
                             <li>Termasuk fitur <strong>Zoom Meeting Package</strong> secara penuh</li>
                         </ul>
-                        <div class="whatsapp-indicator">
+                        <button onclick="sendToWhatsApp('Zoom Meeting + Livestream Combo')" class="whatsapp-indicator">
                             Tanya di WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
-                        </div>
+                        </button>
                     </div>
                 </div>
-            </a>
+            </div>
 
             <!-- 5. 1x Zoom + 2x Livestream Combo (Gradien Biru -> Gold) -->
-            <a href="#" onclick="sendToWhatsApp('1x Zoom Meeting + 2x Livestream Combo'); return false;" class="price-card theme-combo-2 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 mt-8">
+            <div class="price-card theme-combo-2 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700 mt-8">
                 <div class="card-inner-layout">
                     <div class="price-zone">
                         <div class="price-strike">Rp 7,800,000</div>
@@ -456,20 +453,15 @@ layout: null
                             <li><strong>Zoom Meeting</strong> hanya di salah 1 tempat/lokasi utama/acara puncak</li>
                             <li><strong>Livestreaming</strong> untuk 2 lokasi acara berurutan</li>
                         </ul>
-                        <div class="whatsapp-indicator">
+                        <button onclick="sendToWhatsApp('1x Zoom Meeting + 2x Livestream Combo')" class="whatsapp-indicator">
                             Tanya di WhatsApp <i class="fa-brands fa-whatsapp text-xl"></i>
-                        </div>
+                        </button>
                     </div>
                 </div>
-            </a>
-            
-            <div class="text-center mt-2 animate-on-scroll opacity-0 transition-all duration-700">
-                <span class="text-xs text-gray-500 italic">*Ketuk atau klik pada kotak paket di atas untuk mulai memesan via WhatsApp.</span>
             </div>
-
-
+            
             <!-- SEKSI INFO KELENGKAPAN (Standard Inclusions) -->
-            <div class="mt-8 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
+            <div class="mt-10 animate-on-scroll opacity-0 translate-y-6 transition-all duration-700">
                 <div class="bg-[#d4d4d4] text-black rounded-t-xl py-4 px-6 text-center font-bold text-lg border-b-4 border-gray-400">
                     Semua paket di atas sudah termasuk item di bawah ini:
                 </div>
@@ -479,7 +471,7 @@ layout: null
                         <!-- Kolom Kiri -->
                         <div>
                             <ul class="package-list !mb-0">
-                                <li><strong>1 tempat (max 3 jam)</strong> <br><span class="text-xs text-red-500 font-bold block mt-1">Jika durasi melebih jauh dari 3 jam, maka akan dikenakan charge 20% dari harga paket / jam di setiap jam yang terlewati</span></li>
+                                <li><strong>1 tempat (max 3 jam)</strong> <br><span class="text-xs text-red-500 font-bold block mt-1">Jika durasi melebih jauh dari 3 jam, maka akan dikenakan charge 20% dari harga paket yang dipilih di setiap jam yang terlewati.</span></li>
                                 <li><strong>3 kamera</strong> <br><span class="text-xs text-gray-400 font-normal">(1x kamera close-up, 1x kamera berjalan, 1x kamera berjalan ke-2/kamera bumper/kamera backup)</span></li>
                                 <li><strong>Kameramen + operator</strong></li>
                                 <li><strong>Peralatan-peralatan dan kabel-kabel pendukung</strong> untuk siaran langsung dan multimedia untuk menyambungkan ke sound system dan juga ke layar besar/TV <br><span class="text-xs text-gray-400 font-normal">(jika tersedia/disewa dari alphacast.id)</span></li>
@@ -581,7 +573,6 @@ layout: null
         </div>
     </main>
 
-    <!-- FOOTER INCLUDE -->
     {% include footer.html %}
 
     <!-- Script Utama -->
@@ -620,17 +611,16 @@ layout: null
             document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
         }
 
-        // 3. Logika Klik Seluruh Area Card ke WhatsApp 
+        // 3. Logika WhatsApp (Hanya dipanggil oleh Tombol WhatsApp di dalam Card)
         function sendToWhatsApp(packageName) {
             const phoneNumber = '6285159556468';
             
-            // Format Pesan Otomatis (Memakai format Opsi 2 Anda)
-            const textMessage = `Halo Kak, selamat pagi 👋\nSemoga aktivitasnya lancar hari ini. Mohon maaf mengganggu waktunya sebentar 🙏\n\nBerhubung acara sudah semakin dekat, saya izin follow up penawaran dari kami, *alphacast.id* (vendor live streaming dan multimedia).\nKira-kira apakah sudah ada update terbaru, atau ada bagian penawaran yang ingin disesuaikan (termasuk untuk *${packageName}*)?\n\nJika ada hal yang ingin didiskusikan, silakan kabari kami kapan saja, Kak.\nDitunggu kabar baiknya, terima kasih banyak! 🙏`;
+            // Pesan singkat, natural, dan to the point dari sisi client
+            const textMessage = `Halo admin alphacast.id 👋\nSaya ingin bertanya lebih lanjut mengenai *${packageName}*.`;
 
             const encodedMessage = encodeURIComponent(textMessage);
             const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
             
-            // Buka di tab baru
             window.open(whatsappUrl, '_blank');
         }
     </script>
